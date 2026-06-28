@@ -1,36 +1,37 @@
-# LLM-SSH Honeypot on AWS
+# Wraith: LLM-SSH Honeypot on AWS
 
 ## Overview
 
-This project deploys an LLM-powered SSH honeypot using the Beelzebub deception framework on AWS EC2. It is designed to simulate realistic interactive Linux environments in order to study real-world attacker behavior and collect structured telemetry from malicious SSH sessions.
+Wraith is an LLM-powered SSH honeypot system deployed on AWS EC2 using the Beelzebub deception framework. It is designed to simulate realistic interactive Linux environments in order to study real-world attacker behavior and collect structured telemetry from malicious SSH sessions.
 
-Unlike traditional static honeypots, this system integrates Large Language Models (LLMs) to dynamically generate terminal responses, increasing realism and enabling deeper attacker interaction analysis.
+Unlike traditional static honeypots, Wraith integrates Large Language Models (LLMs) to dynamically generate terminal responses, increasing realism and enabling deeper analysis of attacker interaction patterns and decision-making behavior.
 
-## Key Features
+---
 
-- Fully functional SSH honeypot deployed on AWS EC2
-- LLM-powered command response generation (OpenAI / Ollama compatible)
-- Multi-service deception framework (SSH, HTTP, TCP, Telnet)
-- Structured telemetry logging of attacker sessions
-- Plugin-based architecture for extensibility
-- Support for static, adaptive, and persistent deception modes
+## What This Project Does
+
+Wraith deploys fake SSH services on AWS that attract real-world attackers and log their activity in detail. Instead of returning static or predefined responses, the system uses LLMs to simulate a real Linux shell environment, making interactions more believable and increasing the depth of collected threat intelligence.
+
+---
 
 ## Research Goals
 
-- Evaluate whether LLM-driven honeypots increase attacker engagement
-- Compare static vs adaptive deception models
-- Analyze SSH attack behavior across real-world IP sources
-- Measure session depth, duration, and interaction complexity
-- Investigate whether realism affects credential brute-force behavior
+- Evaluate whether LLM-powered honeypots increase attacker engagement compared to static systems  
+- Compare different LLM backend strategies for response generation  
+- Analyze SSH attack patterns across real-world internet sources  
+- Measure session depth, duration, and interaction complexity  
+- Investigate whether increased realism affects credential brute-force behavior and persistence  
 
-## Current Status
+---
 
-- SSH honeypot deployed and functional on AWS EC2
-- Beelzebub framework running with LLMHoneypot plugin enabled
-- Telemetry logging verified
-- LLM backend integration currently requires valid API key and billing-enabled provider
+## Tech Stack
 
-## Known Limitation
+| Component | Tool |
+|----------|------|
+| Cloud | AWS EC2 |
+| Honeypot Framework | Beelzebub |
+| LLM Backend | OpenAI / Ollama (extensible) |
+| Session State | In-memory (current phase) |
+| Logging | Structured JSON telemetry |
 
-- LLM provider currently requires paid API quota (OpenAI exhausted during testing)
-- System falls back to static responses ("command not found") when LLM is unavailable
+---
