@@ -1,18 +1,32 @@
 # Wraith
 
-Wraith is a cloud-hosted SSH honeypot framework designed for collecting real-world attack telemetry and studying attacker behavior in controlled deception environments.
+Wraith is a cloud-native adaptive SSH deception framework built on top of Beelzebub for collecting and analyzing real-world attacker telemetry.
 
-Built on top of Beelzebub, the project focuses on adaptive SSH interaction, session persistence, telemetry collection, and comparative analysis between static and dynamic deception strategies.
+The project focuses on deploying interactive SSH honeypots on AWS infrastructure, integrating adaptive LLM-generated responses, collecting attacker interaction data, and analyzing real-world attack behavior.
 
-## Core Objectives
+## Objectives
 
-- Deploy an SSH-accessible honeypot on AWS
-- Capture attacker credentials, commands, and session telemetry
-- Evaluate attacker engagement under varying deception strategies
-- Integrate adaptive LLM-assisted SSH responses
-- Implement attacker-specific session persistence
-- Analyze real-world SSH attack behavior through structured telemetry collection
+* Deploy a publicly accessible SSH honeypot on AWS EC2
+* Simulate realistic attacker interaction using LLM-powered deception
+* Collect and persist attacker telemetry
+* Analyze attacker behavior patterns and command execution
+* Compare static vs adaptive honeypot effectiveness
+
+## Stack
+
+* AWS EC2
+* Beelzebub
+* SSH Deception Runtime
+* Python Telemetry Processing
+* Amazon S3 Log Storage
+* Grafana / Prometheus (planned)
+* LLM Integration (planned)
 
 ## Current Status
 
-Wraith v0 → Infrastructure setup and baseline deployment.
+* AWS infrastructure deployed
+* EC2 instance running
+* Elastic IP configured
+* Security groups configured
+* Beelzebub compiled successfully
+* SSH deception service live on port 2222

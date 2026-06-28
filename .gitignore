@@ -1,0 +1,11 @@
+*.pem
+*.key
+*.csv
+.env
+.env.local
+__pycache__/
+*.log
+logs/*
+!logs/sample/
+admin_credentials.csv
+wraith-admin_credentials.csv
