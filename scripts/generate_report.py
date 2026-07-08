@@ -156,24 +156,6 @@ def generate_report(events, date_label=None, excluded_ips=None, do_geo=True):
             if dt:
                 all_times.append(dt)
     time_range = f"{min(all_times)} — {max(all_times)}" if all_times else "N/A"
-    
-    # Timeline statistics
-    first_seen = min(all_times) if all_times else None
-    last_seen = max(all_times) if all_times else None
-
-    hour_counter = defaultdict(int)
-
-    for t in all_times:
-        try:
-            hour = t[11:13]          # Extract HH from ISO timestamp
-            hour_counter[hour] += 1
-        except Exception:
-            pass
-
-    if hour_counter:
-        busiest_hour, busiest_events = max(hour_counter.items(), key=lambda x: x[1])
-    else:
-        busiest_hour, busiest_events = ("N/A", 0)
 
     if llm_stats:
         avg_latency = sum(s['total_duration_ms'] for s in llm_stats) / len(llm_stats)
@@ -239,17 +221,6 @@ def generate_report(events, date_label=None, excluded_ips=None, do_geo=True):
     lines.append(f"| Avg tokens generated | {avg_tokens:.1f} |")
     if countries:
         lines.append(f"| Countries observed | {', '.join(sorted(countries.keys()))} |")
-    lines.append("")
-
-    lines.append("---")
-    lines.append("")
-    lines.append("## Timeline")
-    lines.append("")
-    lines.append("| Metric | Value |")
-    lines.append("|--------|-------|")
-    lines.append(f"| First attack | {first_seen or 'N/A'} |")
-    lines.append(f"| Last attack | {last_seen or 'N/A'} |")
-    lines.append(f"| Most active hour | {busiest_hour}:00 UTC ({busiest_events} events) |")
     lines.append("")
 
     lines.append("---")
