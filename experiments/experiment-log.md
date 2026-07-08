@@ -51,6 +51,21 @@ Terminal realism is functional but imperfect. Some command outputs can be unreal
 
 ---
 
+## 03-08 July 2026
+
+### Observation Summary
+
+Across the first week of Wraith operation, the honeypot consistently attracted automated SSH reconnaissance and password-spraying traffic. Most activity originated from China and used libssh or OpenSSH client stacks, with one particularly intense burst on 06 July that generated more than 12,000 login attempts. No successful logins or command executions were observed during this period, which suggests the service was primarily being probed for weak credentials rather than exploited further.
+
+### Key Takeaways
+
+- The honeypot is successfully attracting internet-facing SSH scanning traffic.
+- Attackers appear to rely on scripted tooling and common password lists rather than interactive human access.
+- The absence of command execution indicates the current deception layer is still effective at blocking progression beyond authentication.
+- The next refinement target remains stronger lure content and more realistic shell behavior to increase engagement if a password is guessed.
+
+---
+
 ## 28 June 2026
 
 ### Infrastructure Deployment
