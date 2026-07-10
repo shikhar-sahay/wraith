@@ -1,7 +1,7 @@
 # Analysis — Cumulative — All Time
 **Honeypot:** Wraith (Beelzebub + qwen2.5:0.5b via Ollama)
 **Region:** Mumbai (ap-south-1)
-**Period:** 2026-07-03T18:59:13Z — 2026-07-08T18:15:59Z
+**Period:** 2026-07-01T15:41:41Z — 2026-07-10T15:14:15Z
 **Test traffic excluded:** Yes
 
 ---
@@ -10,14 +10,14 @@
 
 | Metric | Value |
 |--------|-------|
-| Unique IPs | 24 |
-| Total sessions | 68 |
-| Login attempts | 12940 |
-| Sessions with commands | 0 |
-| Total commands executed | 0 |
-| Avg LLM response latency | 2806 ms |
-| Avg tokens generated | 19.5 |
-| Countries observed | China, Hong Kong, India, Malaysia, Russia, South Korea, Sweden, The Netherlands, United States |
+| Unique IPs | 46 |
+| Total sessions | 246 |
+| Login attempts | 13169 |
+| Sessions with commands | 3 |
+| Total commands executed | 7 |
+| Avg LLM response latency | 32801 ms |
+| Avg tokens generated | 14.6 |
+| Countries observed | China, India, Malaysia, Russia, South Korea, Sweden, The Netherlands, Unknown |
 
 ---
 
@@ -25,30 +25,52 @@
 
 | IP | Country | Organization | Sessions | Commands | SSH Client |
 |----|---------|--------------|----------|----------|------------|
-| 1.212.225.99 | South Korea | LG Uplus | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 111.21.227.194 | China | China Mobile | 1 | 0 | SSH-2.0-Go |
-| 111.42.175.101 | China | China Mobile | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 119.207.37.22 | South Korea | Korea Telecom | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 122.187.227.144 | India | Bharti Telenet Ltd. | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 128.185.220.90 | India | Bharti Airtel Limited | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 1.212.225.99 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 103.214.5.133 | The Netherlands | Rakar Investments Holding B.V | 0 | 0 | SSH-2.0-libssh2_1.11.1 |
+| 111.21.227.194 | Unknown | Unknown | 1 | 0 | SSH-2.0-Go |
+| 111.42.175.101 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 117.158.160.42 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 117.205.3.26 | India | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 118.183.180.108 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 119.207.37.22 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 122.165.91.5 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 122.187.227.144 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 128.185.220.90 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 139.224.244.185 | China | Aliyun Computing Co., LTD | 175 | 0 | SSH-2.0-Go |
+| 14.33.96.3 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 14.48.112.8 | South Korea | Kornet | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 175.207.239.76 | South Korea | Kornet | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 183.196.144.45 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 188.126.240.80 | Sweden | Telia Company AB | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 200.106.49.149 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 213.66.197.199 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 217.150.37.249 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 218.149.228.137 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 218.21.0.230 | China | Chinanet NX | 1 | 0 | SSH-2.0-Go |
-| 45.156.87.50 | The Netherlands | VMHeaven.io | 0 | 0 | SSH-2.0-libssh_0.11.4 |
-| 47.108.225.192 | China | Aliyun Computing Co., LTD | 22 | 0 | SSH-2.0-libssh_0.7.4 |
-| 49.124.148.195 | Malaysia | DiGi Telecommunications Sdn Bhd | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 49.124.149.203 | Malaysia | DiGi Telecommunications Sdn Bhd | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 49.124.149.209 | Malaysia | DiGi Telecommunications Sdn Bhd | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 50.188.204.213 | United States | Comcast Cable Communications, LLC | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 35.130.111.146 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 45.156.87.50 | Unknown | Unknown | 0 | 0 | SSH-2.0-libssh_0.11.4 |
+| 47.108.225.192 | Unknown | Unknown | 22 | 0 | SSH-2.0-libssh_0.7.4 |
+| 49.124.142.137 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 49.124.148.195 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 49.124.149.203 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 49.124.149.209 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 49.124.151.15 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 49.124.151.20 | Malaysia | DiGi Telecommunications Sdn Bhd | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 49.124.153.40 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 49.207.63.82 | Unknown | Unknown | 3 | 7 | SSH-2.0-OpenSSH_for_Windows_9.5 |
+| 50.188.204.213 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 59.14.191.130 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 62.183.82.70 | Russia | OJSC Rostelecom Macroregional Branch Sou | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 68.233.177.188 | United States | Natural Wireless, LLC | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 68.7.114.69 | United States | Cox Communications Inc | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 77.106.78.215 | Russia | JSC "ER-Telecom Holding" Barnaul Branch | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 78.66.45.101 | Sweden | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 8.136.51.171 | China | Aliyun Computing Co. | 0 | 0 | SSH-2.0-libssh2_1.11.1 |
-| 8.159.132.214 | China | Alibaba.com LLC | 0 | 0 | SSH-2.0-Go |
-| 8.163.15.89 | China | Aliyun Computing Co. | 22 | 0 | SSH-2.0-libssh_0.7.4 |
-| 8.218.7.200 | Hong Kong | Alibaba.com Singapore E-Commerce Private | 22 | 0 | SSH-2.0-libssh_0.7.4 |
+| 68.233.177.188 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 68.7.114.69 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 77.106.78.215 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 78.66.45.101 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 79.78.139.127 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 8.136.51.171 | Unknown | Unknown | 0 | 0 | SSH-2.0-libssh2_1.11.1 |
+| 8.159.132.214 | Unknown | Unknown | 0 | 0 | SSH-2.0-Go |
+| 8.163.15.89 | Unknown | Unknown | 22 | 0 | SSH-2.0-libssh_0.7.4 |
+| 8.218.7.200 | Unknown | Unknown | 22 | 0 | SSH-2.0-libssh_0.7.4 |
+| 80.233.77.136 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 
 ---
 
@@ -56,11 +78,212 @@
 
 | Password | Attempts |
 |----------|----------|
+| 123456 | 7 |
 | AyaKuyaSKRR | 3 |
-| 123456 | 3 |
+| sales | 3 |
 | synergy | 3 |
-| password | 2 |
+| 19091983 | 3 |
+| 19061992 | 3 |
+| 19021991 | 3 |
+| 18121983 | 3 |
+| 18111986 | 3 |
+| 16121986 | 3 |
+| 16091987 | 3 |
+| 16071991 | 3 |
+| 16071987 | 3 |
+| 15111989 | 3 |
+| 14041986 | 3 |
+| 13121983 | 3 |
+| 13091984 | 3 |
+| 13071990 | 3 |
+| 1228 | 3 |
+| 12101990 | 3 |
+| 12091991 | 3 |
+| 11111a | 3 |
+| 11041990 | 3 |
+| 1028 | 3 |
+| 10081990 | 3 |
+| 10081983 | 3 |
+| 10071990 | 3 |
+| 10061989 | 3 |
+| 10011992 | 3 |
+| 09111987 | 3 |
+| 09081985 | 3 |
+| 08121987 | 3 |
+| 08111984 | 3 |
+| 08101986 | 3 |
+| 08051989 | 3 |
+| 07091988 | 3 |
+| 07081987 | 3 |
+| 07071988 | 3 |
+| 07071982 | 3 |
+| 07051987 | 3 |
+| 06031992 | 3 |
+| 05111986 | 3 |
+| 05051991 | 3 |
+| 05031990 | 3 |
+| 05011987 | 3 |
+| 04111988 | 3 |
+| 02081973 | 3 |
+| 02061978 | 3 |
+| 02031991 | 3 |
+| 02031990 | 3 |
+| 02011976 | 3 |
+| 01071984 | 3 |
+| 01041980 | 3 |
+| 01021992 | 3 |
+| yyyyyyyy | 3 |
+| worthy | 3 |
+| woowoo | 3 |
+| wind | 3 |
+| warhamme | 3 |
+| walton | 3 |
+| venom | 3 |
+| velocity | 3 |
+| treble | 3 |
+| tigercat | 3 |
+| tarakan | 3 |
+| streaming | 3 |
+| starr | 3 |
+| sonysony | 3 |
+| skylark | 3 |
+| sites | 3 |
+| shower | 3 |
+| sheldon | 3 |
+| seneca | 3 |
+| sedona | 3 |
+| scamper | 3 |
+| romantic | 3 |
+| rockwell | 3 |
+| rabbits | 3 |
+| protect | 3 |
+| plato | 3 |
+| plastics | 3 |
+| pinnacle | 3 |
+| peppers | 3 |
+| pathetic | 3 |
+| patch | 3 |
+| pancakes | 3 |
+| offshore | 3 |
+| neville | 3 |
+| ncc74656 | 3 |
+| motor | 3 |
+| motocros | 3 |
+| middle | 3 |
+| met2002 | 3 |
+| meow | 3 |
+| meliss | 3 |
+| meadow | 3 |
+| matty | 3 |
+| masterp | 3 |
+| lucia | 3 |
+| loose | 3 |
+| linden | 3 |
+| lhfrjy | 3 |
+| letsdoit | 3 |
+| lawson | 3 |
+| laddie | 3 |
+| ladder | 3 |
+| kittie | 3 |
+| jughead | 3 |
+| joecool | 3 |
+| jimmys | 3 |
+| iklo | 3 |
+| honeys | 3 |
+| hoffman | 3 |
+| hiking | 3 |
+| hello2 | 3 |
+| heels | 3 |
+| harrier | 3 |
+| haley | 3 |
+| gofast | 3 |
+| fyutkjxtr | 3 |
+| frogs | 3 |
+| francisc | 3 |
+| four | 3 |
+| fields | 3 |
+| farm | 3 |
+| dreamcas | 3 |
+| dragster | 3 |
+| doggy1 | 3 |
+| dirt | 3 |
+| dicky | 3 |
+| deputy | 3 |
+| daisydog | 3 |
+| cyprus | 3 |
+| cupoi | 3 |
+| colonial | 3 |
+| cirrus | 3 |
+| chewy | 3 |
+| chessie | 3 |
+| caster | 3 |
+| candyass | 3 |
+| cable | 3 |
+| bynthytn | 3 |
+| buzzer | 3 |
+| burner | 3 |
+| bumbum | 3 |
+| bumble | 3 |
+| briggs | 3 |
+| boyz | 3 |
+| bowtie | 3 |
+| bootsie | 3 |
+| bigbooty | 3 |
+| baylor | 3 |
+| base | 3 |
+| asd222 | 3 |
+| amstel | 3 |
+| airman | 3 |
+| acidburn | 3 |
+| 7734 | 3 |
+| 66613666 | 3 |
+| 44332211 | 3 |
+| 31071990 | 3 |
+| 31051993 | 3 |
+| 30051987 | 3 |
+| 30011990 | 3 |
+| 29091987 | 3 |
+| 29061986 | 3 |
+| 29011982 | 3 |
+| 2828 | 3 |
+| 28101986 | 3 |
+| 28081990 | 3 |
+| 28081986 | 3 |
+| 28011988 | 3 |
+| 27111989 | 3 |
+| 27031992 | 3 |
+| 27021992 | 3 |
+| 26081986 | 3 |
+| 25031983 | 3 |
+| 24091991 | 3 |
+| 23111989 | 3 |
+| 23091989 | 3 |
+| 23091985 | 3 |
+| 23061989 | 3 |
+| 22091991 | 3 |
+| 22071985 | 3 |
+| 22071984 | 3 |
+| 22051989 | 3 |
+| 22011992 | 3 |
+| 21061988 | 3 |
+| 21031984 | 3 |
+| 20071988 | 3 |
+| 20061983 | 3 |
+| 20041985 | 3 |
+| 1qazzaq1 | 3 |
+| 1qazxsw23edc | 3 |
+| 19991999 | 3 |
+| 19061991 | 3 |
+| 18051989 | 3 |
+| 18031988 | 3 |
+| 18021992 | 3 |
+| 18011985 | 3 |
+| 17051990 | 3 |
+| 17051989 | 3 |
+| 17021989 | 3 |
 | !QAZ2wsx | 2 |
+| admin | 2 |
+| support | 2 |
 | sparks | 2 |
 | spank | 2 |
 | smelly | 2 |
@@ -2180,7 +2403,6 @@
 | skibum | 2 |
 | series | 2 |
 | screamer | 2 |
-| sales | 2 |
 | report | 2 |
 | rampage | 2 |
 | qwedsa | 2 |
@@ -3468,205 +3690,9 @@
 | 20061990 | 2 |
 | 20051987 | 2 |
 | 1q2q3q | 2 |
-| 19091983 | 2 |
-| 19061992 | 2 |
-| 19021991 | 2 |
-| 18121983 | 2 |
-| 18111986 | 2 |
-| 16121986 | 2 |
-| 16091987 | 2 |
-| 16071991 | 2 |
-| 16071987 | 2 |
-| 15111989 | 2 |
-| 14041986 | 2 |
-| 13121983 | 2 |
-| 13091984 | 2 |
-| 13071990 | 2 |
-| 1228 | 2 |
-| 12101990 | 2 |
-| 12091991 | 2 |
-| 11111a | 2 |
-| 11041990 | 2 |
-| 1028 | 2 |
-| 10081990 | 2 |
-| 10081983 | 2 |
-| 10071990 | 2 |
-| 10061989 | 2 |
-| 10011992 | 2 |
-| 09111987 | 2 |
-| 09081985 | 2 |
-| 08121987 | 2 |
-| 08111984 | 2 |
-| 08101986 | 2 |
-| 08051989 | 2 |
-| 07091988 | 2 |
-| 07081987 | 2 |
-| 07071988 | 2 |
-| 07071982 | 2 |
-| 07051987 | 2 |
-| 06031992 | 2 |
-| 05111986 | 2 |
-| 05051991 | 2 |
-| 05031990 | 2 |
-| 05011987 | 2 |
-| 04111988 | 2 |
-| 02081973 | 2 |
-| 02061978 | 2 |
-| 02031991 | 2 |
-| 02031990 | 2 |
-| 02011976 | 2 |
-| 01071984 | 2 |
-| 01041980 | 2 |
-| 01021992 | 2 |
-| yyyyyyyy | 2 |
-| worthy | 2 |
-| woowoo | 2 |
-| wind | 2 |
-| warhamme | 2 |
-| walton | 2 |
-| venom | 2 |
-| velocity | 2 |
-| treble | 2 |
-| tigercat | 2 |
-| tarakan | 2 |
-| streaming | 2 |
-| starr | 2 |
-| sonysony | 2 |
-| skylark | 2 |
-| sites | 2 |
-| shower | 2 |
-| sheldon | 2 |
-| seneca | 2 |
-| sedona | 2 |
-| scamper | 2 |
-| romantic | 2 |
-| rockwell | 2 |
-| rabbits | 2 |
-| protect | 2 |
-| plato | 2 |
-| plastics | 2 |
-| pinnacle | 2 |
-| peppers | 2 |
-| pathetic | 2 |
-| patch | 2 |
-| pancakes | 2 |
-| offshore | 2 |
-| neville | 2 |
-| ncc74656 | 2 |
-| motor | 2 |
-| motocros | 2 |
-| middle | 2 |
-| met2002 | 2 |
-| meow | 2 |
-| meliss | 2 |
-| meadow | 2 |
-| matty | 2 |
-| masterp | 2 |
-| lucia | 2 |
-| loose | 2 |
-| linden | 2 |
-| lhfrjy | 2 |
-| letsdoit | 2 |
-| lawson | 2 |
-| laddie | 2 |
-| ladder | 2 |
-| kittie | 2 |
-| jughead | 2 |
-| joecool | 2 |
-| jimmys | 2 |
-| iklo | 2 |
-| honeys | 2 |
-| hoffman | 2 |
-| hiking | 2 |
-| hello2 | 2 |
-| heels | 2 |
-| harrier | 2 |
-| haley | 2 |
-| gofast | 2 |
-| fyutkjxtr | 2 |
-| frogs | 2 |
-| francisc | 2 |
-| four | 2 |
-| fields | 2 |
-| farm | 2 |
-| dreamcas | 2 |
-| dragster | 2 |
-| doggy1 | 2 |
-| dirt | 2 |
-| dicky | 2 |
-| deputy | 2 |
-| daisydog | 2 |
-| cyprus | 2 |
-| cupoi | 2 |
-| colonial | 2 |
-| cirrus | 2 |
-| chewy | 2 |
-| chessie | 2 |
-| caster | 2 |
-| candyass | 2 |
-| cable | 2 |
-| bynthytn | 2 |
-| buzzer | 2 |
-| burner | 2 |
-| bumbum | 2 |
-| bumble | 2 |
-| briggs | 2 |
-| boyz | 2 |
-| bowtie | 2 |
-| bootsie | 2 |
-| bigbooty | 2 |
-| baylor | 2 |
-| base | 2 |
-| asd222 | 2 |
-| amstel | 2 |
-| airman | 2 |
-| acidburn | 2 |
-| 7734 | 2 |
-| 66613666 | 2 |
-| 44332211 | 2 |
-| 31071990 | 2 |
-| 31051993 | 2 |
-| 30051987 | 2 |
-| 30011990 | 2 |
-| 29091987 | 2 |
-| 29061986 | 2 |
-| 29011982 | 2 |
-| 2828 | 2 |
-| 28101986 | 2 |
-| 28081990 | 2 |
-| 28081986 | 2 |
-| 28011988 | 2 |
-| 27111989 | 2 |
-| 27031992 | 2 |
-| 27021992 | 2 |
-| 26081986 | 2 |
-| 25031983 | 2 |
-| 24091991 | 2 |
-| 23111989 | 2 |
-| 23091989 | 2 |
-| 23091985 | 2 |
-| 23061989 | 2 |
-| 22091991 | 2 |
-| 22071985 | 2 |
-| 22071984 | 2 |
-| 22051989 | 2 |
-| 22011992 | 2 |
-| 21061988 | 2 |
-| 21031984 | 2 |
-| 20071988 | 2 |
-| 20061983 | 2 |
-| 20041985 | 2 |
-| 1qazzaq1 | 2 |
-| 1qazxsw23edc | 2 |
-| 19991999 | 2 |
-| 19061991 | 2 |
-| 18051989 | 2 |
-| 18031988 | 2 |
-| 18021992 | 2 |
-| 18011985 | 2 |
-| 17051990 | 2 |
-| 17051989 | 2 |
-| 17021989 | 2 |
+| dbnfkbr | 2 |
+| 25081985 | 2 |
+| 25031991 | 2 |
 | 16091988 | 2 |
 | 15091985 | 2 |
 | 15061985 | 2 |
@@ -4025,18 +4051,7 @@
 | cliff | 2 |
 | clemente | 2 |
 | charlie2 | 2 |
-| default123456789 | 1 |
-| supp0r7 | 1 |
-| supervisor99 | 1 |
-| 1q2w3e | 1 |
-| default123456 | 1 |
-| operator55 | 1 |
-| nobody123456 | 1 |
-| 159753 | 1 |
-| ubnt22 | 1 |
-| guest1 | 1 |
-| Abc123 | 1 |
-| Support123 | 1 |
+| password | 2 |
 | dwade3 | 1 |
 | wachtwoord | 1 |
 | spongebob2 | 1 |
@@ -4632,7 +4647,6 @@
 | chivas10 | 1 |
 | andrew2 | 1 |
 | 393041123 | 1 |
-| admin | 1 |
 | 159357 | 1 |
 | 01011971 | 1 |
 | 001975 | 1 |
@@ -7076,7 +7090,6 @@
 | dogs | 1 |
 | butt | 1 |
 | oldman | 1 |
-| support | 1 |
 | review | 1 |
 | colt45 | 1 |
 | bottom | 1 |
@@ -7866,9 +7879,6 @@
 | tool | 1 |
 | piggy | 1 |
 | scrapper | 1 |
-| dbnfkbr | 1 |
-| 25081985 | 1 |
-| 25031991 | 1 |
 | camil | 1 |
 | burning | 1 |
 | buckley | 1 |
@@ -9023,12 +9033,85 @@
 | nobody | 1 |
 | test8 | 1 |
 | Admin@1234 | 1 |
+| default123456789 | 1 |
+| supp0r7 | 1 |
+| supervisor99 | 1 |
+| 1q2w3e | 1 |
+| default123456 | 1 |
+| operator55 | 1 |
+| nobody123456 | 1 |
+| 159753 | 1 |
+| 123 | 1 |
+| ubnt22 | 1 |
+| 1928389922 | 1 |
+| guest1 | 1 |
+| Abc123 | 1 |
+| Support123 | 1 |
+| ubuntu | 1 |
+| 123qwe!@# | 1 |
+| 112233 | 1 |
+| operator33 | 1 |
+| nobody0 | 1 |
+| 123654 | 1 |
+| orangepi | 1 |
+| Admin@123 | 1 |
+| qwerty | 1 |
+| Support1234567 | 1 |
+| 999 | 1 |
+| Root8 | 1 |
+| blank8 | 1 |
+| root00 | 1 |
+| guest0 | 1 |
+| config8 | 1 |
+| supervisor12345 | 1 |
+| 1q2w3e4r | 1 |
+
+---
+
+## Commands Executed
+
+| Command | Count |
+|---------|-------|
+| whoami | 3 |
+| pwd | 2 |
+| ls | 2 |
 
 ---
 
 ## Session Details — Attacker Activity Inside Honeypot
 
-*No successful logins with command execution yet. Attackers are currently in the brute-force phase.*
+*These are sessions where an attacker successfully logged in and ran commands.*
+
+### Session f03167c5 — 49.207.63.82 — Unknown,  (11s)
+
+| # | Command | LLM Response |
+|---|---------|--------------|
+| 1 | whoami | root |
+| 2 | pwd | /home/user/.ssh/id_rsa.pub 809271165d4e3fba82cbb10561b6a8d2ac4a8596d387d03bda4b1cc1f8f31d8b |
+| 3 | ls | /home/user/  |
+
+**Command sequence analysis:**
+- **Reconnaissance:** whoami
+
+### Session ab6a52d5 — 49.207.63.82 — Unknown,  (21s)
+
+| # | Command | LLM Response |
+|---|---------|--------------|
+| 1 | whoami | ubuntu |
+| 2 | pwd | /home/user/Desktop/Ubuntu/Linux terminal/test.txt |
+| 3 | ls | Filesystem      Size  Used Avail Use% Mounted on devtmpfs         1039M     0  1039M   0% /dev tmpfs |
+
+**Command sequence analysis:**
+- **Reconnaissance:** whoami
+
+### Session 1d210a09 — 49.207.63.82 — Unknown,  (8s)
+
+| # | Command | LLM Response |
+|---|---------|--------------|
+| 1 | whoami | ubuntu |
+
+**Command sequence analysis:**
+- **Reconnaissance:** whoami
 
 ---
 
@@ -9036,11 +9119,11 @@
 
 | Metric | Value |
 |--------|-------|
-| Total LLM calls | 64 |
-| Avg response time | 2806 ms |
-| Avg tokens generated | 19.5 |
+| Total LLM calls | 163 |
+| Avg response time | 32801 ms |
+| Avg tokens generated | 14.6 |
 | Fastest response | 451 ms |
-| Slowest response | 8452 ms |
+| Slowest response | 2786245 ms |
 
 ---
 
@@ -9048,16 +9131,17 @@
 
 | Client | Count | Notes |
 |--------|-------|-------|
-| SSH-2.0-Go | 12908 | Go-based mass scanner |
-| SSH-2.0-OpenSSH_7.4 | 16 |  |
+| SSH-2.0-Go | 13111 | Go-based mass scanner |
+| SSH-2.0-OpenSSH_7.4 | 36 |  |
 | SSH-2.0-libssh_0.11.4 | 9 |  |
 | SSH-2.0-libssh_0.7.4 | 6 | Known attack tool (libssh scanner) |
-| SSH-2.0-libssh2_1.11.1 | 1 |  |
+| SSH-2.0-OpenSSH_for_Windows_9.5 | 4 | Windows OpenSSH client |
+| SSH-2.0-libssh2_1.11.1 | 3 |  |
 
 ---
 
 ## Research Notes
 
-- Across the full observation window, Wraith attracted a sustained pattern of automated SSH reconnaissance and password-spraying activity rather than successful post-compromise behavior.
-- The attacks were concentrated around common credential guesses and automated client tooling, especially libssh and OpenSSH-based scanners, with a strong concentration of activity from China.
-- No successful logins or command executions were recorded, which suggests the honeypot remained effective at containing attackers at the authentication stage and that follow-on engagement was not achieved.
+- Across the full collection window, activity is heavily weighted toward authentication probing: 13,169 login attempts and 246 sessions resulted in only 3 sessions with command execution.
+- All command-bearing sessions came from `49.207.63.82` and remained limited to basic reconnaissance commands (`whoami`, `pwd`, and `ls`), with no observed payload retrieval, persistence setup, or destructive action.
+- The strongest recurring automation signal is `SSH-2.0-Go`, especially the high-volume Aliyun source `139.224.244.185`, suggesting mass scanner traffic is the main background pattern while successful interactive activity remains sparse.
