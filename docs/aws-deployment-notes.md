@@ -1,77 +1,84 @@
 # AWS Deployment Notes
 
-This repository documents two deployments. Deployment 1 is the existing valid deployment that remains in place. Deployment 2 is the newer additive deployment that introduces the deterministic simulator and is being documented separately.
+This repository documents two deployments. The Mumbai deployment remains the original reference deployment, and the Wraith deployment is the newer additive path in us-east-1.
 
-## Infrastructure
+## Shared AWS Infrastructure
 
 - AWS EC2 Ubuntu server
-- Region: `us-east-1`
+- Region: `us-east-1` for the Wraith deployment
 - Instance role: public SSH honeypot host
 - Public SSH exposure:
   - Port `22`: admin SSH access, restricted by security group
   - Port `2222`: public SSH honeypot service
-- Storage: standard Ubuntu EBS volume sized for logs and telemetry
+- Storage: EBS volume sized for logs, telemetry, and reports
 
----
+## Mumbai Deployment
 
-## Deployment 1: Existing Valid Deployment
+The Mumbai deployment is preserved as the original documented AWS honeypot setup and remains valid.
 
-This remains the original production-style deployment and is not being replaced by the work below.
+See:
+- [docs/architecture-notes.md](architecture-notes.md)
+- [docs/llm-backend-notes.md](llm-backend-notes.md)
 
-## Deployment 2: New Simulator Deployment
+## Wraith Deployment
 
-Only the following services are documented as active in the new deployment path:
+The Wraith deployment adds a deterministic telemetry pipeline alongside the existing project history.
 
 | Service | Port | Exposure | Purpose |
 |---------|------|----------|---------|
-| Beelzebub core | internal | local process | Honeypot orchestration |
+| beelzebub.service | internal | local process | SSH honeypot orchestration |
+| wraith.service | internal | local process | JSONL telemetry server |
 | SSH honeypot | 2222 | public internet | Attacker interaction |
-| Telemetry output | local JSONL | internal | Session logging |
+| telemetry output | local JSONL | internal | Session and command logging |
+| reports/ | filesystem path | local only | Markdown experiment reports |
 
-Do not assume other Beelzebub services are active unless they are explicitly enabled and verified.
+Do not assume other services are active unless they are explicitly enabled and verified.
 
----
+### Wraith runtime layout
 
-## Python Simulator Deployment
-
-The active shell backend for Deployment 2 is a local deterministic Python simulator. It does not require Ollama or any external model endpoint and is added alongside the existing Deployment 1 setup.
-
-```bash
-cd /home/ubuntu/wraith
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-python3 demo_fake_shell.py
+```mermaid
+flowchart LR
+    A[Attacker] --> B[EC2 host]
+    B --> C[Beelzebub SSH honeypot]
+    C --> D[Wraith telemetry service]
+    D --> E[wraith_logs/ JSONL]
+    E --> F[generate_report.py]
+    F --> G[reports/]
 ```
 
-The simulator writes structured JSONL events under the local telemetry directory.
+### Wraith persistence
 
----
+The Wraith deployment is intended to run under systemd so it can remain active after disconnecting from the terminal.
 
-## Beelzebub Deployment
+- `beelzebub.service` keeps the SSH honeypot available
+- `wraith.service` keeps telemetry collection available
 
-```bash
-git clone <repo-url>
-cd beelzebub
+## Mumbai vs Wraith
 
-go mod download
-go build -o beelzebub .
-```
+| Aspect | Mumbai | Wraith |
+|--------|--------|--------|
+| Goal | Original research deployment | Additive structured-telemetry deployment |
+| Telemetry | Existing operational notes | JSONL session and command events |
+| Report generation | Existing experiment summaries | generate_report.py Markdown reports |
+| Runtime model | Preserved original stack | Deterministic SSH telemetry pipeline |
 
-The honeypot should be configured to route attacker sessions into the local simulator integration rather than the previous LLMHoneypot provider path.
+## Deployment Workflow
 
-Run Beelzebub with the active service configuration:
+### Mumbai
 
-```bash
-./beelzebub run
-```
+The Mumbai deployment remains the historical baseline and should continue to be documented as originally intended.
 
----
+### Wraith
 
-## Verified Deployment State
+1. Deploy Beelzebub and the Wraith telemetry service on the EC2 host.
+2. Enable the systemd services.
+3. Confirm SSH access through port `2222`.
+4. Collect JSONL telemetry under `wraith_logs/`.
+5. Generate Markdown reports into `reports/`.
 
-- External SSH connections reach the honeypot on port `2222`
-- Password prompt and SSH interaction are reachable from the public internet
-- The local Python simulator is serving shell responses deterministically
-- Structured telemetry/event logging is operational
-- No runtime LLM provider is required for the active deployment
+## Setup References
+
+- [infra/aws-setup.md](../infra/aws-setup.md)
+- [infra/ec2-configuration.md](../infra/ec2-configuration.md)
+- [infra/security-groups.md](../infra/security-groups.md)
+- [docs/telemetry-pipeline.md](telemetry-pipeline.md)

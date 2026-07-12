@@ -1,65 +1,98 @@
-# Backend Integration Notes
+# Telemetry Pipeline Notes
 
-## Deployment Context
+## Overview
 
-Wraith now has two deployment contexts that should be treated separately:
+This document describes the Wraith telemetry pipeline used by the newer deployment in us-east-1. The original Mumbai deployment remains documented elsewhere and is not replaced by this pipeline.
 
-- Deployment 1: the existing valid deployment with its earlier operational setup
-- Deployment 2: the newer additive deployment that uses a deterministic fake shell simulator instead of an LLM backend
+## Wraith Telemetry Flow
 
-## Current Implementation for Deployment 2
-
-The newer Wraith deployment uses a deterministic fake shell simulator instead of an LLM backend.
-
-Current backend:
-
-| Field | Value |
-|-------|-------|
-| Provider | Local Python simulator |
-| Runtime | Deterministic code, no external model |
-| Inference location | Local EC2 instance |
-| API key required | No |
-| Cloud quota dependency | No |
-| Endpoint | Local Python module |
-
-Ollama, OpenAI, and Gemini are not active deployment dependencies for Deployment 2. They are retained only as historical references in earlier experiments and do not replace the existing Deployment 1 setup.
-
----
-
-## Active SSH Honeypot Configuration
-
-The SSH honeypot should integrate with the local Python simulator as the response layer for attacker commands.
-
-```text
-Beelzebub -> local shell simulator -> structured JSONL telemetry
+```mermaid
+flowchart TD
+	A[Attacker interaction] --> B[SSH honeypot]
+	B --> C[Telemetry collection]
+	C --> D[JSONL event storage]
+	D --> E[generate_report.py]
+	E --> F[Markdown experiment report]
 ```
 
-The integration is intentionally simple so future work can replace the local module with a richer backend without changing the overall architecture.
+## Event Types
 
----
+### session_started
 
-## Backend Evolution
+Emitted when a new SSH session is created.
 
-### Phase 1: OpenAI
+Typical fields:
 
-OpenAI API integration was tested earlier, but a runtime LLM backend is no longer part of the active deployment.
+- `event`
+- `session_id`
+- `attacker_ip`
+- `client`
+- `timestamp`
 
-### Phase 2: Gemini
+### command_executed
 
-Gemini was evaluated as a lower-cost cloud alternative; it is not part of the current design.
+Emitted for each simulated command execution.
 
-### Phase 3: Deterministic Simulator (Current)
+Typical fields:
 
-The project now uses a local Python shell simulator because it is:
+- `event`
+- `session_id`
+- `attacker_ip`
+- `client`
+- `command`
+- `response`
+- `cwd`
+- `latency_ms`
+- `timestamp`
 
-- deterministic and predictable
-- cheap to run
-- easy to maintain
-- suitable for offline honeypot research
-- compatible with the current us-east-1 deployment model
+### session_ended
 
----
+Emitted when the session ends.
 
-## Current Status
+Typical fields:
 
-The simulator covers common Linux-style commands, a fake filesystem, per-session state, privilege escalation prompts, and fake-download logging. It is designed to be extended with richer telemetry and more realistic behaviors over time.
+- `event`
+- `session_id`
+- `attacker_ip`
+- `client`
+- `duration_seconds`
+- `commands`
+- `timestamp`
+
+## JSONL Storage
+
+Wraith stores one JSON object per line. Malformed lines are ignored by the report generator so telemetry can continue to be consumed even if a log line is incomplete.
+
+Suggested storage layout:
+
+- `wraith_logs/` for raw JSONL telemetry
+- `reports/` for generated Markdown reports
+
+## Report Generation
+
+`generate_report.py` reads JSONL telemetry and produces experiment summaries that can include:
+
+- date
+- total sessions
+- unique attacker IPs
+- clients used
+- commands executed
+- command frequency
+- session duration
+- suspicious commands
+
+## Collected Fields
+
+Wraith telemetry focuses on the fields that matter for attacker-behavior analysis:
+
+- attacker IP
+- client
+- command
+- response
+- cwd
+- latency_ms
+- timestamps
+
+## Backward Compatibility
+
+The telemetry format is intentionally simple so older reports can still coexist with newer Wraith logs while the repository keeps the Mumbai deployment documentation intact.
