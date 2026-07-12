@@ -1,38 +1,40 @@
-# LLM Backend Integration Notes
+# Backend Integration Notes
 
-## Current Implementation
+## Deployment Context
 
-The active Wraith deployment uses the Beelzebub `LLMHoneypot` plugin with local Ollama inference.
+Wraith now has two deployment contexts that should be treated separately:
+
+- Deployment 1: the existing valid deployment with its earlier operational setup
+- Deployment 2: the newer additive deployment that uses a deterministic fake shell simulator instead of an LLM backend
+
+## Current Implementation for Deployment 2
+
+The newer Wraith deployment uses a deterministic fake shell simulator instead of an LLM backend.
 
 Current backend:
 
 | Field | Value |
 |-------|-------|
-| Provider | Ollama |
-| Model | `qwen2.5:0.5b` |
+| Provider | Local Python simulator |
+| Runtime | Deterministic code, no external model |
 | Inference location | Local EC2 instance |
 | API key required | No |
 | Cloud quota dependency | No |
-| Local endpoint | `http://localhost:11434/api/chat` |
+| Endpoint | Local Python module |
 
-OpenAI and Gemini are not active deployment dependencies. They were evaluated during development and should be treated as optional legacy/provider experiments only.
+Ollama, OpenAI, and Gemini are not active deployment dependencies for Deployment 2. They are retained only as historical references in earlier experiments and do not replace the existing Deployment 1 setup.
 
 ---
 
 ## Active SSH Honeypot Configuration
 
-The active SSH honeypot service (`configurations/services/ssh-2222.yaml`) is configured to use Ollama:
+The SSH honeypot should integrate with the local Python simulator as the response layer for attacker commands.
 
-```yaml
-plugin:
-  llmProvider: "ollama"
-  llmModel: "qwen2.5:0.5b"
-  rateLimitEnabled: true
-  rateLimitRequests: 10
-  rateLimitWindowSeconds: 60
+```text
+Beelzebub -> local shell simulator -> structured JSONL telemetry
 ```
 
-The `llmProvider: "ollama"` setting routes requests to the local Ollama server at `http://localhost:11434/api/chat`.
+The integration is intentionally simple so future work can replace the local module with a richer backend without changing the overall architecture.
 
 ---
 
@@ -40,40 +42,24 @@ The `llmProvider: "ollama"` setting routes requests to the local Ollama server a
 
 ### Phase 1: OpenAI
 
-OpenAI API integration was tested first. It was not suitable for the active MVP because paid API access, billing, and quota requirements blocked sustained testing.
+OpenAI API integration was tested earlier, but a runtime LLM backend is no longer part of the active deployment.
 
 ### Phase 2: Gemini
 
-Gemini was tested as a lower-cost cloud alternative. Free tier quotas were too restrictive for real-world honeypot exposure and sustained attack traffic.
+Gemini was evaluated as a lower-cost cloud alternative; it is not part of the current design.
 
-### Phase 3: Ollama (Current)
+### Phase 3: Deterministic Simulator (Current)
 
-The project migrated to Ollama local inference using `qwen2.5:0.5b`.
+The project now uses a local Python shell simulator because it is:
 
-Reasons for the migration:
-
-- Fully free inference
-- No API keys
-- No cloud quota limits
-- Offline local execution
-- Better fit for continuous honeypot deployment
-- Small model footprint that works on the current EC2 instance
+- deterministic and predictable
+- cheap to run
+- easy to maintain
+- suitable for offline honeypot research
+- compatible with the current us-east-1 deployment model
 
 ---
 
-## Model Size Notes
+## Current Status
 
-The EC2 instance has limited RAM, so model size matters. `qwen2.5:0.5b` is the active model because it fits the current resource constraints while still enabling dynamic responses.
-
-| Model | Size | Works on free tier? |
-|-------|------|---------------------|
-| `qwen2.5:0.5b` | about 397 MB | Yes, active model |
-| `qwen2.5:3b` | about 2 GB | Borderline |
-| `qwen2.5:7b` | about 4.7 GB | Not suitable for current instance |
-| `gemini-2.0-flash` | cloud-hosted | Not active; quota limited |
-
----
-
-## Current Limitation
-
-Local inference works, but prompt engineering still needs improvement. Some terminal outputs can be unrealistic or state-inconsistent, such as `pwd` returning unexpected fake paths. This is the main technical refinement area for the next iteration.
+The simulator covers common Linux-style commands, a fake filesystem, per-session state, privilege escalation prompts, and fake-download logging. It is designed to be extended with richer telemetry and more realistic behaviors over time.
