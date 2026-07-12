@@ -1,0 +1,116 @@
+﻿diff --git a/internal/plugins/llm_adapter.go b/internal/plugins/llm_adapter.go
+index 7b4521c..e414f95 100644
+--- a/internal/plugins/llm_adapter.go
++++ b/internal/plugins/llm_adapter.go
+@@ -1,10 +1,12 @@
+ package plugins
+ 
+ import (
++	"bytes"
+ 	"context"
++	"encoding/json"
+ 	"fmt"
++	"net/http"
+ 
+-	"github.com/beelzebub-labs/beelzebub/v3/internal/tracer"
+ 	"github.com/beelzebub-labs/beelzebub/v3/pkg/plugin"
+ )
+ 
+@@ -22,34 +24,41 @@ func (l *llmPlugin) Metadata() plugin.Metadata {
+ }
+ 
+ func (l *llmPlugin) Execute(ctx context.Context, req plugin.CommandRequest) (string, error) {
+-	llmProvider, err := FromStringToLLMProvider(req.Config.LLMProvider)
++	payload := map[string]string{
++		"attacker_ip": req.ClientIP,
++		"client":      req.ClientVersion,
++		"command":     req.Command,
++	}
++
++	body, err := json.Marshal(payload)
+ 	if err != nil {
+-		return "", fmt.Errorf("llm plugin: %w", err)
++		return "", fmt.Errorf("marshal simulator payload: %w", err)
+ 	}
+ 
+-	proto, ok := tracer.ProtocolFromString(req.Protocol)
+-	if !ok {
+-		return "", fmt.Errorf("llm plugin: unknown protocol %q", req.Protocol)
++	httpReq, err := http.NewRequestWithContext(ctx, http.MethodPost, "http://127.0.0.1:8080/command", bytes.NewReader(body))
++	if err != nil {
++		return "", fmt.Errorf("build simulator request: %w", err)
+ 	}
++	httpReq.Header.Set("Content-Type", "application/json")
+ 
+-	hp := &LLMHoneypot{
+-		Histories:               MessagesFromPlugin(req.History),
+-		OpenAIKey:               req.Config.OpenAISecretKey,
+-		Protocol:                proto,
+-		Host:                    req.Config.Host,
+-		Model:                   req.Config.LLMModel,
+-		Provider:                llmProvider,
+-		CustomPrompt:            req.Config.Prompt,
+-		InputValidationEnabled:  req.Config.InputValidationEnabled,
+-		InputValidationPrompt:   req.Config.InputValidationPrompt,
+-		OutputValidationEnabled: req.Config.OutputValidationEnabled,
+-		OutputValidationPrompt:  req.Config.OutputValidationPrompt,
+-		RateLimitEnabled:        req.Config.RateLimitEnabled,
+-		RateLimitRequests:       req.Config.RateLimitRequests,
+-		RateLimitWindowSeconds:  req.Config.RateLimitWindowSeconds,
++	resp, err := http.DefaultClient.Do(httpReq)
++	if err != nil {
++		return "", fmt.Errorf("post to simulator: %w", err)
++	}
++	defer resp.Body.Close()
++
++	if resp.StatusCode != http.StatusOK {
++		return "", fmt.Errorf("simulator returned status %d", resp.StatusCode)
++	}
++
++	var result struct {
++		Output string `json:"output"`
++	}
++	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
++		return "", fmt.Errorf("decode simulator response: %w", err)
+ 	}
+ 
+-	return InitLLMHoneypot(*hp).ExecuteModel(req.Command, req.ClientIP)
++	return result.Output, nil
+ }
+ 
+ func init() {
+diff --git a/internal/protocols/strategies/SSH/ssh.go b/internal/protocols/strategies/SSH/ssh.go
+index 8f5dfa6..410684d 100644
+--- a/internal/protocols/strategies/SSH/ssh.go
++++ b/internal/protocols/strategies/SSH/ssh.go
+@@ -130,11 +130,12 @@ func (sshStrategy *SSHStrategy) Init(servConf parser.BeelzebubServiceConfigurati
+ 							if command.Plugin != "" {
+ 								if cp, ok := plugin.GetCommand(command.Plugin); ok {
+ 									output, err := cp.Execute(context.Background(), plugin.CommandRequest{
+-										Command:  commandInput,
+-										ClientIP: host,
+-										Protocol: "ssh",
+-										History:  plugins.MessagesToPlugin(histories),
+-										Config:   plugins.ConfigFromServiceConf(servConf),
++										Command:       commandInput,
++										ClientIP:      host,
++										ClientVersion: sess.ClientVersion(),
++										Protocol:      "ssh",
++										History:       plugins.MessagesToPlugin(histories),
++										Config:        plugins.ConfigFromServiceConf(servConf),
+ 									})
+ 									if err != nil {
+ 										log.Errorf("plugin %q execute error: %s", command.Plugin, err.Error())
+diff --git a/pkg/plugin/plugin.go b/pkg/plugin/plugin.go
+index 2297404..d6ff655 100644
+--- a/pkg/plugin/plugin.go
++++ b/pkg/plugin/plugin.go
+@@ -55,6 +55,8 @@ type CommandRequest struct {
+ 	Command string
+ 	// ClientIP is the remote IP address of the attacker.
+ 	ClientIP string
++	// ClientVersion is the client identifier supplied by the remote session.
++	ClientVersion string
+ 	// Protocol is the honeypot protocol ("http", "ssh", "tcp", "telnet").
+ 	Protocol string
+ 	// History is the conversation so far (for stateful/LLM plugins).

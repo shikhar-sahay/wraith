@@ -1,0 +1,14 @@
+[Unit]
+Description=Wraith deterministic shell simulator
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/ubuntu/wraith
+ExecStart=/usr/bin/python3 /home/ubuntu/wraith/demo_fake_shell.py
+Restart=always
+User=ubuntu
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
