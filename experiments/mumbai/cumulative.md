@@ -9072,46 +9072,7 @@
 
 | Command | Count |
 |---------|-------|
-| whoami | 3 |
-| pwd | 2 |
-| ls | 2 |
-
----
-
-## Session Details — Attacker Activity Inside Honeypot
-
-*These are sessions where an attacker successfully logged in and ran commands.*
-
-### Session f03167c5 — 49.207.63.82 — Unknown,  (11s)
-
-| # | Command | LLM Response |
-|---|---------|--------------|
-| 1 | whoami | root |
-| 2 | pwd | /home/user/.ssh/id_rsa.pub 809271165d4e3fba82cbb10561b6a8d2ac4a8596d387d03bda4b1cc1f8f31d8b |
-| 3 | ls | /home/user/  |
-
-**Command sequence analysis:**
-- **Reconnaissance:** whoami
-
-### Session ab6a52d5 — 49.207.63.82 — Unknown,  (21s)
-
-| # | Command | LLM Response |
-|---|---------|--------------|
-| 1 | whoami | ubuntu |
-| 2 | pwd | /home/user/Desktop/Ubuntu/Linux terminal/test.txt |
-| 3 | ls | Filesystem      Size  Used Avail Use% Mounted on devtmpfs         1039M     0  1039M   0% /dev tmpfs |
-
-**Command sequence analysis:**
-- **Reconnaissance:** whoami
-
-### Session 1d210a09 — 49.207.63.82 — Unknown,  (8s)
-
-| # | Command | LLM Response |
-|---|---------|--------------|
-| 1 | whoami | ubuntu |
-
-**Command sequence analysis:**
-- **Reconnaissance:** whoami
+| None | 0 |
 
 ---
 
@@ -9142,6 +9103,5 @@
 
 ## Research Notes
 
-- Across the full collection window, activity is heavily weighted toward authentication probing: 13,169 login attempts and 246 sessions resulted in only 3 sessions with command execution.
-- All command-bearing sessions came from `49.207.63.82` and remained limited to basic reconnaissance commands (`whoami`, `pwd`, and `ls`), with no observed payload retrieval, persistence setup, or destructive action.
+- Across the full collection window, activity is heavily weighted toward authentication probing: 13,169 login attempts and 243 sessions resulted in no command-bearing sessions in the filtered report.
 - The strongest recurring automation signal is `SSH-2.0-Go`, especially the high-volume Aliyun source `139.224.244.185`, suggesting mass scanner traffic is the main background pattern while successful interactive activity remains sparse.
