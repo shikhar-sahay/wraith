@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Wraith now has two deployment contexts. Deployment 1 remains the existing valid deployment, while Deployment 2 uses a local deterministic shell simulator instead of an LLM backend. The simulator is designed to behave like a believable Ubuntu 22.04 server for research purposes while never executing commands on the real host.
+Wraith now documents two deployment contexts. The Mumbai deployment is the LLM-adapted path, backed by Ollama and the Gwen model, while the us-east-1/Virginia deployment uses a local deterministic shell simulator. The simulator is designed to behave like a believable Ubuntu 22.04 server for research purposes while never executing commands on the real host.
 
 ## Architecture
 
@@ -27,7 +27,7 @@ Internet attacker
 
 ## Key Behavior
 
-- No runtime AI, Ollama, OpenAI, Gemini, or external model is used.
+- No runtime AI, Ollama, OpenAI, Gemini, or external model is used in the static-shell deployment.
 - Each SSH session gets a seeded randomizer so the machine appears slightly different per connection.
 - Files created during a session disappear when the session ends.
 - Privilege escalation is simulated with a short fake sudo/su flow.

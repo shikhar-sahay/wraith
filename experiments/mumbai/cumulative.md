@@ -1,7 +1,7 @@
 # Analysis — Cumulative — All Time
 **Honeypot:** Wraith (Beelzebub + qwen2.5:0.5b via Ollama)
 **Region:** Mumbai (ap-south-1)
-**Period:** 2026-07-01T15:41:41Z — 2026-07-10T15:14:15Z
+**Period:** 2026-07-03T18:59:13Z — 2026-07-13T13:43:07Z
 **Test traffic excluded:** Yes
 
 ---
@@ -10,14 +10,14 @@
 
 | Metric | Value |
 |--------|-------|
-| Unique IPs | 46 |
-| Total sessions | 246 |
-| Login attempts | 13169 |
-| Sessions with commands | 3 |
-| Total commands executed | 7 |
+| Unique IPs | 125 |
+| Total sessions | 243 |
+| Login attempts | 13260 |
+| Sessions with commands | 0 |
+| Total commands executed | 0 |
 | Avg LLM response latency | 32801 ms |
 | Avg tokens generated | 14.6 |
-| Countries observed | China, India, Malaysia, Russia, South Korea, Sweden, The Netherlands, Unknown |
+| Countries observed | Bolivia, Canada, China, Colombia, Egypt, France, Georgia, Hong Kong, India, Iraq, Ireland, Japan, Malaysia, Pakistan, Peru, Russia, Singapore, South Korea, Sweden, Taiwan, The Netherlands, United Kingdom, United States, Unknown, Vietnam |
 
 ---
 
@@ -25,52 +25,131 @@
 
 | IP | Country | Organization | Sessions | Commands | SSH Client |
 |----|---------|--------------|----------|----------|------------|
-| 1.212.225.99 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 103.214.5.133 | The Netherlands | Rakar Investments Holding B.V | 0 | 0 | SSH-2.0-libssh2_1.11.1 |
-| 111.21.227.194 | Unknown | Unknown | 1 | 0 | SSH-2.0-Go |
-| 111.42.175.101 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 117.158.160.42 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 1.212.225.99 | South Korea | LG Uplus | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 103.111.6.121 | India | NIXI | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 103.120.116.162 | Pakistan | Broadband Business Ideas (PVT.) Limited | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 103.214.5.133 | Unknown | Unknown | 0 | 0 | SSH-2.0-libssh2_1.11.1 |
+| 103.220.16.51 | India | Linkin Commucation PVT LTD | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 103.251.143.14 | India | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 103.68.22.140 | India | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 111.21.227.194 | China | China Mobile | 1 | 0 | SSH-2.0-Go |
+| 111.42.175.101 | China | China Mobile | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 111.70.32.53 | Taiwan | Chunghwa Telecom Co. Ltd. | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 112.168.121.39 | South Korea | Sudogwongangnambonbujang | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 115.28.200.56 | China | Aliyun Computing Co., LTD | 0 | 0 | SSH-2.0-libssh_0.7.4 |
+| 116.48.138.69 | Hong Kong | Hong Kong Telecommunications (HKT) Limit | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 117.158.160.42 | China | China Mobile | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 117.205.3.26 | India | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 118.183.180.108 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 117.69.255.239 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 117.70.94.155 | China | Chinanet AH | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 118.122.196.230 | China | Chinanet SC | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 118.183.180.108 | China | Chinanet GS | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 119.207.37.22 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 121.200.54.19 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 122.165.91.5 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 122.187.227.144 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 122.187.227.144 | India | Bharti Telenet Ltd. | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 122.187.229.247 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 122.187.237.122 | India | Bharti Telenet Ltd. | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 124.152.90.68 | China | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 124.167.20.72 | China | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 125.139.124.120 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 128.185.220.90 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 139.224.244.185 | China | Aliyun Computing Co., LTD | 175 | 0 | SSH-2.0-Go |
-| 14.33.96.3 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 128.199.118.234 | Singapore | DigitalOcean, LLC | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 139.224.244.185 | Unknown | Unknown | 175 | 0 | SSH-2.0-Go |
+| 14.155.227.83 | China | Chinanet GD | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 14.238.137.2 | Vietnam | Vietnam Posts and Telecommunications Gro | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 14.33.96.3 | South Korea | Kornet | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 14.48.112.8 | South Korea | Kornet | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 175.207.239.76 | South Korea | Kornet | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 146.255.228.189 | Georgia | JSC "Silknet" | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 163.223.244.3 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 175.207.239.76 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 176.10.203.54 | Sweden | General Private NET A463 | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 177.159.150.111 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 178.178.222.50 | Russia | MF MB | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 178.178.222.53 | Russia | MF MB | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 178.178.222.55 | Russia | MF MB | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 181.114.93.153 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 182.42.113.10 | China | Chinanet SD | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 183.196.144.45 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 183.242.64.111 | China | China Mobile | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 188.126.240.80 | Sweden | Telia Company AB | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 200.106.49.149 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 190.90.79.26 | Colombia | Internexa S.a. E.S.P | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 191.241.142.170 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 196.188.93.169 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 196.219.93.108 | Egypt | TE Data | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 196.28.226.66 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 197.155.225.93 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 200.105.141.172 | Bolivia | AXS Bolivia S. A | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 200.106.49.149 | Peru | Telefonica del Peru S.A.A. | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 202.111.183.30 | China | CC Trust Finance INF | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 203.252.10.4 | South Korea | Boranet | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 203.75.170.63 | Taiwan | IMCA-CO.-LTD-TP | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 207.219.222.29 | Canada | TELUS Communications Inc | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 211.114.40.60 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 213.126.222.66 | The Netherlands | Knipt | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 213.66.197.199 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 217.150.37.249 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 217.150.37.249 | Russia | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 218.149.228.137 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 218.21.0.230 | China | Chinanet NX | 1 | 0 | SSH-2.0-Go |
-| 35.130.111.146 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 220.161.52.149 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 220.163.252.244 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 220.246.41.171 | Hong Kong | Hong Kong Telecommunications (HKT) Limit | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 220.246.66.209 | Hong Kong | Hong Kong Telecommunications (HKT) Limit | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 221.162.175.253 | South Korea | Kornet | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 222.190.110.210 | China | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 222.222.124.164 | China | Chinanet HE | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 222.252.16.237 | Vietnam | Hanoi Post and Telecom Company | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 34.146.248.7 | Japan | Google Cloud (asia-northeast1) | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 34.29.104.32 | United States | Google Cloud (us-central1) | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 35.130.111.146 | United States | Mountain Breeze Motel 2926 Parkway | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 37.28.177.141 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 41.239.129.157 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 45.156.87.50 | Unknown | Unknown | 0 | 0 | SSH-2.0-libssh_0.11.4 |
-| 47.108.225.192 | Unknown | Unknown | 22 | 0 | SSH-2.0-libssh_0.7.4 |
-| 49.124.142.137 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 49.124.148.195 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 45.55.133.80 | United States | Digital Ocean | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 47.108.225.192 | China | Aliyun Computing Co., LTD | 22 | 0 | SSH-2.0-libssh_0.7.4 |
+| 47.115.92.162 | Unknown | Unknown | 0 | 0 | SSH-2.0-libssh_0.7.4 |
+| 49.124.142.137 | Malaysia | DiGi Telecommunications Sdn Bhd | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 49.124.148.195 | Malaysia | DiGi Telecommunications Sdn Bhd | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 49.124.149.203 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 49.124.149.209 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 49.124.151.15 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 49.124.149.209 | Malaysia | DiGi Telecommunications Sdn Bhd | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 49.124.149.213 | Malaysia | DiGi Telecommunications Sdn Bhd | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 49.124.151.15 | Malaysia | DiGi Telecommunications Sdn Bhd | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 49.124.151.20 | Malaysia | DiGi Telecommunications Sdn Bhd | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 49.124.153.40 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 49.207.63.82 | Unknown | Unknown | 3 | 7 | SSH-2.0-OpenSSH_for_Windows_9.5 |
-| 50.188.204.213 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 49.124.152.242 | Malaysia | DiGi Telecommunications Sdn Bhd | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 49.124.153.38 | Malaysia | DiGi Telecommunications Sdn Bhd | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 49.124.153.40 | Malaysia | DiGi Telecommunications Sdn Bhd | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 49.124.154.173 | Malaysia | DiGi Telecommunications Sdn Bhd | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 49.124.159.194 | Malaysia | DiGi Telecommunications Sdn Bhd | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 49.206.201.253 | India | Beam Telecom Pvt Ltd | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 50.188.204.213 | United States | Comcast Cable Communications, LLC | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 51.68.226.171 | France | OVH | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 58.57.154.146 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 59.14.191.130 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 60.175.91.53 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 60.220.241.50 | China | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 60.223.245.120 | China | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 60.251.229.144 | Taiwan | Chunghwa Telecom Co. Ltd. | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 61.80.158.202 | South Korea | Kornet | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 62.183.82.70 | Russia | OJSC Rostelecom Macroregional Branch Sou | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 68.233.177.188 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 62.201.212.54 | Iraq | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 65.20.146.109 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 65.20.158.10 | Iraq | Earthlink Telecommunications Equipment T | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 68.233.177.188 | United States | Natural Wireless, LLC | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 | 68.7.114.69 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 77.106.78.215 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 78.66.45.101 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 79.78.139.127 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
-| 8.136.51.171 | Unknown | Unknown | 0 | 0 | SSH-2.0-libssh2_1.11.1 |
-| 8.159.132.214 | Unknown | Unknown | 0 | 0 | SSH-2.0-Go |
-| 8.163.15.89 | Unknown | Unknown | 22 | 0 | SSH-2.0-libssh_0.7.4 |
+| 71.12.241.225 | United States | Spectrum | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 77.106.78.215 | Russia | JSC "ER-Telecom Holding" Barnaul Branch | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 78.66.45.101 | Sweden | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 79.78.139.127 | United Kingdom | TalkTalk Communications Limited | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 8.136.51.171 | China | Aliyun Computing Co. | 0 | 0 | SSH-2.0-libssh2_1.11.1 |
+| 8.159.132.214 | China | Alibaba.com LLC | 0 | 0 | SSH-2.0-Go |
+| 8.163.15.89 | China | Aliyun Computing Co. | 22 | 0 | SSH-2.0-libssh_0.7.4 |
 | 8.218.7.200 | Unknown | Unknown | 22 | 0 | SSH-2.0-libssh_0.7.4 |
-| 80.233.77.136 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 80.233.77.136 | Ireland | Hutchison 3G Ireland Limited | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 82.102.188.117 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 83.136.176.50 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 83.191.176.93 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 83.226.56.106 | Unknown | Unknown | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
+| 96.1.40.151 | Canada | TELUS Communications Inc | 0 | 0 | SSH-2.0-OpenSSH_7.4 |
 
 ---
 
@@ -78,10 +157,16 @@
 
 | Password | Attempts |
 |----------|----------|
-| 123456 | 7 |
-| AyaKuyaSKRR | 3 |
+| 123456 | 8 |
+| AyaKuyaSKRR | 5 |
+| qwerty12 | 4 |
+| password | 3 |
+| uploader | 3 |
+| admin | 3 |
+| support | 3 |
 | sales | 3 |
 | synergy | 3 |
+| default | 3 |
 | 19091983 | 3 |
 | 19061992 | 3 |
 | 19021991 | 3 |
@@ -281,9 +366,12 @@
 | 17051990 | 3 |
 | 17051989 | 3 |
 | 17021989 | 3 |
+| 555555555 | 3 |
+| ubnt22 | 3 |
+| dietpi | 2 |
+| administrator | 2 |
 | !QAZ2wsx | 2 |
-| admin | 2 |
-| support | 2 |
+| video | 2 |
 | sparks | 2 |
 | spank | 2 |
 | smelly | 2 |
@@ -2903,7 +2991,6 @@
 | elway7 | 2 |
 | dominion | 2 |
 | dogbone | 2 |
-| default | 2 |
 | cumslut | 2 |
 | cumcum | 2 |
 | cricket1 | 2 |
@@ -4051,7 +4138,29 @@
 | cliff | 2 |
 | clemente | 2 |
 | charlie2 | 2 |
-| password | 2 |
+| ubuntu | 2 |
+| 123qwe!@# | 2 |
+| operator33 | 2 |
+| nobody0 | 2 |
+| qwerty | 2 |
+| Support1234567 | 2 |
+| root00 | 2 |
+| guest0 | 2 |
+| 1q2w3e4r | 2 |
+| supervisor55 | 2 |
+| config12 | 2 |
+| centos22 | 2 |
+| supervisor123456789 | 2 |
+| admin555 | 2 |
+| 888888 | 1 |
+| 123 | 1 |
+| 987654321 | 1 |
+| Changeme123 | 1 |
+| admin123 | 1 |
+| alpine | 1 |
+| Support12 | 1 |
+| password123 | 1 |
+| pass | 1 |
 | dwade3 | 1 |
 | wachtwoord | 1 |
 | spongebob2 | 1 |
@@ -6919,7 +7028,6 @@
 | young | 1 |
 | hawkeye | 1 |
 | cannon | 1 |
-| video | 1 |
 | stealth | 1 |
 | browns | 1 |
 | trucks | 1 |
@@ -8387,7 +8495,6 @@
 | dingding | 1 |
 | 19871012 | 1 |
 | 19870623 | 1 |
-| 555555555 | 1 |
 | 12332112 | 1 |
 | dg123456 | 1 |
 | Aa111111 | 1 |
@@ -9041,38 +9148,66 @@
 | operator55 | 1 |
 | nobody123456 | 1 |
 | 159753 | 1 |
-| 123 | 1 |
-| ubnt22 | 1 |
-| 1928389922 | 1 |
 | guest1 | 1 |
 | Abc123 | 1 |
 | Support123 | 1 |
-| ubuntu | 1 |
-| 123qwe!@# | 1 |
 | 112233 | 1 |
-| operator33 | 1 |
-| nobody0 | 1 |
 | 123654 | 1 |
 | orangepi | 1 |
 | Admin@123 | 1 |
-| qwerty | 1 |
-| Support1234567 | 1 |
 | 999 | 1 |
 | Root8 | 1 |
 | blank8 | 1 |
-| root00 | 1 |
-| guest0 | 1 |
 | config8 | 1 |
 | supervisor12345 | 1 |
-| 1q2w3e4r | 1 |
+| 1978 | 1 |
+| 654321 | 1 |
+| Passw0rd | 1 |
+| 1987 | 1 |
+| 000 | 1 |
+| 121212 | 1 |
+| 7 | 1 |
+| 590426 | 1 |
+| admin6 | 1 |
+| cms500 | 1 |
+| 99999 | 1 |
+| 001122 | 1 |
+| R00T | 1 |
+| qwertyuiop | 1 |
+| 12344 | 1 |
+| blank0 | 1 |
+| 44 | 1 |
+| meiyoumima | 1 |
+| Support5 | 1 |
+| centos88 | 1 |
+| user9 | 1 |
+| tmadmin | 1 |
+| Info1 | 1 |
+| 5555 | 1 |
+| operator8 | 1 |
+| nobody13 | 1 |
+| supervisor44 | 1 |
+| 123456654321 | 1 |
+| admin01 | 1 |
+| test | 1 |
+| 12345 | 1 |
+| password321 | 1 |
+| marcel | 1 |
+| zaq12wsx | 1 |
+| 1qaz@WSX3edc | 1 |
+| student | 1 |
+| p@ssword | 1 |
+| 1234567 | 1 |
+| maintenance | 1 |
+| Admin | 1 |
+| test1234 | 1 |
+| 123321 | 1 |
 
 ---
 
-## Commands Executed
+## Session Details — Attacker Activity Inside Honeypot
 
-| Command | Count |
-|---------|-------|
-| None | 0 |
+*No successful logins with command execution yet. Attackers are currently in the brute-force phase.*
 
 ---
 
@@ -9093,15 +9228,13 @@
 | Client | Count | Notes |
 |--------|-------|-------|
 | SSH-2.0-Go | 13111 | Go-based mass scanner |
-| SSH-2.0-OpenSSH_7.4 | 36 |  |
+| SSH-2.0-OpenSSH_7.4 | 129 |  |
 | SSH-2.0-libssh_0.11.4 | 9 |  |
-| SSH-2.0-libssh_0.7.4 | 6 | Known attack tool (libssh scanner) |
-| SSH-2.0-OpenSSH_for_Windows_9.5 | 4 | Windows OpenSSH client |
+| SSH-2.0-libssh_0.7.4 | 8 | Known attack tool (libssh scanner) |
 | SSH-2.0-libssh2_1.11.1 | 3 |  |
 
 ---
 
 ## Research Notes
 
-- Across the full collection window, activity is heavily weighted toward authentication probing: 13,169 login attempts and 243 sessions resulted in no command-bearing sessions in the filtered report.
-- The strongest recurring automation signal is `SSH-2.0-Go`, especially the high-volume Aliyun source `139.224.244.185`, suggesting mass scanner traffic is the main background pattern while successful interactive activity remains sparse.
+*(Add manual observations here after reviewing the session details above)*

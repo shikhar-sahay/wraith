@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Ghost Cloud is a research repository for collecting attacker behavior from multiple AWS honeypot deployments. The project began with the original Mumbai deployment and now also includes the Wraith deployment in us-east-1. Both remain documented because they serve different research paths and are intentionally preserved side by side.
+Ghost Cloud is a research repository for collecting attacker behavior from multiple AWS honeypot deployments. The Mumbai deployment is the LLM adaptation path, using an Ollama backend with the Gwen model to generate interactive shell responses. The Wraith deployment in us-east-1/Virginia is the static shell path. Both remain documented because they serve different research goals and are intentionally preserved side by side.
 
 The shared objective is to observe how attackers interact with realistic SSH honeypots, compare behavior across deployments, and store evidence in a form that is easy to analyze later.
 
@@ -10,7 +10,7 @@ The shared objective is to observe how attackers interact with realistic SSH hon
 
 - Capture reconnaissance, privilege escalation, persistence, and malware download attempts
 - Record attacker IPs, SSH client fingerprints, command execution, and response behavior
-- Compare how attackers behave across the Mumbai and Wraith deployments
+- Compare how attackers behave across the Mumbai LLM-backed deployment and the Wraith static-shell deployment
 - Preserve a deterministic, low-maintenance telemetry pipeline for repeatable analysis
 
 ## System Architecture
@@ -33,7 +33,7 @@ flowchart LR
 
 ### Mumbai Deployment
 
-The Mumbai deployment is the original documented honeypot environment and remains valid. It represents the earlier AWS-based research setup and is kept in the repository as the baseline deployment.
+The Mumbai deployment is the LLM-adapted honeypot environment and remains valid. It represents the earlier AWS-based research setup with an Ollama backend and Gwen model, and it is the adaptive baseline for realistic interactive shell behavior.
 
 See:
 - [docs/aws-deployment-notes.md](docs/aws-deployment-notes.md)
@@ -41,7 +41,7 @@ See:
 
 ### Wraith Deployment
 
-The Wraith deployment is the newer additive deployment in us-east-1. It runs Beelzebub SSH as the attacker-facing honeypot and uses a custom Python telemetry server to collect structured JSONL events.
+The Wraith deployment is the newer additive deployment in us-east-1/Virginia. It runs Beelzebub SSH as the attacker-facing honeypot and uses a static shell simulator plus a custom Python telemetry server to collect structured JSONL events.
 
 Wraith highlights:
 

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This repository keeps experiment output for both the Mumbai deployment and the Wraith deployment.
+This repository keeps experiment output for both the Mumbai LLM-adapted deployment and the Wraith static-shell deployment.
 
 ## Experiment Layout
 
@@ -33,12 +33,12 @@ The current historical experiment files remain preserved in the repository root 
 
 | Deployment | Experiment target | Notes |
 |------------|-------------------|-------|
-| Mumbai | `experiments/mumbai/` | Original deployment outputs and notes |
-| Wraith | `reports/` and `experiments/wraith/` | Generated Markdown reports and deployment-specific archives |
+| Mumbai | `experiments/mumbai/` | Original LLM-adapted outputs and notes from the Ollama/Gwen deployment |
+| Wraith | `reports/` and `experiments/wraith/` | Generated Markdown reports and deployment-specific archives from the static shell deployment |
 
 ## Report Sources
 
-- Mumbai reports originate from the original documentation workflow
+- Mumbai reports originate from the Ollama/Gwen experiment workflow
 - Wraith reports originate from `wraith_logs/` and `generate_report.py`, then land in `reports/`
 
 ## Preservation Rule

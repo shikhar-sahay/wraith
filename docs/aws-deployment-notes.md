@@ -14,7 +14,7 @@ This repository documents two deployments. The Mumbai deployment remains the ori
 
 ## Mumbai Deployment
 
-The Mumbai deployment is preserved as the original documented AWS honeypot setup and remains valid.
+The Mumbai deployment is preserved as the original documented AWS honeypot setup and remains valid. It is the LLM-adapted path, using Ollama with the Gwen model for interactive shell responses.
 
 See:
 - [docs/architecture-notes.md](architecture-notes.md)
@@ -57,16 +57,16 @@ The Wraith deployment is intended to run under systemd so it can remain active a
 
 | Aspect | Mumbai | Wraith |
 |--------|--------|--------|
-| Goal | Original research deployment | Additive structured-telemetry deployment |
+| Goal | LLM-adapted research deployment | Additive structured-telemetry deployment |
 | Telemetry | Existing operational notes | JSONL session and command events |
 | Report generation | Existing experiment summaries | generate_report.py Markdown reports |
-| Runtime model | Preserved original stack | Deterministic SSH telemetry pipeline |
+| Runtime model | Ollama backend with Gwen model | Deterministic static SSH shell and telemetry pipeline |
 
 ## Deployment Workflow
 
 ### Mumbai
 
-The Mumbai deployment remains the historical baseline and should continue to be documented as originally intended.
+The Mumbai deployment is the historical LLM baseline and should continue to be documented as the Ollama plus Gwen adaptation path.
 
 ### Wraith
 
