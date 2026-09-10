@@ -388,7 +388,7 @@ if __name__ == "__main__":
     parser.add_argument("--all", action="store_true",
                         help="Combine ALL log files into one cumulative report")
     parser.add_argument("--out-file", default=None,
-                        help="Custom output filename (used with --all)")
+                        help="Custom output filename")
     parser.add_argument("--no-geo", action="store_true",
                         help="Skip geo lookup (faster, offline)")
     args = parser.parse_args()
@@ -413,13 +413,19 @@ if __name__ == "__main__":
 
     if args.out_dir:
         os.makedirs(args.out_dir, exist_ok=True)
-        if args.all:
-            fname = args.out_file or "cumulative.md"
+
+        if args.out_file:
+            fname = args.out_file
+        elif args.all:
+            fname = "cumulative.md"
         else:
             fname = datetime.now(timezone.utc).strftime("%Y-%m-%d") + ".md"
+
         fpath = os.path.join(args.out_dir, fname)
+
         with open(fpath, "w") as f:
             f.write(report)
+
         print(f"Report written to {fpath}")
     else:
         print(report)
