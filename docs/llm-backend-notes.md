@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes the Wraith deterministic shell telemetry pipeline (`wraith/` on `127.0.0.1:8080` or `8765`, `wraith_logs/`). The Mumbai deployment (`ap-south-1`, `t3.micro`, Beelzebub + local Ollama `qwen2.5:0.5b`, period `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`) remains documented in `experiments/mumbai/` and uses raw Beelzebub logs directly; it is not replaced by this pipeline. The Wraith cloud instance `wraith-us-east-static` (`us-east-1`, `100.27.226.37`) is pending recovery, so Wraith JSONL telemetry has not yet contributed to comparative analysis.
+This document describes the Wraith deterministic shell telemetry pipeline (`wraith/` on `127.0.0.1:8080` or `8765`, `wraith_logs/` -> `reports/us-east/`). The Mumbai deployment (`ap-south-1`, `t3.micro`, Beelzebub + local Ollama `qwen2.5:0.5b`, period `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`) remains documented in `experiments/mumbai/` and uses raw Beelzebub logs directly; it is not replaced by this pipeline. The Wraith cloud instance `wraith-us-east-static` (`us-east-1`, `100.27.226.37`) was recovered (see `docs/us-east-recovery.md`) and has produced telemetry (`reports/us-east/` 12 IPs, 21103 commands); comparison is in `docs/deployment-comparison.md`.
 
 ## Wraith Telemetry Flow
 
@@ -97,7 +97,7 @@ Wraith telemetry focuses on the fields that matter for attacker-behavior analysi
 
 - **Mumbai:** Completed, recovered, and documented (`experiments/mumbai/` - 24 dated reports + cumulative, 773 IPs, 942 sessions, 15,153 logins, 1 command). Investigation of July 26 OOM and degraded networking complete (see `experiments/mumbai/README.md`).
 - **Wraith local:** Implemented and verified (`wraith/` modules, `demo_fake_shell.py`, `tests/test_fake_shell.py` pass). Telemetry is per-session in-memory (no Redis persistence; no LLM fallback in `wraith/server.py`).
-- **Wraith cloud (`us-east-1`):** Historical instance `wraith-us-east-static` pending recovery; no telemetry incorporated yet. Static-vs-interactive comparison remains pending.
+- **Wraith cloud (`us-east-1`):** Instance `wraith-us-east-static` recovered with EBS snapshot (see `docs/us-east-recovery.md`); telemetry `reports/us-east/` 12 IPs, 12 sessions, 21103 commands from `2026-07-12` to `2026-09-06`; observational comparison in `docs/deployment-comparison.md` (caveat: different regions/periods).
 
 ## Backward Compatibility
 

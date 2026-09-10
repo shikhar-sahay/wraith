@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Wraith now documents two deployment contexts. The Mumbai deployment is the LLM-adapted path, backed by local Ollama `qwen2.5:0.5b` on `t3.micro` (Beelzebub on `2222` in `ap-south-1`; see `experiments/mumbai/` for the July 26 OOM and networking limitation), while the US-East deployment is a local deterministic shell simulator. The simulator is designed to behave like a believable Ubuntu 22.04 server for research purposes while never executing commands on the real host. Code is in `wraith/` and is verified locally; cloud deployment on `wraith-us-east-static` (`us-east-1`, `100.27.226.37`) is pending recovery.
+Wraith now documents two deployment contexts. The Mumbai deployment is the LLM-adapted path, backed by local Ollama `qwen2.5:0.5b` on `t3.micro` (Beelzebub on `2222` in `ap-south-1`; see `experiments/mumbai/` for the July 26 OOM and networking limitation), while the US-East deployment is a deterministic shell simulator. The simulator is designed to behave like a believable Ubuntu 22.04 server for research purposes while never executing commands on the real host. Code is in `wraith/` and is verified locally; cloud instance `wraith-us-east-static` (`us-east-1`, `100.27.226.37`) was recovered via EBS repair (see `docs/us-east-recovery.md`) and produced `reports/us-east/` telemetry (12 IPs, 21103 commands).
 
 ## Intended Architecture
 
@@ -47,7 +47,7 @@ Internet attacker
 
 - **Cross-session persistence via Redis or disk:** Not implemented. `wraith/filesystem.py` is per-session in-memory only; no Redis code present in `wraith/` (only service name in `persona.py:19`). Documented as future work.
 - **Adaptive or LLM fallback:** Architecture intends deterministic semantics first with optional controlled LLM assistance for uncovered commands; no Ollama or OpenAI integration exists in `wraith/server.py` (intended flow: parser -> deterministic implementation -> optional LLM fallback). The Mumbai deployment used direct LLM emulation (local Ollama `qwen2.5:0.5b`) and its limitations motivate this hybrid direction; Wraith's fallback remains planned.
-- **Cloud deployment on `wraith-us-east-static`:** Code is ready, but US-East instance recovery is pending (admin `22` refused, SSM unavailable, serial console reachable). No US-East telemetry has been incorporated into comparative analysis yet; static-vs-interactive comparison remains pending.
+- **Cloud deployment on `wraith-us-east-static`:** Instance `wraith-us-east-static` (`us-east-1`, `100.27.226.37:2222`) was recovered (masked `ssh.socket` removed, `ssh.service` enabled) and produced telemetry from `2026-07-12` to `2026-09-06` (`reports/us-east/` 12 IPs, 21103 commands); observational comparison is in `docs/deployment-comparison.md` (caveat: different regions/periods, not controlled).
 
 ## Relationship to Mumbai
 

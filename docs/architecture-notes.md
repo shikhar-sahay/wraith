@@ -21,13 +21,13 @@ flowchart LR
 
 ## Wraith Deployment
 
-The Wraith deterministic shell is implemented locally in `wraith/` (`filesystem.py`, `parser.py`, `session_identity.py`, `persona.py`, `privesc.py`, `registry.py`, `telemetry.py`, `server.py`) and is exercised via `demo_fake_shell.py` and `tests/test_fake_shell.py`. The intended cloud deployment is a Beelzebub SSH honeypot fronting the fake shell with a Python telemetry server on the EC2 host. The historical cloud instance `wraith-us-east-static` in `us-east-1` (historically `100.27.226.37`, port `2222`) is currently inaccessible and recovery is pending (port `22` refused, EC2 Instance Connect failed, SSM unavailable due to missing role configuration; serial console reaches a Linux login prompt). Until recovery completes, Wraith is documented as an implemented local simulator with an integration path in `deploy/`, not as a completed comparative dataset.
+The Wraith deterministic shell is implemented locally in `wraith/` (`filesystem.py`, `parser.py`, `session_identity.py`, `persona.py`, `privesc.py`, `registry.py`, `telemetry.py`, `server.py`) and is exercised via `demo_fake_shell.py` and `tests/test_fake_shell.py`. The cloud instance `wraith-us-east-static` in `us-east-1` (historically `100.27.226.37`, port `2222`) was recovered after an admin SSH outage (masked `ssh.socket -> /dev/null`, see `docs/us-east-recovery.md`) via offline EBS repair with snapshot and has produced telemetry: 12 unique attacker IPs, 12 sessions, 11 with commands, 21103 commands from `2026-07-12` to `2026-09-06` in `reports/us-east/` (see `docs/us-east-results.md`). Beelzebub and Wraith services were verified active after recovery.
 
 ```mermaid
 flowchart LR
-    A[Internet attacker] --> B[AWS EC2 in us-east-1 - pending recovery]
+    A[Internet attacker] --> B[AWS EC2 in us-east-1]
     B --> C[Beelzebub SSH honeypot]
-    C --> D[Wraith Python telemetry server - local implementation verified]
+    C --> D[Wraith Python telemetry server]
     D --> E[wraith_logs/ JSONL events]
     E --> F[generate_report.py]
     F --> G[reports/ Markdown outputs]
@@ -37,12 +37,12 @@ flowchart LR
 
 | Aspect | Mumbai Deployment | Wraith Deployment |
 |--------|-------------------|-------------------|
-| Purpose | LLM-adapted interactive deployment (observed) | Deterministic shell for controlled comparison (code implemented, cloud validation pending) |
-| Honeypot layer | Beelzebub with local Ollama `qwen2.5:0.5b` responses (Mumbai `t3.micro`, observed) | Beelzebub SSH honeypot fronting fake shell (local implementation verified; cloud pending) |
-| Telemetry | Beelzebub logs -> `scripts/generate_report.py` -> `experiments/mumbai/*.md` (recovered, validated) | JSONL session and command telemetry (`wraith/server.py` -> `wraith_logs/`) - local tests pass, no US-East telemetry incorporated yet |
-| Output format | Recovered Markdown reports (24 dated + cumulative, period `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`) | Markdown experiment reports generated from JSONL - pending US-East data |
-| Runtime model | Local Ollama `qwen2.5:0.5b` (high latency, OOM on `t3.micro` - observed) | Deterministic static shell and Python telemetry pipeline (no LLM fallback in production; LLM fallback is planned architecture) |
-| Status | Completed and documented in `experiments/mumbai/` | Implemented locally; comparative analysis remains pending until US-East recovery |
+| Purpose | LLM-adapted interactive deployment (observed) | Deterministic shell for controlled comparison (observed after recovery) |
+| Honeypot layer | Beelzebub with local Ollama `qwen2.5:0.5b` responses (Mumbai `t3.micro`, observed) | Beelzebub SSH honeypot fronting fake shell (verified `wraith/server.py:88`) |
+| Telemetry | Beelzebub logs -> `scripts/generate_report.py` -> `experiments/mumbai/*.md` (recovered, validated: 773 IPs, 942 sessions, 15153 logins, 1 command) | JSONL session and command telemetry (`wraith/server.py` -> `wraith_logs/` -> `reports/us-east/` via `scripts/generate_report_us_east.py`: 12 IPs, 12 sessions, 21103 commands) |
+| Output format | Recovered Markdown reports (24 dated + cumulative, period `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`) | Markdown reports (14 daily + cumulative, period `2026-07-12` - `2026-09-06`, see `reports/us-east/`) |
+| Runtime model | Local Ollama `qwen2.5:0.5b` (high latency 51094 ms, OOM on `t3.micro` - observed) | Deterministic static shell and Python telemetry pipeline (sub-millisecond, no LLM fallback in production; LLM fallback is planned architecture) |
+| Status | Completed and documented in `experiments/mumbai/` (`docs/mumbai-results.md`, `docs/mumbai-incident.md`) | Recovered and documented in `reports/us-east/` (`docs/us-east-results.md`, `docs/us-east-recovery.md`); observational comparison in `docs/deployment-comparison.md` |
 
 ## Wraith Components (verified in repository)
 
@@ -62,11 +62,11 @@ flowchart LR
 
 Planned but not production-complete: cross-session persistence via Redis (no Redis code present; filesystem is per-session in-memory only) and adaptive LLM fallback (architecture intends deterministic semantics first with optional controlled LLM assistance; no Ollama/OpenAI integration in `wraith/server.py`).
 
-- JSONL storage for session events and command execution records (`wraith_logs/`)
-- Markdown report generation pipeline via `scripts/generate_report.py` (supports Mumbai Beelzebub logs and Wraith JSONL)
-- Systemd persistence definitions (`deploy/beelzebub-simulator.service`) - deployment pending US-East recovery
+- JSONL storage for session events and command execution records (`wraith_logs/` -> `reports/us-east/` after recovery)
+- Markdown report generation pipeline via `scripts/generate_report.py` (Mumbai) and `scripts/generate_report_us_east.py` (Wraith JSONL)
+- Systemd persistence definitions (`deploy/beelzebub-simulator.service`) - verified active after US-East recovery (`docs/us-east-recovery.md`)
 
-## Wraith Event Flow (intended, local verification)
+## Wraith Event Flow (verified locally and in recovered US-East)
 
 1. An attacker connects to SSH on the EC2 instance (simulated locally via `FakeShellServer.create_session` or HTTP `/command`).
 2. Beelzebub accepts the session and the fake shell responds deterministically (verified in `tests/test_fake_shell.py`).

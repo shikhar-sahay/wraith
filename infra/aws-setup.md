@@ -10,7 +10,7 @@
 ## Compute Infrastructure
 
 - **Mumbai:** EC2 instance type: `t3.micro`, Region: `ap-south-1` (`wraith-honeypot`, Ubuntu 24.04), Elastic IP attached, EBS volume expanded from 8GB to 15GB for Ollama `qwen2.5:0.5b` storage - completed and documented in `experiments/mumbai/`
-- **Wraith historical:** Instance `wraith-us-east-static`, Region `us-east-1`, historically `100.27.226.37` - currently inaccessible, recovery pending (see `docs/aws-deployment-notes.md`); no Wraith cloud telemetry validated yet
+- **Wraith:** Instance `wraith-us-east-static`, Region `us-east-1`, `100.27.226.37` - recovered via offline EBS repair (masked `ssh.socket` removed, `ssh.service` enabled) with snapshot, produced `reports/us-east/` telemetry (12 IPs, 12 sessions, 21103 commands, `2026-07-12` - `2026-09-06`, see `docs/us-east-results.md` and `docs/us-east-recovery.md`)
 
 ## Network Configuration
 

@@ -13,7 +13,7 @@ The shared objective is to observe how attackers interact with realistic SSH hon
 - Evaluate limitations of conventional or purely LLM-driven honeypot behavior on constrained cloud instances
 - Develop a more realistic adaptive SSH shell (deterministic semantics with optional controlled LLM assistance)
 - Preserve a deterministic, low-maintenance telemetry pipeline for repeatable analysis
-- Intended comparison: static/traditional behavior versus richer interactive Wraith behavior (pending US-East recovery; not yet supported by complete comparative data)
+- Compare static/traditional behavior versus richer interactive Wraith behavior (observational comparison documented in `docs/deployment-comparison.md` after recovery of both deployments; caveat: different regions/periods, not a controlled causal experiment)
 
 ## System Architecture
 
@@ -45,15 +45,15 @@ See:
 
 ### Wraith Deployment
 
-The Wraith deployment is the newer deterministic shell path. Code for the adaptive shell is implemented locally in `wraith/` and is exercised via `demo_fake_shell.py` and unit tests. The historical cloud instance `wraith-us-east-static` in `us-east-1` (public IP historically `100.27.226.37`, honeypot port `2222`) is currently inaccessible and recovery is pending (admin port `22` refused, EC2 Instance Connect failed, SSM unavailable due to missing role configuration; serial console reaches a Linux login prompt). Until recovery, Wraith is documented as a local deterministic simulator with a Beelzebub integration path, not as a completed comparative dataset.
+The Wraith deployment is the deterministic shell path. Code for the adaptive shell is implemented locally in `wraith/` and is exercised via `demo_fake_shell.py` and unit tests. The cloud instance `wraith-us-east-static` in `us-east-1` (public IP historically `100.27.226.37`, honeypot port `2222`) was recovered after an admin SSH outage (masked `ssh.socket`, see `docs/us-east-recovery.md`) via offline EBS repair with snapshot. It produced real-world telemetry: 12 unique attacker IPs, 12 sessions, 11 with commands, 21103 commands from `2026-07-12` to `2026-09-06` (`reports/us-east/`; test traffic excluded via `scripts/generate_report_us_east.py`). See `docs/us-east-results.md` and `reports/us-east/cumulative.md`.
 
-Wraith highlights (implemented locally, cloud validation pending):
+Wraith highlights (local implementation verified, cloud telemetry recovered):
 
-- Deterministic fake Linux shell (session identity, parser, filesystem, persona, privesc simulation, registry, telemetry)
+- Deterministic fake Linux shell (session identity, parser, filesystem, persona, privesc simulation, registry, telemetry) - `wraith/server.py:88` handles 30+ commands
 - Python telemetry server for structured session logging (`wraith/server.py`, JSONL under `wraith_logs/`)
-- JSONL storage for session and command events
-- Markdown report generation with `scripts/generate_report.py`
-- Systemd persistence definitions in `deploy/` (`beelzebub-simulator.service`) - deployment to EC2 pending recovery
+- JSONL storage for session and command events (`wraith/telemetry.py` `events.jsonl`)
+- Markdown report generation with `scripts/generate_report_us_east.py` (Wraith JSONL) and `scripts/generate_report.py` (Mumbai Beelzebub logs)
+- Systemd persistence definitions in `deploy/` (`beelzebub-simulator.service`); Beelzebub and Wraith services verified active after recovery
 
 ## Telemetry Pipeline
 
@@ -85,15 +85,15 @@ Collected fields include attacker IP, client string, command, response, cwd, lat
 
 ## Repository Structure
 
-- [README.md](README.md) – project overview and deployment summary
-- [docs/](docs) – architecture, telemetry, deployment, and background notes
-- [experiments/](experiments) – daily and cumulative experiment reports
-- [reports/](reports) – generated Markdown reports for Wraith experiments
-- [wraith_logs/](wraith_logs) – raw JSONL telemetry output from the Wraith deployment
-- [deploy/](deploy) – deployment documentation and service definitions
-- [infra/](infra) – AWS environment notes and operational guidance
-- [scripts/](scripts) – report generation utilities
-- [wraith/](wraith) – simulator runtime used by the Wraith deployment
+- [README.md](README.md) - project overview and deployment summary
+- [docs/](docs) - architecture, telemetry, deployment, and background notes; key results: `docs/us-east-results.md`, `docs/mumbai-results.md`, `docs/deployment-comparison.md`, `docs/us-east-recovery.md`, `docs/mumbai-incident.md`
+- [experiments/](experiments) - Mumbai daily and cumulative experiment reports (`experiments/mumbai/` 24+1 reports)
+- [reports/](reports) - Wraith experiment reports (`reports/us-east/` 14 daily + `cumulative.md`)
+- [wraith_logs/](wraith_logs) - raw JSONL telemetry output from the Wraith deployment (gitignored, backup `raw-data-us-east/`)
+- [deploy/](deploy) - deployment documentation and service definitions
+- [infra/](infra) - AWS environment notes and operational guidance
+- [scripts/](scripts) - report generation utilities (`generate_report.py`, `generate_report_us_east.py`)
+- [wraith/](wraith) - simulator runtime used by the Wraith deployment
 
 ## Setup Instructions
 
@@ -112,26 +112,23 @@ For the deployed Wraith stack, enable the systemd services on the Ubuntu EC2 ins
 
 **Completed**
 
-- Mumbai AWS deployment on `wraith-honeypot` (`t3.micro`, `ap-south-1`, Ubuntu 24.04, Beelzebub on `2222`, local Ollama `qwen2.5:0.5b`)
-- Recovery of surviving Mumbai telemetry and regeneration of 24 dated reports + `cumulative.md` (period `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`, `experiments/mumbai/`)
-- Cumulative analysis: 773 unique observed source IPs, 942 sessions, 15,153 login attempts, 1 session with commands (1 command: `echo 1 > /dev/null && cat /bin/echo` from `47.113.113.162`)
-- Investigation of July 26 operational failure (OOM resource exhaustion and degraded guest networking, September 10 reboot recovery)
-- Development of Wraith deterministic shell components (`wraith/` - filesystem, parser, session identity, persona, privesc, registry, telemetry, server) with local demo and tests
-
-**In progress**
-
-- Recovery of US-East instance `wraith-us-east-static` (`us-east-1`, historically `100.27.226.37`) and validation of its telemetry (currently inaccessible)
-- End-to-end validation of Wraith on cloud (Beelzebub integration via `deploy/`)
+- Mumbai AWS deployment on `wraith-honeypot` (`t3.micro`, `ap-south-1`, Ubuntu 24.04, Beelzebub on `2222`, local Ollama `qwen2.5:0.5b`) - 24 dated reports + `cumulative.md` in `experiments/mumbai/` (period `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`, 773 IPs, 942 sessions, 15153 logins, 1 command from `47.113.113.162`)
+- Recovery of surviving Mumbai telemetry and regeneration via `scripts/generate_report.py` (test traffic excluded); investigation of July 26 OOM resource exhaustion and degraded guest networking with `2026-09-10` reboot recovery (`docs/mumbai-incident.md`)
+- Development of Wraith deterministic shell components (`wraith/` - filesystem, parser, session identity, persona, privesc, registry, telemetry, server) with local demo `demo_fake_shell.py` and tests `tests/test_fake_shell.py`
+- US-East AWS deployment `wraith-us-east-static` (`us-east-1`, `100.27.226.37:2222`) - 14 daily reports + `cumulative.md` in `reports/us-east/` (period `2026-07-12` - `2026-09-06`, 12 IPs, 12 sessions, 11 with commands, 21103 commands, see `docs/us-east-results.md`)
+- US-East recovery from masked `ssh.socket -> /dev/null` via offline EBS repair with snapshot, telemetry preserved and verified (`docs/us-east-recovery.md`)
+- Observational comparison between Mumbai (LLM-assisted) and US-East (deterministic Wraith) documented in `docs/deployment-comparison.md` (caveat: different regions/periods, not a controlled causal experiment)
+- Analysis docs: `docs/mumbai-results.md`, `docs/us-east-results.md`, `docs/mumbai-incident.md`, `docs/deployment-comparison.md`
 
 **Pending / future**
 
-- Final static-vs-interactive comparison after US-East recovery (not yet supported by complete comparative data)
-- Session persistence evaluation beyond per-session in-memory state (no Redis persistence implemented)
-- Final consolidated research analysis and engagement-depth assessment
+- Session persistence evaluation beyond per-session in-memory state (no Redis persistence implemented - `wraith/filesystem.py` is per-session)
+- Final consolidated research analysis after extended observation if additional deployments are run
+- Optional controlled LLM fallback as adaptive layer (planned, not production-complete in `wraith/server.py`)
 
 ## Future Work
 
-- Complete US-East recovery and incorporate its telemetry after validation
-- Conduct the intended static-vs-interactive comparison only after both datasets are available
-- Add richer report summaries for command sequences and session duration
-- Preserve the current deterministic simulator while extending the telemetry analysis layer
+- Extend observation periods with additional deployments if resources permit
+- Add normalized engagement metrics (unique commands, de-duplicated sessions) to `scripts/generate_report_us_east.py` and `scripts/generate_report.py`
+- Preserve the current deterministic simulator while extending the telemetry analysis layer with optional LLM assistance
+- Validate service boot configuration (`systemctl is-enabled ssh.service`, no `ssh.socket` mask) after any future deployment
