@@ -1,5 +1,7 @@
 # Wraith Experiment Log
 
+This log preserves early Wraith iteration notes (June - July 2026). Early iterations explored direct LLM terminal emulation (OpenAI, Gemini, then local Ollama `qwen2.5:0.5b`). The current Wraith deterministic shell is implemented locally in `wraith/` and verified via tests; the historical cloud instance `wraith-us-east-static` (`us-east-1`, `100.27.226.37`) is pending recovery and no Wraith cloud telemetry has been incorporated into comparative analysis yet. See `docs/simulator-architecture.md` for the current architecture and `experiments/mumbai/` for the validated Mumbai artifact.
+
 ## 29 June 2026
 
 ### LLM Backend Migration
