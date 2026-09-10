@@ -26,3 +26,6 @@ wraith-admin_credentials.csv
 Thumbs.db
 
 temp/
+# US-East recovered raw telemetry and backup
+raw-data-us-east/
+wraith-us-east-telemetry-backup-*.tar.gz
