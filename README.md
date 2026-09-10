@@ -10,8 +10,10 @@ The shared objective is to observe how attackers interact with realistic SSH hon
 
 - Capture reconnaissance, privilege escalation, persistence, and malware download attempts
 - Record attacker IPs, SSH client fingerprints, command execution, and response behavior
-- Compare how attackers behave across the Mumbai LLM-backed deployment and the Wraith static-shell deployment
+- Evaluate limitations of conventional or purely LLM-driven honeypot behavior on constrained cloud instances
+- Develop a more realistic adaptive SSH shell (deterministic semantics with optional controlled LLM assistance)
 - Preserve a deterministic, low-maintenance telemetry pipeline for repeatable analysis
+- Intended comparison: static/traditional behavior versus richer interactive Wraith behavior (pending US-East recovery; not yet supported by complete comparative data)
 
 ## System Architecture
 
@@ -43,16 +45,15 @@ See:
 
 ### Wraith Deployment
 
-The Wraith deployment is the newer additive deployment in us-east-1/Virginia. It runs Beelzebub SSH as the attacker-facing honeypot and uses a static shell simulator plus a custom Python telemetry server to collect structured JSONL events.
+The Wraith deployment is the newer deterministic shell path. Code for the adaptive shell is implemented locally in `wraith/` and is exercised via `demo_fake_shell.py` and unit tests. The historical cloud instance `wraith-us-east-static` in `us-east-1` (public IP historically `100.27.226.37`, honeypot port `2222`) is currently inaccessible and recovery is pending (admin port `22` refused, EC2 Instance Connect failed, SSM unavailable due to missing role configuration; serial console reaches a Linux login prompt). Until recovery, Wraith is documented as a local deterministic simulator with a Beelzebub integration path, not as a completed comparative dataset.
 
-Wraith highlights:
+Wraith highlights (implemented locally, cloud validation pending):
 
-- AWS EC2 hosted honeypot environment
-- Beelzebub SSH honeypot on the attack surface
-- Python telemetry server for structured session logging
+- Deterministic fake Linux shell (session identity, parser, filesystem, persona, privesc simulation, registry, telemetry)
+- Python telemetry server for structured session logging (`wraith/server.py`, JSONL under `wraith_logs/`)
 - JSONL storage for session and command events
-- Markdown report generation with generate_report.py
-- systemd persistence through beelzebub.service and wraith.service
+- Markdown report generation with `scripts/generate_report.py`
+- Systemd persistence definitions in `deploy/` (`beelzebub-simulator.service`) - deployment to EC2 pending recovery
 
 ## Telemetry Pipeline
 
@@ -107,9 +108,30 @@ python demo_fake_shell.py
 
 For the deployed Wraith stack, enable the systemd services on the Ubuntu EC2 instance and keep the simulator and honeypot running independently from the terminal.
 
+## Current Status
+
+**Completed**
+
+- Mumbai AWS deployment on `wraith-honeypot` (`t3.micro`, `ap-south-1`, Ubuntu 24.04, Beelzebub on `2222`, local Ollama `qwen2.5:0.5b`)
+- Recovery of surviving Mumbai telemetry and regeneration of 24 dated reports + `cumulative.md` (period `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`, `experiments/mumbai/`)
+- Cumulative analysis: 773 unique observed source IPs, 942 sessions, 15,153 login attempts, 1 session with commands (1 command: `echo 1 > /dev/null && cat /bin/echo` from `47.113.113.162`)
+- Investigation of July 26 operational failure (OOM resource exhaustion and degraded guest networking, September 10 reboot recovery)
+- Development of Wraith deterministic shell components (`wraith/` - filesystem, parser, session identity, persona, privesc, registry, telemetry, server) with local demo and tests
+
+**In progress**
+
+- Recovery of US-East instance `wraith-us-east-static` (`us-east-1`, historically `100.27.226.37`) and validation of its telemetry (currently inaccessible)
+- End-to-end validation of Wraith on cloud (Beelzebub integration via `deploy/`)
+
+**Pending / future**
+
+- Final static-vs-interactive comparison after US-East recovery (not yet supported by complete comparative data)
+- Session persistence evaluation beyond per-session in-memory state (no Redis persistence implemented)
+- Final consolidated research analysis and engagement-depth assessment
+
 ## Future Work
 
-- Expand the experiment corpus for both deployments
+- Complete US-East recovery and incorporate its telemetry after validation
+- Conduct the intended static-vs-interactive comparison only after both datasets are available
 - Add richer report summaries for command sequences and session duration
-- Compare attacker behavior across Mumbai and Wraith over longer periods
 - Preserve the current deterministic simulator while extending the telemetry analysis layer

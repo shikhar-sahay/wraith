@@ -9,11 +9,8 @@
 
 ## Compute Infrastructure
 
-- EC2 instance type: `t3.micro`
-- Region: `ap-south-1`
-- Ubuntu server deployed
-- Elastic IP attached
-- EBS volume expanded from 8GB to 15GB for Ollama model storage
+- **Mumbai:** EC2 instance type: `t3.micro`, Region: `ap-south-1` (`wraith-honeypot`, Ubuntu 24.04), Elastic IP attached, EBS volume expanded from 8GB to 15GB for Ollama `qwen2.5:0.5b` storage - completed and documented in `experiments/mumbai/`
+- **Wraith historical:** Instance `wraith-us-east-static`, Region `us-east-1`, historically `100.27.226.37` - currently inaccessible, recovery pending (see `docs/aws-deployment-notes.md`); no Wraith cloud telemetry validated yet
 
 ## Network Configuration
 

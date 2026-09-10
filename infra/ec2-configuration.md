@@ -2,11 +2,8 @@
 
 ## Host
 
-- Platform: AWS EC2
-- Operating system: Ubuntu server
-- Region: `ap-south-1`
-- Instance type: `t3.micro`
-- Elastic IP: attached
+- **Mumbai (`wraith-honeypot`):** Platform: AWS EC2, Operating system: Ubuntu 24.04 LTS, Region: `ap-south-1`, Instance type: `t3.micro`, Elastic IP: attached - completed
+- **Wraith historical (`wraith-us-east-static`):** Region: `us-east-1`, historically `100.27.226.37` - currently inaccessible, recovery pending; not yet validated
 
 ## Storage
 
@@ -37,9 +34,5 @@ sudo resize2fs /dev/nvme0n1p1
 
 ## Current Status
 
-- Beelzebub compiled successfully
-- SSH honeypot reachable externally on port `2222`
-- Ollama installed locally
-- `qwen2.5:0.5b` installed locally
-- Local inference working
-- Structured telemetry/event logging operational
+- **Mumbai (`ap-south-1`):** Beelzebub compiled successfully, SSH honeypot reachable externally on port `2222` during `2026-07-03` - `2026-07-26`, Ollama `qwen2.5:0.5b` installed locally, local inference working with high latency and eventual OOM, structured telemetry operational - completed and investigated
+- **Wraith (`us-east-1` historical):** Local shell implementation verified (`wraith/` + tests), but cloud instance `wraith-us-east-static` is pending recovery (admin `22` refused, SSM unavailable); no cloud telemetry validated yet
