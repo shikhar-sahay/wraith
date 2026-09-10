@@ -171,7 +171,7 @@ def generate_report(events, date_label=None, excluded_ips=None, do_geo=True):
             all_times.append(s['started_at'])
         if s.get('ended_at'):
             all_times.append(s['ended_at'])
-    time_range = f"{min(all_times)} — {max(all_times)}" if all_times else "N/A"
+    time_range = f"{min(all_times)} - {max(all_times)}" if all_times else "N/A"
 
     cmd_freq = Counter()
     suspicious_freq = Counter()
@@ -202,7 +202,7 @@ def generate_report(events, date_label=None, excluded_ips=None, do_geo=True):
             countries[geo[ip]['country']] += 1
 
     lines = []
-    lines.append(f"# Analysis — {date_label}")
+    lines.append(f"# Analysis - {date_label}")
     lines.append("**Honeypot:** Wraith")
     lines.append(f"**Period:** {time_range}")
     if excluded_ips:
@@ -280,7 +280,7 @@ def generate_report(events, date_label=None, excluded_ips=None, do_geo=True):
     if sessions_with_commands:
         lines.append("---")
         lines.append("")
-        lines.append("## Session Details — Attacker Activity Inside Honeypot")
+        lines.append("## Session Details - Attacker Activity Inside Honeypot")
         lines.append("")
         lines.append("*These are sessions where an attacker successfully logged in and ran commands.*")
         lines.append("")
@@ -291,9 +291,9 @@ def generate_report(events, date_label=None, excluded_ips=None, do_geo=True):
             geo_str = ""
             if do_geo and ip in geo:
                 g = geo[ip]
-                geo_str = f" — {g['country']}, {g['org']}"
+                geo_str = f" - {g['country']}, {g['org']}"
             client = s.get('client') or 'N/A'
-            lines.append(f"### Session {s['id'][:8]} — {ip}{geo_str} ({dur_str})")
+            lines.append(f"### Session {s['id'][:8]} - {ip}{geo_str} ({dur_str})")
             lines.append("")
             lines.append(f"**Client:** {client}")
             lines.append(f"**Commands reported:** {s['commands_reported'] if s.get('commands_reported') is not None else len(s['commands'])}")
@@ -326,7 +326,7 @@ def generate_report(events, date_label=None, excluded_ips=None, do_geo=True):
     else:
         lines.append("---")
         lines.append("")
-        lines.append("## Session Details — Attacker Activity Inside Honeypot")
+        lines.append("## Session Details - Attacker Activity Inside Honeypot")
         lines.append("")
         lines.append("*No successful logins with command execution yet. Attackers are currently in the brute-force phase.*")
         lines.append("")
@@ -372,7 +372,7 @@ if __name__ == "__main__":
     parser.add_argument("--all", action="store_true",
                         help="Combine ALL log files into one cumulative report")
     parser.add_argument("--out-file", default=None,
-                        help="Custom output filename (used with --all)")
+                        help="Custom output filename")
     parser.add_argument("--no-geo", action="store_true",
                         help="Skip geo lookup (faster, offline)")
     args = parser.parse_args()
@@ -388,7 +388,7 @@ if __name__ == "__main__":
             sys.exit(1)
         print(f"Combining {len(all_files)} log files: {[os.path.basename(f) for f in all_files]}", file=sys.stderr)
         events = parse_multiple_logs(all_files)
-        date_label = args.date_label or "Cumulative — All Time"
+        date_label = args.date_label or "Cumulative - All Time"
     else:
         events = parse_logs(args.log_path)
         date_label = args.date_label
@@ -397,8 +397,10 @@ if __name__ == "__main__":
 
     if args.out_dir:
         os.makedirs(args.out_dir, exist_ok=True)
-        if args.all:
-            fname = args.out_file or "cumulative.md"
+        if args.out_file:
+            fname = args.out_file
+        elif args.all:
+            fname = "cumulative.md"
         else:
             fname = datetime.now(timezone.utc).strftime("%Y-%m-%d") + ".md"
         fpath = os.path.join(args.out_dir, fname)
