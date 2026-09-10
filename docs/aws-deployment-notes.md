@@ -14,7 +14,7 @@ This repository documents two deployments. The Mumbai deployment remains the ori
 
 ## Mumbai Deployment
 
-The Mumbai deployment is preserved as the original documented AWS honeypot setup and remains valid. It is the LLM-adapted path, using Ollama with the Gwen model for interactive shell responses.
+The Mumbai deployment is preserved as the original documented AWS honeypot setup and remains valid. It is the LLM-adapted path, using local Ollama with `qwen2.5:0.5b` for interactive shell responses on `wraith-honeypot` (`t3.micro`, Ubuntu 24.04, `ap-south-1`, Beelzebub on `2222`). The recovered attacker-observation period is `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z` (773 source IPs, 942 sessions, 15,153 login attempts, 1 command executed); see `experiments/mumbai/`.
 
 See:
 - [docs/architecture-notes.md](architecture-notes.md)
@@ -60,13 +60,13 @@ The Wraith deployment is intended to run under systemd so it can remain active a
 | Goal | LLM-adapted research deployment | Additive structured-telemetry deployment |
 | Telemetry | Existing operational notes | JSONL session and command events |
 | Report generation | Existing experiment summaries | generate_report.py Markdown reports |
-| Runtime model | Ollama backend with Gwen model | Deterministic static SSH shell and telemetry pipeline |
+| Runtime model | Local Ollama `qwen2.5:0.5b` on `t3.micro` (operationally fragile under load; see `experiments/mumbai/`) | Deterministic static SSH shell and telemetry pipeline |
 
 ## Deployment Workflow
 
 ### Mumbai
 
-The Mumbai deployment is the historical LLM baseline and should continue to be documented as the Ollama plus Gwen adaptation path.
+The Mumbai deployment is the historical LLM baseline and should continue to be documented as the Beelzebub + local Ollama `qwen2.5:0.5b` adaptation path (see `experiments/mumbai/README.md` for the July 26 OOM/networking interruption and September 10 recovery).
 
 ### Wraith
 

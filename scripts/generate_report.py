@@ -155,7 +155,7 @@ def generate_report(events, date_label=None, excluded_ips=None, do_geo=True):
             dt = ev.get('DateTime')
             if dt:
                 all_times.append(dt)
-    time_range = f"{min(all_times)} — {max(all_times)}" if all_times else "N/A"
+    time_range = f"{min(all_times)} - {max(all_times)}" if all_times else "N/A"
 
     if llm_stats:
         avg_latency = sum(s['total_duration_ms'] for s in llm_stats) / len(llm_stats)
@@ -198,7 +198,7 @@ def generate_report(events, date_label=None, excluded_ips=None, do_geo=True):
             countries[geo[ip]['country']] += 1
 
     lines = []
-    lines.append(f"# Analysis — {date_label}")
+    lines.append(f"# Analysis - {date_label}")
     lines.append(f"**Honeypot:** Wraith (Beelzebub + qwen2.5:0.5b via Ollama)")
     lines.append("**Region:** Mumbai (ap-south-1)")
     lines.append(f"**Period:** {time_range}")
@@ -287,7 +287,7 @@ def generate_report(events, date_label=None, excluded_ips=None, do_geo=True):
     if sessions_with_commands:
         lines.append("---")
         lines.append("")
-        lines.append("## Session Details — Attacker Activity Inside Honeypot")
+        lines.append("## Session Details - Attacker Activity Inside Honeypot")
         lines.append("")
         lines.append("*These are sessions where an attacker successfully logged in and ran commands.*")
         lines.append("")
@@ -298,8 +298,8 @@ def generate_report(events, date_label=None, excluded_ips=None, do_geo=True):
             geo_str = ""
             if do_geo and ip in geo:
                 g = geo[ip]
-                geo_str = f" — {g['country']}, {g['org']}"
-            lines.append(f"### Session {s['id'][:8]} — {ip}{geo_str} ({dur_str})")
+                geo_str = f" - {g['country']}, {g['org']}"
+            lines.append(f"### Session {s['id'][:8]} - {ip}{geo_str} ({dur_str})")
             lines.append("")
             lines.append("| # | Command | LLM Response |")
             lines.append("|---|---------|--------------|")
@@ -326,9 +326,12 @@ def generate_report(events, date_label=None, excluded_ips=None, do_geo=True):
     else:
         lines.append("---")
         lines.append("")
-        lines.append("## Session Details — Attacker Activity Inside Honeypot")
+        lines.append("## Session Details - Attacker Activity Inside Honeypot")
         lines.append("")
-        lines.append("*No successful logins with command execution yet. Attackers are currently in the brute-force phase.*")
+        if not login_attempts and not sessions:
+            lines.append("*No attacker login attempts or command execution were recorded for this period.*")
+        else:
+            lines.append("*No successful logins with command execution yet. Attackers are currently in the brute-force phase.*")
         lines.append("")
 
     if llm_stats:
@@ -369,7 +372,24 @@ def generate_report(events, date_label=None, excluded_ips=None, do_geo=True):
     lines.append("")
     lines.append("## Research Notes")
     lines.append("")
-    lines.append("*(Add manual observations here after reviewing the session details above)*")
+    if "Cumulative" in date_label:
+        lines.append("This cumulative report aggregates all surviving Mumbai telemetry after regeneration from raw Beelzebub logs (test IPs excluded). Interpret quantitative results separately from infrastructure observations.")
+        lines.append("")
+        if total_commands <= 1 and len(sessions_with_commands) <= 1:
+            lines.append(f"- **Telemetry finding:** Heavy automated SSH credential activity was observed ({len(all_ips)} unique source IPs, {len(sessions)} sessions, {len(login_attempts)} login attempts) but only {len(sessions_with_commands)} session(s) progressed to post-authentication command execution ({total_commands} command(s) total). This indicates the deployment primarily captured scanning and credential-guessing, with minimal engagement depth.")
+            lines.append("")
+        lines.append("- **Operational limitation (July 26):** Telemetry stops at the last recorded attacker event. Around 2026-07-26T17:17Z the local Ollama/qwen2.5:0.5b backend exhausted memory on the t3.micro host (OOM killer terminated llama-server, ~629 MB RSS; systemd-journald/snapd watchdog failures followed). Beelzebub remained alive until at least 2026-07-26T17:23:56Z; subsequent guest-networking degradation (169.254.169.254 unreachable, DNS/SSM failures) interrupted further honeypot connectivity. This was resource exhaustion and degraded networking, not a full host crash; the instance remained running until the 2026-09-10 reboot.")
+        lines.append("")
+        lines.append("- **LLM terminal-emulation limitation:** Shortly before the interruption, source IP 39.105.172.20 repeatedly issued `echo -e \"\\x6F\\x6B\"`. The Beelzebub LLMHoneypot plugin reported rate-limit errors and the local qwen2.5:0.5b model returned inconsistent, semantically incorrect responses to this trivial command. This supports the Wraith design choice to use deterministic shell behavior for standard commands and reserve the LLM as a controlled fallback. Rate limiting did not cause the outage; the confirmed cause was OOM/resource exhaustion and later network degradation.")
+        lines.append("")
+        lines.append("- **Interpretation guidance:** Avoid describing each of the 773 source IPs as a distinct human attacker; prefer 'unique source IPs' / 'observed Internet hosts'. Do not fabricate richer shell engagement than the single recorded command execution.")
+        lines.append("")
+        lines.append("*(Add further manual observations here after reviewing the session details above.)*")
+    else:
+        if not login_attempts and not sessions:
+            lines.append("*No attacker login attempts or command execution were recorded for this period. This is consistent with a pre-observation or validation interval (e.g., LLM testing) rather than active attacker telemetry.*")
+        else:
+            lines.append("*(Add manual observations here after reviewing the session details above.)*")
     lines.append("")
 
     return "\n".join(lines)
@@ -404,7 +424,7 @@ if __name__ == "__main__":
             sys.exit(1)
         print(f"Combining {len(all_files)} log files: {[os.path.basename(f) for f in all_files]}", file=sys.stderr)
         events = parse_multiple_logs(all_files)
-        date_label = args.date_label or "Cumulative — All Time"
+        date_label = args.date_label or "Cumulative - All Time"
     else:
         events = parse_logs(args.log_path)
         date_label = args.date_label

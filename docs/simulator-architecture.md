@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Wraith now documents two deployment contexts. The Mumbai deployment is the LLM-adapted path, backed by Ollama and the Gwen model, while the us-east-1/Virginia deployment uses a local deterministic shell simulator. The simulator is designed to behave like a believable Ubuntu 22.04 server for research purposes while never executing commands on the real host.
+Wraith now documents two deployment contexts. The Mumbai deployment is the LLM-adapted path, backed by local Ollama `qwen2.5:0.5b` on `t3.micro` (Beelzebub on `2222` in `ap-south-1`; see `experiments/mumbai/` for the July 26 OOM/networking limitation), while the `us-east-1`/Virginia deployment uses a local deterministic shell simulator. The simulator is designed to behave like a believable Ubuntu 22.04 server for research purposes while never executing commands on the real host.
 
 ## Architecture
 

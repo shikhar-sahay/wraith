@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Ghost Cloud is a research repository for collecting attacker behavior from multiple AWS honeypot deployments. The Mumbai deployment is the LLM adaptation path, using an Ollama backend with the Gwen model to generate interactive shell responses. The Wraith deployment in us-east-1/Virginia is the static shell path. Both remain documented because they serve different research goals and are intentionally preserved side by side.
+Ghost Cloud is a research repository for collecting attacker behavior from multiple AWS honeypot deployments. The Mumbai deployment is the LLM adaptation path, using a local Ollama backend with `qwen2.5:0.5b` to generate interactive shell responses on a `t3.micro` (Ubuntu 24.04, Beelzebub on port 2222). The Wraith deployment in `us-east-1`/Virginia is the deterministic static-shell path. Both remain documented because they serve different research goals and are intentionally preserved side by side.
 
 The shared objective is to observe how attackers interact with realistic SSH honeypots, compare behavior across deployments, and store evidence in a form that is easy to analyze later.
 
@@ -33,9 +33,11 @@ flowchart LR
 
 ### Mumbai Deployment
 
-The Mumbai deployment is the LLM-adapted honeypot environment and remains valid. It represents the earlier AWS-based research setup with an Ollama backend and Gwen model, and it is the adaptive baseline for realistic interactive shell behavior.
+The Mumbai deployment is the LLM-adapted honeypot environment and remains valid. It ran in `ap-south-1` (Mumbai) on `wraith-honeypot` (`t3.micro`, Beelzebub on `2222`, Ollama `qwen2.5:0.5b`) and is the adaptive baseline for interactive shell behavior. Recovered dataset: `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`, 773 unique observed source IPs, 942 sessions, 15,153 login attempts, but only 1 session progressed to command execution: indicating heavy automated credential-guessing with minimal engagement depth. Local LLM inference was observed to be operationally fragile on `t3.micro` (OOM/resource exhaustion and degraded networking ended telemetry on July 26). See `experiments/mumbai/` for the full 24-report recovered set and research notes.
 
 See:
+- [experiments/mumbai/README.md](experiments/mumbai/README.md)
+- [experiments/mumbai/cumulative.md](experiments/mumbai/cumulative.md)
 - [docs/aws-deployment-notes.md](docs/aws-deployment-notes.md)
 - [docs/architecture-notes.md](docs/architecture-notes.md)
 

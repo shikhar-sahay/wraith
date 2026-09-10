@@ -33,12 +33,12 @@ The current historical experiment files remain preserved in the repository root 
 
 | Deployment | Experiment target | Notes |
 |------------|-------------------|-------|
-| Mumbai | `experiments/mumbai/` | Original LLM-adapted outputs and notes from the Ollama/Gwen deployment |
+| Mumbai | `experiments/mumbai/` | Recovered Beelzebub + local Ollama `qwen2.5:0.5b` outputs - 24 dated reports (July 1 validation + July 3-26 observation) + cumulative (773 IPs, 942 sessions, 15,153 logins, 1 command) |
 | Wraith | `reports/` and `experiments/wraith/` | Generated Markdown reports and deployment-specific archives from the static shell deployment |
 
 ## Report Sources
 
-- Mumbai reports originate from the Ollama/Gwen experiment workflow
+- Mumbai reports originate from raw Beelzebub logs via `scripts/generate_report.py` (local Ollama `qwen2.5:0.5b` path) and land in `experiments/mumbai/` (July 1 is validation-only; July 5 intentionally absent)
 - Wraith reports originate from `wraith_logs/` and `generate_report.py`, then land in `reports/`
 
 ## Preservation Rule

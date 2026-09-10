@@ -1,7 +1,7 @@
-# Analysis — Cumulative — All Time
+# Analysis - Cumulative - All Time
 **Honeypot:** Wraith (Beelzebub + qwen2.5:0.5b via Ollama)
 **Region:** Mumbai (ap-south-1)
-**Period:** 2026-07-03T18:59:13Z — 2026-07-26T17:23:56Z
+**Period:** 2026-07-03T18:59:13Z - 2026-07-26T17:23:56Z
 **Test traffic excluded:** Yes
 
 ---
@@ -10503,11 +10503,11 @@
 
 ---
 
-## Session Details — Attacker Activity Inside Honeypot
+## Session Details - Attacker Activity Inside Honeypot
 
 *These are sessions where an attacker successfully logged in and ran commands.*
 
-### Session 7bb45dfc — 47.113.113.162 (6s)
+### Session 7bb45dfc - 47.113.113.162 (6s)
 
 | # | Command | LLM Response |
 |---|---------|--------------|
@@ -10545,4 +10545,30 @@
 
 ## Research Notes
 
-*(Add manual observations here after reviewing the session details above)*
+This cumulative report aggregates all surviving Mumbai telemetry after full regeneration from raw Beelzebub logs (period `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`; test traffic from `49.207.63.82`, `49.207.60.111`, `49.207.58.88` excluded). Interpret quantitative results separately from infrastructure observations.
+
+### Measurement findings (what the honeypot captured)
+
+- **Source population:** 773 unique observed source IP addresses, 942 sessions, 15,153 login attempts. Use "unique source IPs" / "observed source addresses" / "Internet hosts observed" - not "773 sophisticated human attackers." SSH client distribution is dominated by `SSH-2.0-Go` (13,928 login attempts) and `SSH-2.0-OpenSSH_7.4`, consistent with automated scanning and credential-guessing.
+- **Engagement depth - core result:** Only **1 session** (`47.113.113.162`, `SSH-2.0-russh_0.51.1`) progressed to post-authentication command execution, with a single recorded command: `echo 1 > /dev/null && cat /bin/echo`. The deployment therefore primarily captured the **scanning / credential-guessing phase** with minimal post-authentication interaction. Do not fabricate richer shell engagement than this single command execution; this limited engagement is itself a meaningful finding.
+- **LLM performance under load:** Mean LLM response latency **51,094 ms** (avg tokens 27.7; 646 LLM calls) reflects the operational cost of local inference on a `t3.micro`. Fastest 451 ms, slowest 3,886,405 ms. This latency and the July 26 OOM indicate that pure local-LLM terminal emulation was not operationally reliable on this `t3.micro` configuration under sustained Internet exposure.
+
+### Infrastructure observations (how the deployment behaved)
+
+- **July 26 resource exhaustion and telemetry interruption:** Around **2026-07-26T17:17-17:18Z** the local Ollama `qwen2.5:0.5b` backend exhausted memory; the Linux OOM killer terminated `llama-server` (RSS ~629 MB) with `systemd-journald` and `snapd` watchdog failures (`Out of memory: Killed process ... (llama-server)`). **Beelzebub did not immediately crash** - it continued processing until at least the last confirmed attacker event at `2026-07-26T17:23:56Z`. Around **17:44Z** the guest reported `169.254.169.254` unreachable, DNS via `127.0.0.53` misbehaving, and SSM agent unable to reach AWS endpoints, while cron/sysstat continued. The best-supported interpretation is **resource exhaustion and degraded guest networking** that interrupted external honeypot connectivity and stopped telemetry collection. The instance itself remained running July 17 - September 10 and was not intentionally stopped; after the **September 10 reboot**, SSH `22`, honeypot `2222`, Beelzebub, and Ollama all recovered normally. Use precise language - *OOM condition, resource exhaustion, degraded networking, telemetry interruption* - not unqualified "server crashed."
+- **Separating findings from infrastructure:** The scanning/credential-guessing result is a measurement finding about Internet SSH activity observed by the honeypot. The OOM/network degradation is an infrastructure observation about the local-LLM deployment's operational limits. They are distinct.
+
+### Observed LLM terminal-emulation limitation
+
+- Shortly before the interruption, source IP **`39.105.172.20`** (285 sessions on July 26 alone) repeatedly reconnected and issued `echo -e "\x6F\x6B"`. The Beelzebub `LLMHoneypot` plugin logged `Rate limit exceeded` / `plugin "LLMHoneypot" execute error: rate limited`, and the local `qwen2.5:0.5b` model returned **inconsistent, semantically incorrect responses** to this trivial command (variants including `command not found`, malformed explanations, escaped Unicode output). This is documented as an **observed limitation of pure LLM-based terminal emulation**. It supports Wraith's later hybrid design - deterministic shell behavior for normal Linux commands with the LLM reserved as a controlled fallback/adaptive layer. **Rate limiting did not cause the outage;** the confirmed infrastructure cause is OOM/resource exhaustion and subsequent network degradation.
+
+### Relationship to Wraith adaptive-shell work
+
+- The Mumbai result motivates Wraith's architecture: keep the SSH honeypot's shell responses deterministic and auditable, and use the LLM only where adaptivity is needed. Mumbai is the **Beelzebub + local-LLM baseline** (adaptive/interactive path); Wraith (`us-east-1`, static-shell + structured JSONL telemetry) is the **additive structured-telemetry path** that builds directly on the limitations documented here.
+
+### Reproducibility and coverage notes
+
+- **Coverage:** 24 dated reports - `2026-07-01.md` (validation/LLM testing, 0 attacker events, Period `N/A`, 6 LLM calls) plus `2026-07-03.md` through `2026-07-26.md` (attacker-observation period). **July 2:** no surviving telemetry source, no report. **July 5:** stale report intentionally deleted (no source). Do not fabricate a July 5 report or attacker activity for July 1.
+- **Generation:** Reports regenerated from raw Beelzebub logs via `scripts/generate_report.py` with test-IP exclusion and `--out-file` support for both daily and cumulative modes; `--no-geo` available for offline regeneration. `2026-07-05.md` must remain absent.
+
+*No further attacker telemetry is available after 2026-07-26T17:23:56Z due to the interruption described above.*

@@ -4,12 +4,12 @@
 
 Ghost Cloud now documents two coexisting deployments:
 
-- Mumbai deployment: the LLM-adapted AWS honeypot setup that uses Ollama with the Gwen model for dynamic shell responses
-- Wraith deployment: the newer us-east-1/Virginia deployment that uses a deterministic static shell and telemetry-focused SSH layer
+- Mumbai deployment: the LLM-adapted AWS honeypot setup that used local Ollama `qwen2.5:0.5b` on `t3.micro` (Beelzebub on `2222` in `ap-south-1`) for dynamic shell responses - recovered period `2026-07-03` - `2026-07-26`, see `experiments/mumbai/`
+- Wraith deployment: the newer `us-east-1`/Virginia deployment that uses a deterministic static shell and telemetry-focused SSH layer
 
 ## Mumbai Deployment
 
-The Mumbai deployment is the LLM adaptation path described in the experiment logs. It uses Ollama with the Gwen model and should be treated as the interactive, model-backed deployment rather than a plain baseline shell.
+The Mumbai deployment is the LLM adaptation path described in `experiments/mumbai/`. It used local Ollama `qwen2.5:0.5b` on `t3.micro` and should be treated as the interactive, model-backed deployment rather than a plain baseline shell; the recovered dataset shows heavy scanning with minimal post-auth engagement and an operational OOM/networking limit on July 26.
 
 ```mermaid
 flowchart LR
@@ -38,10 +38,10 @@ flowchart LR
 | Aspect | Mumbai Deployment | Wraith Deployment |
 |--------|-------------------|-------------------|
 | Purpose | LLM-adapted interactive deployment | Additive research deployment with structured telemetry |
-| Honeypot layer | Beelzebub with Ollama-backed Gwen responses | Beelzebub SSH honeypot |
-| Telemetry | Existing operational logging | JSONL session and command telemetry |
-| Output format | Existing reports and notes | Markdown experiment reports generated from JSONL |
-| Runtime model | Ollama backend with Gwen model | Deterministic static shell and Python telemetry pipeline |
+| Honeypot layer | Beelzebub with local Ollama `qwen2.5:0.5b` responses (Mumbai `t3.micro`) | Beelzebub SSH honeypot |
+| Telemetry | Beelzebub logs → `scripts/generate_report.py` → `experiments/mumbai/*.md` | JSONL session and command telemetry |
+| Output format | Recovered Markdown reports (24 dated + cumulative) | Markdown experiment reports generated from JSONL |
+| Runtime model | Local Ollama `qwen2.5:0.5b` (high latency, OOM on `t3.micro`) | Deterministic static shell and Python telemetry pipeline |
 
 ## Wraith Components
 
