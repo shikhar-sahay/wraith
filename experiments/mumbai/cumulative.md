@@ -10547,6 +10547,14 @@
 
 This cumulative report aggregates all surviving Mumbai telemetry after full regeneration from raw Beelzebub logs (period `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`; test traffic from `49.207.63.82`, `49.207.60.111`, `49.207.58.88` excluded). Interpret quantitative results separately from infrastructure observations.
 
+### Observation methodology
+
+- **Source:** Surviving Beelzebub JSONL logs on `wraith-honeypot` (`t3.micro`, Ubuntu 24.04, `ap-south-1`), parsed via `scripts/generate_report.py` (`extract_sessions` and `extract_llm_stats`). No log data was altered.
+- **Exclusion:** Researcher-controlled test IPs `49.207.63.82`, `49.207.60.111`, `49.207.58.88` were excluded during parsing (`excluded_ips` set) and do not contribute to counts in this report.
+- **Period derivation:** `min` and `max` `DateTime` across non-excluded events; July 1 is excluded from attacker period (0 logins, 0 sessions, 6 LLM calls - validation only).
+- **Geo:** Optional `ip-api.com` lookup for `Attacking IPs` table (`--no-geo` skips it); not used to infer attribution.
+- **Reproducibility:** Regenerated with `--all` and `--out-file cumulative.md` (see `experiments/mumbai/README.md` for commands); manual edits cover only this Research Notes section, all quantitative tables remain generated.
+
 ### Measurement findings (what the honeypot captured)
 
 - **Source population:** 773 unique observed source IP addresses, 942 sessions, 15,153 login attempts. Use "unique source IPs" / "observed source addresses" / "Internet hosts observed" - not "773 sophisticated human attackers." SSH client distribution is dominated by `SSH-2.0-Go` (13,928 login attempts) and `SSH-2.0-OpenSSH_7.4`, consistent with automated scanning and credential-guessing.
@@ -10564,7 +10572,13 @@ This cumulative report aggregates all surviving Mumbai telemetry after full rege
 
 ### Relationship to Wraith adaptive-shell work
 
-- The Mumbai result motivates Wraith's architecture: keep the SSH honeypot's shell responses deterministic and auditable, and use the LLM only where adaptivity is needed. Mumbai is the **Beelzebub + local-LLM baseline** (adaptive/interactive path); Wraith (`us-east-1`, static-shell + structured JSONL telemetry) is the **additive structured-telemetry path** that builds directly on the limitations documented here.
+- The Mumbai result motivates Wraith's architecture: keep the SSH honeypot's shell responses deterministic and auditable, and use the LLM only where adaptivity is needed. Mumbai is the **Beelzebub + local-LLM baseline** (adaptive/interactive path); Wraith (`us-east-1`, static-shell + structured JSONL telemetry via `wraith/server.py` and `wraith/telemetry.py`) is the **additive structured-telemetry path** that builds directly on the limitations documented here. Wraith's deterministic handling of common commands and its per-session filesystem (`wraith/filesystem.py`) are intended to avoid the inconsistency and rate limiting observed with pure LLM emulation.
+
+### Limitations of interpretation
+
+- This dataset characterizes the **scanning and credential-guessing phase** on this single `t3.micro` deployment; it does not support general claims about all LLM honeypots or all cloud configurations. The single post-authentication session limits conclusions about engagement depth or session persistence.
+- No geographic or human-actor attribution is claimed beyond observed source IPs and SSH client strings (e.g., `SSH-2.0-Go`, `SSH-2.0-OpenSSH_7.4`); 773 source addresses should not be read as 773 distinct human attackers.
+- Latency and OOM observations are specific to local `qwen2.5:0.5b` inference on this `t3.micro` configuration under sustained Internet exposure (mean 51,094 ms, range 451 ms - 3,886,405 ms, 646 calls) and are presented with `indicates` and `was observed` language to avoid overstated causal claims.
 
 ### Reproducibility and coverage notes
 
