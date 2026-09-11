@@ -10,7 +10,7 @@
 ## Compute Infrastructure
 
 - **Mumbai:** EC2 instance type: `t3.micro`, Region: `ap-south-1` (`wraith-honeypot`, Ubuntu 24.04), Elastic IP attached, EBS volume expanded from 8GB to 15GB for Ollama `qwen2.5:0.5b` storage - completed and documented in `reports/mumbai/` (reports) and `experiments/mumbai/` (logs)
-- **Wraith:** Instance `wraith-us-east-static`, Region `us-east-1`, `100.27.226.37` - recovered via offline EBS repair (masked `ssh.socket` removed, `ssh.service` enabled) with snapshot, produced `reports/us-east/` telemetry (12 IPs, 12 sessions, 21103 commands, `2026-07-12` - `2026-09-06`, see `docs/us-east-results.md` and `docs/us-east-recovery.md`)
+- **Wraith:** EC2 instance type: `t3.micro`, Region: `us-east-1` (`wraith-us-east-static`, Ubuntu 24.04, `100.27.226.37`) - recovered via offline EBS repair (masked `ssh.socket` removed, `ssh.service` enabled) with snapshot, produced `reports/us-east/` telemetry (12 IPs, 12 sessions, 21103 commands, `2026-07-12` - `2026-09-06`, see `docs/us-east-results.md` and `docs/us-east-recovery.md`)
 
 ## Network Configuration
 

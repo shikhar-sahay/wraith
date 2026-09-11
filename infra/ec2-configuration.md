@@ -3,7 +3,7 @@
 ## Host
 
 - **Mumbai (`wraith-honeypot`):** Platform: AWS EC2, Operating system: Ubuntu 24.04 LTS, Region: `ap-south-1`, Instance type: `t3.micro`, Elastic IP: attached - completed
-- **Wraith (`wraith-us-east-static`):** Region: `us-east-1`, `100.27.226.37` - recovered via EBS repair, Beelzebub and Wraith services verified active after recovery (`docs/us-east-recovery.md`), produced `reports/us-east/` telemetry
+- **Wraith (`wraith-us-east-static`):** Platform: AWS EC2, Operating system: Ubuntu 24.04 LTS, Region: `us-east-1`, Instance type: `t3.micro`, Elastic IP: `100.27.226.37` - recovered via EBS repair, Beelzebub and Wraith services verified active after recovery (`docs/us-east-recovery.md`), produced `reports/us-east/` telemetry
 
 ## Storage
 
