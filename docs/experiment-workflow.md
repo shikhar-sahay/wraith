@@ -10,12 +10,10 @@ Recommended structure:
 
 ```text
 experiments/
-  mumbai/
-    existing reports
-  wraith/
-    daily reports
+  mumbai/        (24 reports + cumulative, Beelzebub + Ollama qwen2.5:0.5b)
+  us-east/       (experiment notes for Wraith deterministic shell)
 reports/
-  generated Markdown reports
+  us-east/       (14 daily + cumulative, Wraith JSONL via wraith/telemetry.py)
 ```
 
 The recovered Mumbai files in `experiments/mumbai/` (24 dated reports + `cumulative.md`, period `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`) are preserved and should not be deleted or overwritten except via deliberate regeneration from raw Beelzebub logs. `2026-07-05.md` must remain absent and `2026-07-01.md` is validation-only. Wraith reports in `reports/us-east/` (14 daily + `cumulative.md`, period `2026-07-12` - `2026-09-06`, see `docs/us-east-results.md`) are likewise preserved after recovery via `scripts/generate_report_us_east.py`; they are organized from `wraith_logs/events.jsonl` (gitignored `raw-data-us-east/`).
@@ -34,7 +32,7 @@ The recovered Mumbai files in `experiments/mumbai/` (24 dated reports + `cumulat
 | Deployment | Experiment target | Notes |
 |------------|-------------------|-------|
 | Mumbai | `experiments/mumbai/` | Recovered Beelzebub + local Ollama `qwen2.5:0.5b` outputs - 24 dated reports (July 1 validation + July 3-26 observation) + cumulative (773 IPs, 942 sessions, 15,153 logins, 1 command) |
-| Wraith | `reports/us-east/` and `experiments/wraith/` | Wraith deterministic shell reports - 14 daily + cumulative in `reports/us-east/` (period `2026-07-12` - `2026-09-06`, 12 IPs, 21103 commands, see `docs/us-east-results.md`) |
+| Wraith | `reports/us-east/` and `experiments/us-east/` | Wraith deterministic shell reports - 14 daily + cumulative in `reports/us-east/` (period `2026-07-12` - `2026-09-06`, 12 IPs, 21103 commands, see `docs/us-east-results.md`) |
 
 ## Report Sources
 

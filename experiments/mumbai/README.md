@@ -69,7 +69,7 @@ Shortly before telemetry stopped, source IP `39.105.172.20` repeatedly reconnect
 
 ## Relationship to Wraith adaptive-shell work
 
-The Mumbai result directly motivates Wraith's architecture: use deterministic shell behavior for normal Linux commands and reserve the LLM as a controlled fallback/adaptive layer, rather than relying on the LLM for every terminal response. Mumbai remains the Beelzebub + local-LLM baseline; Wraith (`us-east-1`, static-shell + telemetry pipeline) is the additive structured-telemetry path documented under `experiments/wraith/` and `reports/`.
+The Mumbai result directly motivates Wraith's architecture: use deterministic shell behavior for normal Linux commands and reserve the LLM as a controlled fallback/adaptive layer, rather than relying on the LLM for every terminal response. Mumbai remains the Beelzebub + local-LLM baseline; Wraith (`us-east-1`, deterministic shell + telemetry pipeline) is the additive structured-telemetry path documented under `experiments/us-east/` and `reports/us-east/`.
 
 ## Reproducibility
 
