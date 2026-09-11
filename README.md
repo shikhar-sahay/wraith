@@ -100,7 +100,7 @@ Collected fields include attacker IP, client string, command, response, cwd, lat
 - [docs/](docs) - see `docs/README.md` index; key docs: `methodology.md`, `mumbai-results.md`, `us-east-results.md`, `deployment-comparison.md`, `mumbai-incident.md`, `us-east-recovery.md`
 - [experiments/](experiments) - Mumbai reports `experiments/mumbai/` (24+1, `2026-07-03` - `2026-07-26`), Wraith notes `experiments/us-east/` (`README.md`/`experiment-log.md`)
 - [reports/](reports) - Wraith US-East reports `reports/us-east/` (14+1, `2026-07-12` - `2026-09-06`)
-- [wraith_logs/](wraith_logs) - raw JSONL telemetry (gitignored, backup `raw-data-us-east/` gitignored)
+- `wraith_logs/` - raw JSONL telemetry (gitignored, backup `raw-data-us-east/` gitignored)
 - [deploy/](deploy) - deployment service definitions and Beelzebub patch (`beelzebub-simulator.service`)
 - [infra/](infra) - AWS infrastructure notes
 - [scripts/](scripts) - `generate_report.py` (Mumbai Beelzebub logs) and `generate_report_us_east.py` (Wraith JSONL)
@@ -142,7 +142,7 @@ For the deployed Wraith stack, enable the systemd services on the Ubuntu EC2 ins
 
 - Observational comparison only - Mumbai and US-East differed in region, period, backend, attacker population, and telemetry semantics (see `docs/methodology.md`); not a controlled A/B experiment
 - Mumbai single-command dataset (1 of 942 sessions) limits engagement-depth conclusions; characterizes scanning phase
-- US-East 21103 raw commands overstate diversity (78.9% is one `echo -e` loop from `8.217.18.158`; ~20 unique commands)
+- US-East 21103 raw commands overstate diversity (79.0% - 16662/21103 is one repeated `echo -e "\x6F\x6B"` loop from predominantly one session `8.217.18.158`; 18 exact unique command strings with whitespace-exact counting)
 - No geographic/human-actor attribution beyond source IPs/client strings; `t3.micro` LLM observations specific to `qwen2.5:0.5b` on that configuration
 - Wraith per-session filesystem is in-memory only (no Redis persistence) and `port`/`cwd` handling is simulated; no LLM fallback in production (`wraith/server.py` deterministic)
 
