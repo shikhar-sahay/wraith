@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document explains how the Wraith deterministic shell records SSH attacker activity and turns it into Markdown reports. It applies to the Wraith implementation verified locally (`wraith/` -> `wraith_logs/` -> `reports/`) and to the recovered cloud instance `wraith-us-east-static` (`us-east-1`, `100.27.226.37`, `reports/us-east/` 12 sessions, see `docs/us-east-results.md`). The Mumbai deployment (`ap-south-1`, Beelzebub + local Ollama `qwen2.5:0.5b`) uses raw Beelzebub logs directly via `scripts/generate_report.py` -> `experiments/mumbai/` and is documented separately.
+This document explains how the Wraith deterministic shell records SSH attacker activity and turns it into Markdown reports. It applies to the Wraith implementation verified locally (`wraith/` -> `wraith_logs/` -> `reports/`) and to the recovered cloud instance `wraith-us-east-static` (`us-east-1`, `100.27.226.37`, `reports/us-east/` 12 sessions, see `docs/us-east-results.md`). The Mumbai deployment (`ap-south-1`, Beelzebub + local Ollama `qwen2.5:0.5b`) uses raw Beelzebub logs directly via `scripts/generate_report.py` -> `reports/mumbai/` and is documented separately.
 
 ## Flow
 
@@ -82,7 +82,7 @@ Verification: `wraith/telemetry.py` appends `events.jsonl` and is exercised by `
 - Each line in the JSONL file should be a single JSON object; Mumbai Beelzebub logs are JSONL with `event` envelope.
 - Malformed lines are ignored safely during parsing.
 - Telemetry is designed to be append-only so the report pipeline can be rerun later (`--out-file` and `--no-geo` supported).
-- Both Mumbai (`experiments/mumbai/`) and Wraith (`reports/us-east/`) are validated research artifacts after recovery; Wraith cloud reports were regenerated via `scripts/generate_report_us_east.py` with six excluded IPs and `--out-file` redirection for daily reports.
+- Both Mumbai (`reports/mumbai/`) and Wraith (`reports/us-east/`) are validated research artifacts after recovery; Wraith cloud reports were regenerated via `scripts/generate_report_us_east.py` with six excluded IPs and `--out-file` redirection for daily reports.
 
 ## Deployment Status
 

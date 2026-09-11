@@ -31,7 +31,7 @@ The comparison is intentionally **observational rather than controlled A/B** - s
 
 - **Beelzebub raw events (Mumbai):** JSONL with `event` envelope, `Status` (`Stateless` for login attempts, `Start` for sessions, `Interaction` for commands), `SourceIp`, `SourcePort`, `User`, `Password`, `Client`, `DateTime`, `Command`/`CommandOutput`, `msg` with `total_duration`/`eval_count` for LLM stats. Raw logs are not committed; reports are generated via `scripts/generate_report.py`.
 - **Wraith application events (US-East):** JSONL `wraith_logs/events.jsonl` with `event` (`session_started`, `command_executed`, `session_ended`), `session_id`, `attacker_ip`, `client`, `command`, `response`, `cwd`, `latency_ms`, `timestamp`, `duration_seconds`, `commands`. Produced by `wraith/telemetry.py` (`TelemetryLogger`) via `wraith/server.py` (`FakeShellServer`/`FakeShellSession`). Raw `raw-data-us-east/` and `*.tar.gz` are gitignored; only Markdown reports in `reports/us-east/` are versioned.
-- **Generated Markdown reports:** `experiments/mumbai/` (24+1) and `reports/us-east/` (14+1) with Summary, Attacking IPs, Credentials/Commands, Session Details, Clients, Research Notes. Period derived from `min`/`max` DateTime across non-excluded events.
+- **Generated Markdown reports:** `reports/mumbai/` (24+1) and `reports/us-east/` (14+1) with Summary, Attacking IPs, Credentials/Commands, Session Details, Clients, Research Notes. Period derived from `min`/`max` DateTime across non-excluded events.
 
 ## Session definitions
 
@@ -40,7 +40,7 @@ The comparison is intentionally **observational rather than controlled A/B** - s
 
 ## Report generation
 
-- **Mumbai:** `scripts/generate_report.py` against Beelzebub logs: `python scripts/generate_report.py /path/to/logs --exclude-ip 49.207.63.82 --exclude-ip ... --no-geo --out-dir experiments/mumbai --out-file 2026-07-03.md` daily; cumulative `python scripts/generate_report.py /path/to/logs --all --no-geo --out-dir experiments/mumbai --out-file cumulative.md` (combines `logs*` files from input directory).
+- **Mumbai:** `scripts/generate_report.py` against Beelzebub logs: `python scripts/generate_report.py /path/to/logs --exclude-ip 49.207.63.82 --exclude-ip ... --no-geo --out-dir reports/mumbai --out-file 2026-07-03.md` daily; cumulative `python scripts/generate_report.py /path/to/logs --all --no-geo --out-dir reports/mumbai --out-file cumulative.md` (combines `logs*` files from input directory).
 - **US-East:** `scripts/generate_report_us_east.py` against Wraith JSONL: daily via explicit `--out-file` redirection (because `--out-dir` alone names by current UTC date), cumulative via `--all` (combines `logs*` JSONL files). Both scripts support `--out-file` for daily and cumulative, `--no-geo` to skip `ip-api.com`, and zero-activity wording `No attacker login attempts...` for `2026-07-01.md`-like validation intervals.
 - **Limitations:** Daily `--out-dir` naming by current UTC date is retained for backward compatibility; historical daily report regeneration uses explicit `--out-file`. Geo lookup is rate-limited to 45 req/min and optional.
 
@@ -56,4 +56,4 @@ The Mumbai and US-East deployments differed in geography (`ap-south-1` vs `us-ea
 
 - Mumbai raw Beelzebub logs remain on the instance (not committed); reports are reproducible via `scripts/generate_report.py` with excluded IPs and `--no-geo` as above.
 - US-East raw `wraith_logs/events.jsonl` is preserved locally in `raw-data-us-east/` (gitignored) and backup `wraith-us-east-telemetry-backup-*.tar.gz` (gitignored); reports in `reports/us-east/` are the committed reproducible artifact.
-- All documented metrics are taken directly from committed reports (`experiments/mumbai/cumulative.md`, `reports/us-east/cumulative.md`) and daily reports, not from uncommitted raw files.
+- All documented metrics are taken directly from committed reports (`reports/mumbai/cumulative.md`, `reports/us-east/cumulative.md`) and daily reports, not from uncommitted raw files.

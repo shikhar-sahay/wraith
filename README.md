@@ -41,7 +41,7 @@ The Mumbai deployment is the LLM-adapted honeypot environment and remains valid.
 
 See:
 - [experiments/mumbai/README.md](experiments/mumbai/README.md)
-- [experiments/mumbai/cumulative.md](experiments/mumbai/cumulative.md)
+- [reports/mumbai/cumulative.md](reports/mumbai/cumulative.md)
 - [docs/aws-deployment-notes.md](docs/aws-deployment-notes.md)
 - [docs/architecture-notes.md](docs/architecture-notes.md)
 
@@ -98,7 +98,7 @@ Collected fields include attacker IP, client string, command, response, cwd, lat
 
 - [README.md](README.md) - project overview and deployment summary
 - [docs/](docs) - see `docs/README.md` index; key docs: `methodology.md`, `mumbai-results.md`, `us-east-results.md`, `deployment-comparison.md`, `mumbai-incident.md`, `us-east-recovery.md`
-- [experiments/](experiments) - Mumbai reports `experiments/mumbai/` (24+1, `2026-07-03` - `2026-07-26`), Wraith notes `experiments/us-east/` (`README.md`/`experiment-log.md`)
+- [experiments/](experiments) - Mumbai reports `reports/mumbai/` (24+1, `2026-07-03` - `2026-07-26`), Wraith notes `experiments/us-east/` (`README.md`/`experiment-log.md`)
 - [reports/](reports) - Wraith US-East reports `reports/us-east/` (14+1, `2026-07-12` - `2026-09-06`)
 - `wraith_logs/` - raw JSONL telemetry (gitignored, backup `raw-data-us-east/` gitignored)
 - [deploy/](deploy) - deployment service definitions and Beelzebub patch (`beelzebub-simulator.service`)
@@ -155,6 +155,6 @@ For the deployed Wraith stack, enable the systemd services on the Ubuntu EC2 ins
 
 ## Reproducibility
 
-- Mumbai: `python scripts/generate_report.py /path/to/beelzebub/logs --exclude-ip 49.207.63.82 --exclude-ip 49.207.60.111 --exclude-ip 49.207.58.88 --no-geo --out-dir experiments/mumbai --out-file 2026-07-03.md` daily; cumulative `--all --out-file cumulative.md`
+- Mumbai: `python scripts/generate_report.py /path/to/beelzebub/logs --exclude-ip 49.207.63.82 --exclude-ip 49.207.60.111 --exclude-ip 49.207.58.88 --no-geo --out-dir reports/mumbai --out-file 2026-07-03.md` daily; cumulative `--all --out-file cumulative.md`
 - US-East: `python scripts/generate_report_us_east.py /path/to/wraith_logs --exclude-ip 49.207.63.82 --exclude-ip ... --no-geo --out-dir reports/us-east --out-file 2026-08-05.md` daily; cumulative `--all`
 - Tests: `python -m unittest tests/test_fake_shell.py` (4 tests) and `python demo_fake_shell.py`; `python -m py_compile scripts/generate_report*.py`

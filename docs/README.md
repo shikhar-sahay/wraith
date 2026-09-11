@@ -32,12 +32,12 @@ This folder contains canonical research and engineering documentation for Ghost 
 ## Proposals and Reports
 
 - `project-proposal.pdf` - Original research proposal (Adaptive SSH Honeypot)
-- `../experiments/mumbai/cumulative.md` - Mumbai cumulative report (24+1 reports, test traffic excluded)
+- `../reports/mumbai/cumulative.md` - Mumbai cumulative report (24+1 reports, test traffic excluded)
 - `../reports/us-east/cumulative.md` - US-East cumulative report (14+1 reports, 6 test IPs excluded)
 
 ## Key Links
 
 - Implementation: `../wraith/` (`server.py`, `filesystem.py`, `parser.py`, `telemetry.py`), `../run_server.py`, `../demo_fake_shell.py`, `../tests/test_fake_shell.py`
 - Deployment: `../deploy/beelzebub-simulator.service`, `../deploy/beelzebub_command_plugin.go`
-- Reports: `../experiments/mumbai/`, `../reports/us-east/`
+- Reports: `../reports/mumbai/`, `../reports/us-east/`
 - Scripts: `../scripts/generate_report.py` (Mumbai), `../scripts/generate_report_us_east.py` (Wraith)

@@ -31,9 +31,9 @@ The Wraith deterministic shell is implemented locally in `wraith/` and verified 
 | wraith.service | internal | local process | JSONL telemetry server (`wraith/server.py`) | Verified via `run_server.py` on `127.0.0.1:8080` and recovered `wraith_logs/events.jsonl` |
 | SSH honeypot | 2222 | public internet | Attacker interaction | Mumbai `2026-07-03` - `2026-07-26` and Wraith `2026-07-12` - `2026-09-06` both verified |
 | telemetry output | local JSONL | internal | Session and command logging | `wraith_logs/events.jsonl` via `wraith/telemetry.py`, append-only (`raw-data-us-east/` gitignored) |
-| reports/ | filesystem path | local only | Markdown experiment reports | Mumbai `experiments/mumbai/` and Wraith `reports/us-east/` via `scripts/generate_report*.py` |
+| reports/ | filesystem path | local only | Markdown experiment reports | Mumbai `reports/mumbai/` and Wraith `reports/us-east/` via `scripts/generate_report*.py` |
 
-Do not assume other services are active unless they are explicitly enabled and verified. Both Mumbai and Wraith telemetry are now validated research artifacts; see `reports/us-east/cumulative.md` and `experiments/mumbai/cumulative.md`.
+Do not assume other services are active unless they are explicitly enabled and verified. Both Mumbai and Wraith telemetry are now validated research artifacts; see `reports/us-east/cumulative.md` and `reports/mumbai/cumulative.md`.
 
 ### Wraith runtime layout
 
@@ -59,7 +59,7 @@ The Wraith deployment runs under systemd so it can remain active after disconnec
 | Aspect | Mumbai | Wraith |
 |--------|--------|--------|
 | Goal | LLM-adapted research deployment (observed) | Deterministic shell for controlled comparison (observed after recovery) |
-| Telemetry | Beelzebub logs -> `scripts/generate_report.py` -> `experiments/mumbai/*.md` (recovered: 773 IPs, 942 sessions, 15153 logins, 1 command) | JSONL session and command events via `wraith/telemetry.py` -> `reports/us-east/` (recovered: 12 IPs, 12 sessions, 21103 commands) |
+| Telemetry | Beelzebub logs -> `scripts/generate_report.py` -> `reports/mumbai/*.md` (recovered: 773 IPs, 942 sessions, 15153 logins, 1 command) | JSONL session and command events via `wraith/telemetry.py` -> `reports/us-east/` (recovered: 12 IPs, 12 sessions, 21103 commands) |
 | Report generation | Regenerated Markdown reports (24 dated + cumulative) via `scripts/generate_report.py` | Markdown reports (14 daily + cumulative) via `scripts/generate_report_us_east.py` |
 | Runtime model | Local Ollama `qwen2.5:0.5b` on `t3.micro` (operationally fragile under load; see `docs/mumbai-incident.md`) | Deterministic static SSH shell and telemetry pipeline (sub-millisecond, no LLM fallback in production) |
 | Deployment status | Completed, investigated, documented in `docs/mumbai-results.md` | Recovered, investigated, documented in `docs/us-east-results.md` and `docs/us-east-recovery.md` |

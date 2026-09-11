@@ -32,7 +32,7 @@ Reports for both deployments were regenerated from surviving logs with researche
 
 ## Engagement comparison
 
-- **Mumbai primarily captured credential-scanning behavior.** 773 source IPs and 15,153 login attempts (from `experiments/mumbai/cumulative.md`) indicate broad automated password spraying. Only 1 of 942 sessions (0.11%) reached `Interaction` with 1 recorded command, so engagement depth was minimal - a valid result showing the scanning phase dominates Internet SSH exposure for this configuration.
+- **Mumbai primarily captured credential-scanning behavior.** 773 source IPs and 15,153 login attempts (from `reports/mumbai/cumulative.md`) indicate broad automated password spraying. Only 1 of 942 sessions (0.11%) reached `Interaction` with 1 recorded command, so engagement depth was minimal - a valid result showing the scanning phase dominates Internet SSH exposure for this configuration.
 
 - **US-East captured sustained post-authentication command execution.** 11 of 12 sessions (91.7%) had commands, with 21103 total commands (`reports/us-east/cumulative.md`). However, raw volume overstates diversity.
 
@@ -74,4 +74,4 @@ The Mumbai LLM-backed deployment predominantly captured credential-scanning beha
 
 - **Mumbai:** `scripts/generate_report.py` against surviving Beelzebub logs, excluded `49.207.63.82`, `49.207.60.111`, `49.207.58.88`, daily via `--out-dir` `--out-file`, cumulative via `--all --out-file cumulative.md`.
 - **US-East:** `scripts/generate_report_us_east.py` against `wraith_logs/events.jsonl`, excluded six IPs, daily via explicit `--out-file` redirection (because `--out-dir` names by current UTC date), cumulative via `--all` combining `logs*` files from input directory.
-- Comparative numbers above are taken directly from committed `experiments/mumbai/cumulative.md` and `reports/us-east/cumulative.md` and daily reports; no raw telemetry (`*.jsonl`, `raw-data-us-east/`, `*.tar.gz`) is committed.
+- Comparative numbers above are taken directly from committed `reports/mumbai/cumulative.md` and `reports/us-east/cumulative.md` and daily reports; no raw telemetry (`*.jsonl`, `raw-data-us-east/`, `*.tar.gz`) is committed.

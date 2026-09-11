@@ -8,9 +8,9 @@
 - **SSH honeypot configuration:** Beelzebub compiled from source, `LLMHoneypot` enabled, `qwen2.5:0.5b` model installed, dynamic LLM responses verified before exposure
 - **Observation period:** `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z` (attacker telemetry); `2026-07-01` is validation-only (0 IPs, 0 sessions, 0 logins, 6 LLM calls, period `N/A`)
 - **Known excluded test traffic:** `49.207.63.82`, `49.207.60.111`, `49.207.58.88` (researcher-controlled, excluded via `excluded_ips` in `scripts/generate_report.py`)
-- **Reporting methodology:** Surviving Beelzebub JSONL logs parsed via `scripts/generate_report.py` (`extract_sessions` `Stateless`/`Start`/`Interaction`, `extract_llm_stats` on `total_duration`); daily reports `experiments/mumbai/2026-07-*.md` (24 files, `2026-07-05.md` intentionally absent - stale without source, `07-02` no source), cumulative `experiments/mumbai/cumulative.md` via `--all --out-file cumulative.md` with `--no-geo` for offline regeneration
+- **Reporting methodology:** Surviving Beelzebub JSONL logs parsed via `scripts/generate_report.py` (`extract_sessions` `Stateless`/`Start`/`Interaction`, `extract_llm_stats` on `total_duration`); daily reports `reports/mumbai/2026-07-*.md` (24 files, `2026-07-05.md` intentionally absent - stale without source, `07-02` no source), cumulative `reports/mumbai/cumulative.md` via `--all --out-file cumulative.md` with `--no-geo` for offline regeneration
 
-## Verified cumulative metrics (source: `experiments/mumbai/cumulative.md`, test traffic excluded)
+## Verified cumulative metrics (source: `reports/mumbai/cumulative.md`, test traffic excluded)
 
 | Metric | Value |
 |--------|-------|

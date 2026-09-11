@@ -5,12 +5,12 @@ This folder contains two report generators with different input schemas. They ar
 ## `generate_report.py` - Mumbai (Beelzebub logs)
 
 - **Input:** Beelzebub raw JSONL with `event` envelope (`Status` `Stateless`/`Start`/`Interaction`, `SourceIp`, `User`, `Password`, `Client`, `DateTime`, `Command`/`CommandOutput`, `msg` with `total_duration`)
-- **Output:** `experiments/mumbai/` daily `YYYY-MM-DD.md` and `cumulative.md` (Markdown with Summary, Attacking IPs, Credentials, Commands, Session Details, Clients, Research Notes)
+- **Output:** `reports/mumbai/` daily `YYYY-MM-DD.md` and `cumulative.md` (Markdown with Summary, Attacking IPs, Credentials, Commands, Session Details, Clients, Research Notes)
 - **Test traffic excluded:** `49.207.63.82`, `49.207.60.111`, `49.207.58.88` via `--exclude-ip` (session and login filtering)
 - **Usage:**
   ```bash
-  python scripts/generate_report.py /path/to/beelzebub/logs --exclude-ip 49.207.63.82 --exclude-ip 49.207.60.111 --exclude-ip 49.207.58.88 --no-geo --out-dir experiments/mumbai --out-file 2026-07-03.md
-  python scripts/generate_report.py /path/to/beelzebub/logs --all --exclude-ip ... --no-geo --out-dir experiments/mumbai --out-file cumulative.md
+  python scripts/generate_report.py /path/to/beelzebub/logs --exclude-ip 49.207.63.82 --exclude-ip 49.207.60.111 --exclude-ip 49.207.58.88 --no-geo --out-dir reports/mumbai --out-file 2026-07-03.md
+  python scripts/generate_report.py /path/to/beelzebub/logs --all --exclude-ip ... --no-geo --out-dir reports/mumbai --out-file cumulative.md
   ```
 - **Behavior:** `--out-file` works for both daily and cumulative (`if args.out_file: fname=args.out_file elif args.all: fname=cumulative.md else date.md`); `--out-dir` alone names daily by current UTC date (use `--out-file` for historical dates); `--all` combines `logs*` files from input directory; `--no-geo` skips `ip-api.com` lookup; zero-activity `2026-07-01.md` uses `No attacker login attempts...` wording
 

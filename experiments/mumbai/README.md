@@ -75,10 +75,10 @@ The Mumbai result directly motivates Wraith's architecture: use deterministic sh
 
 ```bash
 # Regenerate a daily report (example: July 3)
-python scripts/generate_report.py /path/to/beelzebub/logs --exclude-ip 49.207.63.82 --exclude-ip 49.207.60.111 --exclude-ip 49.207.58.88 --no-geo --out-dir experiments/mumbai --out-file 2026-07-03.md
+python scripts/generate_report.py /path/to/beelzebub/logs --exclude-ip 49.207.63.82 --exclude-ip 49.207.60.111 --exclude-ip 49.207.58.88 --no-geo --out-dir reports/mumbai --out-file 2026-07-03.md
 
 # Regenerate cumulative report
-python scripts/generate_report.py /path/to/beelzebub/logs --all --exclude-ip 49.207.63.82 --exclude-ip 49.207.60.111 --exclude-ip 49.207.58.88 --no-geo --out-dir experiments/mumbai --out-file cumulative.md
+python scripts/generate_report.py /path/to/beelzebub/logs --all --exclude-ip 49.207.63.82 --exclude-ip 49.207.60.111 --exclude-ip 49.207.58.88 --no-geo --out-dir reports/mumbai --out-file cumulative.md
 ```
 
 `--out-file` works for both daily and cumulative modes; `--no-geo` skips `ip-api.com` lookups for offline regeneration. `2026-07-05.md` must remain absent.

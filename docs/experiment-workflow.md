@@ -16,7 +16,7 @@ reports/
   us-east/       (14 daily + cumulative, Wraith JSONL via wraith/telemetry.py)
 ```
 
-The recovered Mumbai files in `experiments/mumbai/` (24 dated reports + `cumulative.md`, period `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`) are preserved and should not be deleted or overwritten except via deliberate regeneration from raw Beelzebub logs. `2026-07-05.md` must remain absent and `2026-07-01.md` is validation-only. Wraith reports in `reports/us-east/` (14 daily + `cumulative.md`, period `2026-07-12` - `2026-09-06`, see `docs/us-east-results.md`) are likewise preserved after recovery via `scripts/generate_report_us_east.py`; they are organized from `wraith_logs/events.jsonl` (gitignored `raw-data-us-east/`).
+The recovered Mumbai files in `reports/mumbai/` (24 dated reports + `cumulative.md`, period `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`) are preserved and should not be deleted or overwritten except via deliberate regeneration from raw Beelzebub logs. `2026-07-05.md` must remain absent and `2026-07-01.md` is validation-only. Wraith reports in `reports/us-east/` (14 daily + `cumulative.md`, period `2026-07-12` - `2026-09-06`, see `docs/us-east-results.md`) are likewise preserved after recovery via `scripts/generate_report_us_east.py`; they are organized from `wraith_logs/events.jsonl` (gitignored `raw-data-us-east/`).
 
 ## Workflow
 
@@ -25,7 +25,7 @@ The recovered Mumbai files in `experiments/mumbai/` (24 dated reports + `cumulat
 3. Exclude known test traffic when needed (Mumbai: `49.207.63.82`, `49.207.60.111`, `49.207.58.88`; Wraith: those plus `223.187.126.163`, `223.187.121.20`, `1.2.3.4`).
 4. Generate a Markdown report for the day or cumulative period (`scripts/generate_report.py` for Mumbai, `scripts/generate_report_us_east.py` for Wraith, both with `--out-file` and `--no-geo`).
 5. Store the report in the appropriate deployment folder (`experiments/mumbai/` Mumbai, `reports/us-east/` Wraith).
-6. Add manual notes after reviewing attacker behavior (see `experiments/mumbai/cumulative.md` and `reports/us-east/cumulative.md` Research Notes; comparison in `docs/deployment-comparison.md`).
+6. Add manual notes after reviewing attacker behavior (see `reports/mumbai/cumulative.md` and `reports/us-east/cumulative.md` Research Notes; comparison in `docs/deployment-comparison.md`).
 
 ## Deployment Mapping
 
@@ -41,7 +41,7 @@ The recovered Mumbai files in `experiments/mumbai/` (24 dated reports + `cumulat
 
 ## Preservation Rule
 
-Do not remove or overwrite existing experiment results. Both Mumbai (`experiments/mumbai/`) and Wraith (`reports/us-east/`) results are preserved alongside the historical artifacts. Comparative analysis is documented as an observational comparison in `docs/deployment-comparison.md` (not a controlled causal experiment).
+Do not remove or overwrite existing experiment results. Both Mumbai (`reports/mumbai/`) and Wraith (`reports/us-east/`) results are preserved alongside the historical artifacts. Comparative analysis is documented as an observational comparison in `docs/deployment-comparison.md` (not a controlled causal experiment).
 
 ## US-East Status
 
