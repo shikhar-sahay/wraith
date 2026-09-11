@@ -6,6 +6,8 @@ Ghost Cloud is a research repository for collecting attacker behavior from multi
 
 The shared objective is to observe how attackers interact with realistic SSH honeypots, compare behavior across deployments, and store evidence in a form that is easy to analyze later.
 
+**Proposal vs implementation vs experiments:** The original proposal is in `docs/project-proposal.pdf` (Adaptive SSH Honeypot). What was actually built is the Wraith deterministic shell in `wraith/` (`server.py:88` 30+ commands, `filesystem.py`, `telemetry.py`) with Beelzebub integration (`deploy/`). Completed experiments are Mumbai (`ap-south-1`, `2026-07-03` - `2026-07-26`, `experiments/mumbai/`) and US-East (`us-east-1`, `2026-07-12` - `2026-09-06`, `reports/us-east/`). Current conclusions are observational (see `docs/deployment-comparison.md` caveat) and documented in `docs/mumbai-results.md`/`docs/us-east-results.md`.
+
 ## Research Objectives
 
 - Capture reconnaissance, privilege escalation, persistence, and malware download attempts
@@ -83,17 +85,27 @@ Collected fields include attacker IP, client string, command, response, cwd, lat
 5. Generate daily or cumulative Markdown reports.
 6. Review the reports and append manual notes in the experiment log.
 
+## Documentation Map
+
+- **Start here:** `docs/README.md` index, then `docs/methodology.md` for methodology
+- **Deployments:** `docs/aws-deployment-notes.md`, `infra/aws-setup.md`, `deploy/README.md`
+- **Results:** `docs/mumbai-results.md` (`experiments/mumbai/` 24+1 reports), `docs/us-east-results.md` (`reports/us-east/` 14+1 reports), `docs/deployment-comparison.md` (observational comparison)
+- **Incidents:** `docs/mumbai-incident.md` (2026-07-26 OOM), `docs/us-east-recovery.md` (masked `ssh.socket`)
+- **Architecture & Operations:** `docs/architecture-notes.md`, `docs/simulator-architecture.md`, `docs/telemetry-pipeline.md`, `docs/experiment-workflow.md`
+- **Proposal:** `docs/project-proposal.pdf`
+
 ## Repository Structure
 
 - [README.md](README.md) - project overview and deployment summary
-- [docs/](docs) - architecture, telemetry, deployment, and background notes; key results: `docs/us-east-results.md`, `docs/mumbai-results.md`, `docs/deployment-comparison.md`, `docs/us-east-recovery.md`, `docs/mumbai-incident.md`
-- [experiments/](experiments) - Mumbai daily and cumulative experiment reports (`experiments/mumbai/` 24+1 reports)
-- [reports/](reports) - Wraith experiment reports (`reports/us-east/` 14 daily + `cumulative.md`)
-- [wraith_logs/](wraith_logs) - raw JSONL telemetry output from the Wraith deployment (gitignored, backup `raw-data-us-east/`)
-- [deploy/](deploy) - deployment documentation and service definitions
-- [infra/](infra) - AWS environment notes and operational guidance
-- [scripts/](scripts) - report generation utilities (`generate_report.py`, `generate_report_us_east.py`)
-- [wraith/](wraith) - simulator runtime used by the Wraith deployment
+- [docs/](docs) - see `docs/README.md` index; key docs: `methodology.md`, `mumbai-results.md`, `us-east-results.md`, `deployment-comparison.md`, `mumbai-incident.md`, `us-east-recovery.md`
+- [experiments/](experiments) - Mumbai reports `experiments/mumbai/` (24+1, `2026-07-03` - `2026-07-26`), Wraith notes `experiments/us-east/` (`README.md`/`experiment-log.md`)
+- [reports/](reports) - Wraith US-East reports `reports/us-east/` (14+1, `2026-07-12` - `2026-09-06`)
+- [wraith_logs/](wraith_logs) - raw JSONL telemetry (gitignored, backup `raw-data-us-east/` gitignored)
+- [deploy/](deploy) - deployment service definitions and Beelzebub patch (`beelzebub-simulator.service`)
+- [infra/](infra) - AWS infrastructure notes
+- [scripts/](scripts) - `generate_report.py` (Mumbai Beelzebub logs) and `generate_report_us_east.py` (Wraith JSONL)
+- [wraith/](wraith) - deterministic shell implementation (`server.py`, `filesystem.py`, `parser.py`, `telemetry.py`)
+- [tests/](tests) - `test_fake_shell.py` (4 tests)
 
 ## Setup Instructions
 
@@ -126,9 +138,23 @@ For the deployed Wraith stack, enable the systemd services on the Ubuntu EC2 ins
 - Final consolidated research analysis after extended observation if additional deployments are run
 - Optional controlled LLM fallback as adaptive layer (planned, not production-complete in `wraith/server.py`)
 
+## Key Limitations
+
+- Observational comparison only - Mumbai and US-East differed in region, period, backend, attacker population, and telemetry semantics (see `docs/methodology.md`); not a controlled A/B experiment
+- Mumbai single-command dataset (1 of 942 sessions) limits engagement-depth conclusions; characterizes scanning phase
+- US-East 21103 raw commands overstate diversity (78.9% is one `echo -e` loop from `8.217.18.158`; ~20 unique commands)
+- No geographic/human-actor attribution beyond source IPs/client strings; `t3.micro` LLM observations specific to `qwen2.5:0.5b` on that configuration
+- Wraith per-session filesystem is in-memory only (no Redis persistence) and `port`/`cwd` handling is simulated; no LLM fallback in production (`wraith/server.py` deterministic)
+
 ## Future Work
 
-- Extend observation periods with additional deployments if resources permit
-- Add normalized engagement metrics (unique commands, de-duplicated sessions) to `scripts/generate_report_us_east.py` and `scripts/generate_report.py`
-- Preserve the current deterministic simulator while extending the telemetry analysis layer with optional LLM assistance
-- Validate service boot configuration (`systemctl is-enabled ssh.service`, no `ssh.socket` mask) after any future deployment
+- Extend observation with additional regions or longer exposure if resources permit
+- Add normalized engagement metrics to report generators and validate additional Wraith commands
+- Preserve deterministic simulator while optionally adding controlled LLM fallback for uncovered commands (planned, not production)
+- Validate `systemctl is-enabled ssh.service` and no `ssh.socket` mask on every deployment (see `docs/us-east-recovery.md` lesson)
+
+## Reproducibility
+
+- Mumbai: `python scripts/generate_report.py /path/to/beelzebub/logs --exclude-ip 49.207.63.82 --exclude-ip 49.207.60.111 --exclude-ip 49.207.58.88 --no-geo --out-dir experiments/mumbai --out-file 2026-07-03.md` daily; cumulative `--all --out-file cumulative.md`
+- US-East: `python scripts/generate_report_us_east.py /path/to/wraith_logs --exclude-ip 49.207.63.82 --exclude-ip ... --no-geo --out-dir reports/us-east --out-file 2026-08-05.md` daily; cumulative `--all`
+- Tests: `python -m unittest tests/test_fake_shell.py` (4 tests) and `python demo_fake_shell.py`; `python -m py_compile scripts/generate_report*.py`
