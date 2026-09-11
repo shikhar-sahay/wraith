@@ -35,6 +35,11 @@ This folder contains canonical research and engineering documentation for Ghost 
 - `../reports/mumbai/cumulative.md` - Mumbai cumulative report (24+1 reports, test traffic excluded)
 - `../reports/us-east/cumulative.md` - US-East cumulative report (14+1 reports, 6 test IPs excluded)
 
+## Showcase / Presentation
+
+- [Video Showcase Plan](video-showcase-plan.md) - Detailed recording plan (16 sections, 8-min and 15-min versions, what to say, file to open, lines to show, duration, type)
+- [Video Cheat Sheet](video-cheat-sheet.md) - One-page metrics, code snippets, attacker examples, comparison one-liners, incident narrations, titles, openings/closings
+
 ## Key Links
 
 - Implementation: `../wraith/` (`server.py`, `filesystem.py`, `parser.py`, `telemetry.py`), `../run_server.py`, `../demo_fake_shell.py`, `../tests/test_fake_shell.py`
