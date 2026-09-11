@@ -46,7 +46,7 @@ The comparison is intentionally **observational rather than controlled A/B** - s
 
 ## Filtered vs raw metrics
 
-Documented metrics are filtered (test IPs excluded). Raw volume (e.g., US-East 21103 total commands) includes high-volume automated loops (`echo -e "\x6F\x6B"` 78.9%); normalized engagement is `sessions with commands` (Mumbai 1, US-East 11) and unique commands (~1 vs ~20). Reports distinguish raw total from sessions with commands and unique clients.
+Documented metrics are filtered (test IPs excluded). Raw volume (e.g., US-East 21103 total commands) includes high-volume automated loops (`echo -e "\x6F\x6B"` 79.0% - 16662/21103 from predominantly one session); normalized engagement is `sessions with commands` (Mumbai 1, US-East 11) and exact unique command strings (Mumbai 1 vs US-East 18). Reports distinguish raw total from sessions with commands and unique clients.
 
 ## Comparison limitations and observational nature
 

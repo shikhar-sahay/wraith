@@ -71,7 +71,7 @@ Fields:
 - total sessions
 - unique observed source IPs
 - SSH client strings
-- command counts and frequency (Mumbai: 1 command total; Wraith: 21103 total, 78.9% `echo -e "\x6F\x6B"` loop, see `docs/us-east-results.md`)
+- command counts and frequency (Mumbai: 1 command total; Wraith: 21103 total, 79.0% `echo -e "\x6F\x6B"` single-session loop - 16662/21103, see `docs/us-east-results.md`)
 - suspicious command patterns (`nvidia-smi`, `lspci` GPU detection)
 - session duration statistics (Wraith sub-millisecond, Mumbai 51 sec mean LLM latency)
 

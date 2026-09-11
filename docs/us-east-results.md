@@ -62,7 +62,7 @@
 
 | Command | Count | Share |
 |---------|-------|-------|
-| `echo -e "\x6F\x6B"` | 16662 | 78.9% |
+| `echo -e "\x6F\x6B"` | 16662 | 79.0% |
 | `/bin/./uname -s -v -n -r -m` | 687 | 3.3% |
 | `uptime -p` | 685 | 3.2% |
 | `lspci | grep VGA | cut -f5- -d ' '` | 668 | 3.2% |
@@ -73,7 +73,7 @@
 
 Remaining commands (6 occurrences each): `df -h`, `hostname`, `ssh -V`, `nproc`, `uname -a`, `free -h | grep Mem`, `echo 'bash_test_12345' && echo 'second_line'`; two singletons plus two variants of `echo 1 > /dev/null && cat /bin/echo`.
 
-**Dominant source:** `8.217.18.158` (SSH-2.0-Go) contributes 16662 of 21103 commands (78.9%) in a single session `89c5852b` that consists entirely of the `echo -e "\x6F\x6B"` loop. Removing this loop leaves 4441 commands across the other 11 sessions.
+**Dominant source:** `8.217.18.158` (SSH-2.0-Go) contributes 16662 of 21103 commands (79.0% - 16662/21103, single repeated command) in a single session `89c5852b` that consists entirely of the `echo -e "\x6F\x6B"` loop. This single pattern's dominance means total command count is highly skewed; removing this loop leaves 4441 commands across the other 11 sessions.
 
 ## Behavioral analysis
 
@@ -94,7 +94,7 @@ Remaining commands (6 occurrences each): `df -h`, `hostname`, `ssh -V`, `nproc`,
 
 - **Filesystem or shell interaction:** Minimal. No `ls`, `cat /etc/passwd`, `wget`/`curl` downloads, or `chmod`/`useradd` persistence attempts were recorded in the Wraith JSONL (those are present as empty categories in the suspicious-commands table but not observed). The only non-probe commands are `echo 1 > /dev/null && cat /bin/echo` (2 occurrences in 2026-08-05) and `echo "bash --help; ..."` piped to `sh` (1 occurrence). All returned `1` or `command not found`, handled deterministically.
 
-- **Skew:** Raw command count (21103) overstates meaningful diversity. Unique commands in cumulative: ~20 distinct command strings. Normalized engagement: 11 sessions with commands, median commands per session (excluding the 16662 outlier) is 63-119; mean is skewed to ~1758 by the large loop.
+- **Skew:** Raw command count (21103) overstates meaningful diversity. Unique exact command strings in cumulative: 18 distinct strings (verified via `raw-data-us-east/events.jsonl` with six-IP exclusion; whitespace-exact, e.g., two `nvidia-smi` pipelines are distinct, see Command distribution). Normalized engagement: across all 12 filtered sessions (including one zero-command `unknown` session) sorted counts are `[0, 1, 1, 1, 1, 42, 63, 119, 133, 371, 3709, 16662]`; among the 11 command-bearing sessions sorted counts are `[1, 1, 1, 1, 42, 63, 119, 133, 371, 3709, 16662]`. Do not mix denominators.
 
 **Distinction:**
 
@@ -107,8 +107,8 @@ Remaining commands (6 occurrences each): `df -h`, `hostname`, `ssh -V`, `nproc`,
 ## Session-level interpretation
 
 - **Interactive sessions:** 11 of 12 sessions had commands; 1 session (`unknown` on 2026-07-12) had 0.
-- **Command counts:** Heavily skewed. Sorted: 1,1,1,1,42,63,119,133,371,504,3709,16662. Median 91, mean 1758, unique commands 1-7 per session (most sessions use 1 or 7 distinct commands).
-- **Long-running automated sessions:** `8.217.18.158` (16662 commands, latency ~0.03-0.12 ms per command, sub-millisecond deterministic shell), `178.128.36.18` (3709 commands), `159.89.188.217` (371 commands). These are not human-typed; timing and repetition indicate scripts.
+- **Command counts:** Heavily skewed. Across all 12 filtered sessions sorted `[0, 1, 1, 1, 1, 42, 63, 119, 133, 371, 3709, 16662]` median is 52.5 commands and mean is 1758.6 commands (`21103/12`). Among the 11 command-bearing sessions sorted `[1, 1, 1, 1, 42, 63, 119, 133, 371, 3709, 16662]` median is 63 commands and mean is 1918.5 commands (`21103/11`); minimum 0, maximum 16662, minimum among bearing 1. Per-session unique commands are 1-7 types (most sessions use 1 or 7 distinct patterns; 18 exact unique strings overall, see Skew).
+- **Long-running automated sessions:** `8.217.18.158` (16662 commands, per-command latency ~0.03-0.12 ms as recorded in `reports/us-east/cumulative.md` `Latency ms` column, consistent with sub-millisecond deterministic shell - measured via `wraith/telemetry.py` `latency_ms` and not inferred), `178.128.36.18` (3709 commands), `159.89.188.217` (371 commands). These are not human-typed; timing and repetition indicate scripts. Sub-millisecond is measured, not architectural inference.
 - **Limitations:** Raw telemetry is ignored locally (`raw-data-us-east/` is gitignored and contains a backup tarball `wraith-us-east-telemetry-backup-20260910-222309.tar.gz`; not committed). Committed reports are the only reproducible source. Session duration fields are `N/A` in all but `2026-08-23`/`2026-08-05` due to missing `duration_seconds` in JSONL for some sessions; average/longest duration is not reliably derivable from committed reports alone. Where duration is `N/A`, analysis relies on command count.
 
 ## Reporting methodology and limitations
