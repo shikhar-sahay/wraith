@@ -83,3 +83,13 @@ Verification: `wraith/telemetry.py` appends `events.jsonl` and is exercised by `
 - Malformed lines are ignored safely during parsing.
 - Telemetry is designed to be append-only so the report pipeline can be rerun later (`--out-file` and `--no-geo` supported).
 - Both Mumbai (`experiments/mumbai/`) and Wraith (`reports/us-east/`) are validated research artifacts after recovery; Wraith cloud reports were regenerated via `scripts/generate_report_us_east.py` with six excluded IPs and `--out-file` redirection for daily reports.
+
+## Deployment Status
+
+- **Mumbai:** Completed, recovered, and documented (`experiments/mumbai/` 24 reports + cumulative 773 IPs, see `docs/mumbai-results.md` and `docs/mumbai-incident.md`)
+- **Wraith cloud:** Recovered and documented (`reports/us-east/` 14 daily + cumulative 12 IPs, see `docs/us-east-results.md` and `docs/us-east-recovery.md`)
+- **Comparison:** Observational comparison in `docs/deployment-comparison.md` (not controlled)
+
+## Backward Compatibility
+
+The telemetry format is intentionally simple so older reports can still coexist with newer Wraith logs while the repository keeps the Mumbai deployment documentation intact. `scripts/generate_report.py` (Mumbai) handles Beelzebub logs with `Status`/`User`/`Password` fields; `scripts/generate_report_us_east.py` (Wraith) handles `event`/`session_id`/`attacker_ip` JSONL. Both support `--out-file` for daily and cumulative modes and zero-activity wording `No attacker login attempts or command execution were recorded for this period.` for validation intervals like `2026-07-01.md`.

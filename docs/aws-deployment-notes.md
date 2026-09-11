@@ -19,7 +19,7 @@ The Mumbai deployment is preserved as the original documented AWS honeypot setup
 
 See:
 - [docs/architecture-notes.md](architecture-notes.md)
-- [docs/llm-backend-notes.md](llm-backend-notes.md)
+- [docs/telemetry-pipeline.md](telemetry-pipeline.md)
 
 ## Wraith Deployment (local implementation verified; cloud recovered with telemetry)
 
@@ -39,12 +39,12 @@ Do not assume other services are active unless they are explicitly enabled and v
 
 ```mermaid
 flowchart LR
-    A[Attacker] --> B[EC2 host - pending recovery]
+    A[Attacker] --> B[EC2 host]
     B --> C[Beelzebub SSH honeypot]
-    C --> D[Wraith telemetry service - local verified]
+    C --> D[Wraith telemetry service]
     D --> E[wraith_logs/ JSONL]
-    E --> F[generate_report.py]
-    F --> G[reports/]
+    E --> F[generate_report_us_east.py]
+    F --> G[reports/us-east/]
 ```
 
 ### Wraith persistence
