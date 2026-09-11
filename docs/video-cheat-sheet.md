@@ -15,8 +15,8 @@ A Opening 40s | B Research 40s | C Arch 70s | D Wraith code 90s | E Mumbai 60s |
 
 - Period: `2026-07-12` - `2026-09-06` (14 daily + `cumulative.md` `reports/us-east/`), 12 filtered sessions, 11 with commands (91.7%), 21103 total commands, 18 exact unique command strings (whitespace-exact), 4 clients (`Go` dominant)
 - Per-session all 12 sorted `[0,1,1,1,1,42,63,119,133,371,3709,16662]` median 52.5 mean 1758.6 (`21103/12`); bearing 11 sorted `[1,1,1,1,42,63,119,133,371,3709,16662]` median 63 mean 1918.5 (`21103/11`); min 0 max 16662 min bearing 1
-- Dominant: `echo -e "\x6F\x6B"` 16662 of 21103 = 79.0% from predominantly one session `8.217.18.158` `89c5852b`; remaining 7-command battery (`/bin/./uname`, `uptime -p`, `lspci VGA/3D`, `nvidia-smi`) repeated 9-529 times; `df -h` etc. 6 each; excluded 6 IPs (`49.207.63.82` etc. + `223.187.126.163`, `223.187.121.20`, `1.2.3.4`)
-- Latency sub-millisecond measured via `latency_ms` (0.03-0.12 ms in `reports/us-east/cumulative.md`), not inferred
+- Dominant: `echo -e "\x6F\x6B"` 16662 of 21103 = 79.0% (16662/21103, single repeated command) from predominantly one session `8.217.18.158` `89c5852b`; remaining 7-command battery (`/bin/./uname`, `uptime -p`, `lspci VGA/3D`, `nvidia-smi`) repeated 9-529 times; `df -h` etc. 6 each plus three low-frequency strings (one observed twice: `echo 1 > /dev/null && cat /bin/echo` (2), and two singletons: `echo 1 && cat /bin/echo` (1) and the `bash --help` composite (1)); excluded 6 IPs
+- Measured deterministic command responses in the available telemetry were sub-millisecond (approximately 0.03-0.12 ms in the measured sample, e.g., session `89c5852b` via `wraith/telemetry.py` `latency_ms`), not inferred and not generalized to every command/session without evidence
 
 ## Never Confuse
 
@@ -25,7 +25,7 @@ A Opening 40s | B Research 40s | C Arch 70s | D Wraith code 90s | E Mumbai 60s |
 - Daily total 1877 (2026-08-04 single session) vs per-session list (verified list has no 1877 as filtered per-session; 1877 is daily total)
 - 773 IPs != 773 human attackers (automated scanners)
 - `Stateless` logins (Mumbai) vs `session_started` sessions (US-East) - not directly comparable
-- Observational comparison, not controlled A/B (different regions  ap-south-1 vs us-east-1, periods 23 vs 56 days, populations 773 vs 12, backends, telemetry semantics)
+- Observational comparison, not controlled A/B (different regions ap-south-1 vs us-east-1, periods 23 vs 56 days, populations: Mumbai 773 source IPs from broad Beelzebub telemetry vs US-East 12 filtered Wraith sessions, backends, telemetry semantics - not directly comparable)
 
 ## Do Not Claim -> Correct Wording
 
@@ -59,8 +59,8 @@ python -m py_compile scripts/generate_report.py scripts/generate_report_us_east.
 python demo_fake_shell.py  # shows Wraith locally: whoami, pwd, mkdir, ls, sudo
 ```
 
-**Fake-shell sequence (only supported commands):**
-`whoami` -> `admin`; `pwd` -> `/home/admin`; `ls` -> empty or `db`; `cd /tmp` -> ok; `touch demo.txt` -> ok; `ls` -> `demo.txt`; `cat /etc/os-release` -> Ubuntu 22.04; `uname -a` -> Linux db-prod-01; `sudo whoami` -> password prompt then `root@db-prod-01`
+**Fake-shell sequence (verified against `wraith/server.py:88` and `wraith/filesystem.py:9`, only supported commands, state-consistent):**
+`whoami` -> `admin` (user `admin`); `pwd` -> `/home/admin` (cwd); `mkdir /tmp/demo` -> `mkdir: created directory '/tmp/demo'` (creates per-session dir, visible via `ls /tmp`); `ls /tmp` -> `demo` (shows per-session state); `cd /tmp/demo` -> (no output, cwd changes to `/tmp/demo`); `pwd` -> `/tmp/demo` (verifies `cd`); `cat /etc/os-release` -> `PRETTY_NAME="Ubuntu 22.04 LTS"` (file exists per `filesystem.py:26`); `uname -a` -> `Linux db-prod-01 5.15.0-105-generic ...` (`server.py:109`); `sudo whoami` -> `[sudo] password for admin:` then `root@db-prod-01:~#` after second attempt (`privesc.py:7`). Note: `touch demo.txt` creates `/demo.txt` (not visible via `ls` due to `filesystem.py` not adding to parent), so use `mkdir`/`ls /tmp` to demonstrate state change, not `touch`+`ls`.
 
 ## Best Attacker Examples (source file, why, what not to infer)
 
@@ -70,7 +70,7 @@ python demo_fake_shell.py  # shows Wraith locally: whoami, pwd, mkdir, ls, sudo
 
 ## Comparison One-Liners (for table)
 
-- Traffic volume: Mumbai 773 IPs/15153 logins broad scanning vs US-East 12 IPs/12 sessions focused
+- Traffic volume: Mumbai observed broad credential-scanning traffic from 773 source IPs (15,153 logins), while the filtered US-East Wraith dataset contained 12 sessions, 11 of which executed commands (different counting: Beelzebub Stateless logins vs Wraith session_started)
 - Engagement: Mumbai 1/942 (0.11%) vs US-East 11/12 (91.7%) but US-East heavily skewed
 - Command diversity: Mumbai 1 vs US-East 18 exact (7 patterns)
 - Latency: Mumbai 51 sec mean (646 calls) vs US-East sub-ms measured 0.03-0.12 ms
@@ -91,7 +91,7 @@ python demo_fake_shell.py  # shows Wraith locally: whoami, pwd, mkdir, ls, sudo
 
 ## Closing Takeaway (30s)
 
-"I built Wraith deterministic shell with Beelzebub, deployed Mumbai LLM-backed and US-East deterministic across AWS, collected 773 vs 12 IPs over multi-week periods, compared scanning vs post-auth reconnaissance, learned deterministic is lightweight and resilient while local LLM on t3.micro is costly, with observational limitations and future hybrid work. All reports, methodology, and recovery are documented and reproducible."
+"I built Wraith deterministic shell with Beelzebub, deployed Mumbai LLM-backed (ap-south-1, 2026-07-03 - 2026-07-26) and US-East deterministic (us-east-1, 2026-07-12 - 2026-09-06), observed Mumbai showed broad credential scanning with very little post-auth interaction, while the US-East Wraith dataset captured multiple command-bearing reconnaissance sessions (11 of 12 sessions), learned deterministic is lightweight and resilient while local LLM on t3.micro is costly, with observational limitations and future hybrid work. All reports, methodology, and recovery are documented and reproducible."
 
 ## Video Titles (10 options)
 

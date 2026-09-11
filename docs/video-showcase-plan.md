@@ -76,7 +76,7 @@
 
 ## I. Deployment Comparison (7:40-8:40, 60s)
 
-- **Say:** Use table verbally: "Mumbai 773 IPs 942 sessions 15153 logins 1 command 51 sec mean latency vs US-East 12 IPs 12 sessions 21103 commands but 79% one loop. Not directly comparable: different login counting, 23 vs 56 days, regions, populations."
+- **Say:** Use table verbally: "Mumbai observed broad credential-scanning from 773 source IPs with 15,153 logins and 1 command-bearing session and 51 sec mean LLM latency, while the filtered US-East Wraith dataset had 12 sessions with 11 command-bearing and 79.0% of 21103 commands from one repeated echo loop. Not directly comparable: different login counting (Stateless vs session_started), 23 vs 56 days, regions, populations, telemetry semantics."
 - **Open:** `docs/deployment-comparison.md:13` Comparison table (23 dimensions)
 - **Show:** Table, highlight Dominant pattern, Post-auth engagement, Response latency rows
 - **Type:** Table walkthrough
@@ -123,7 +123,7 @@
 
 ## P. Closing (13:30-14:00, 30s/40s)
 
-- **Say (40s):** "I built Wraith deterministic shell integrated with Beelzebub, deployed across Mumbai LLM-backed and US-East deterministic on AWS, collected 773 vs 12 IPs over multi-week periods, compared scanning vs post-auth reconnaissance, learned deterministic is lightweight and resilient while local LLM on t3.micro is costly, with observational limitations and future hybrid work. All reports, methodology, and recovery are documented and reproducible via scripts/generate_report*.py."
+- **Say (40s):** "I built Wraith deterministic shell integrated with Beelzebub, deployed Mumbai LLM-backed (ap-south-1, 2026-07-03 to 2026-07-26, broad scanning from 773 source IPs with 1 command) and US-East deterministic (us-east-1, 2026-07-12 to 2026-09-06, 12 filtered Wraith sessions with 11 command-bearing), compared their differing post-auth reconnaissance and operational characteristics, learned deterministic measured 0.03-0.12 ms in sample with low overhead while local LLM on t3.micro was costly, with observational limitations and future hybrid work. All reports, methodology, and recovery are documented and reproducible."
 - **Open:** `README.md` Current Status
 - **Type:** Talking-head + `git status` clean
 
