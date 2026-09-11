@@ -29,3 +29,6 @@ temp/
 # US-East recovered raw telemetry and backup
 raw-data-us-east/
 wraith-us-east-telemetry-backup-*.tar.gz
+# Stray local data file (raw JSONL without extension, gitignored)
+data
+data/
