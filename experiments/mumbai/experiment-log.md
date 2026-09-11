@@ -46,7 +46,7 @@ Chronological record of the Mumbai honeypot deployment, subsequent operational i
 ## References
 
 - `experiments/mumbai/README.md` - deployment summary and findings
-- `experiments/mumbai/cumulative.md` - aggregated telemetry and research notes
-- `experiments/mumbai/2026-07-*.md` - daily reports (24 files)
+- `reports/mumbai/cumulative.md` - aggregated telemetry and research notes
+- `reports/mumbai/2026-07-*.md` - daily reports (24 files)
 - `scripts/generate_report.py` - report generator
 - Root `README.md` and `docs/` for project-wide context (Wraith adaptive-shell work builds on the Mumbai limitations documented here)

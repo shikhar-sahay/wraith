@@ -4,7 +4,7 @@
 
 Two geographically separate, Internet-facing SSH honeypot deployments with different interaction backends were operated under the "Ghost Cloud: LLM Honeypots in AWS" track (`Adaptive SSH Honeypot for Real-World Attack Telemetry Collection on AWS`).
 
-- **Mumbai (`ap-south-1`, `wraith-honeypot`, `t3.micro`, Ubuntu 24.04):** Beelzebub SSH on `2222` with **local LLM-assisted behavior** (Ollama `qwen2.5:0.5b` via `LLMHoneypot` plugin). Intended to evaluate adaptive LLM deception. Period `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z` (24 dated reports + `cumulative.md` in `experiments/mumbai/`).
+- **Mumbai (`ap-south-1`, `wraith-honeypot`, `t3.micro`, Ubuntu 24.04):** Beelzebub SSH on `2222` with **local LLM-assisted behavior** (Ollama `qwen2.5:0.5b` via `LLMHoneypot` plugin). Intended to evaluate adaptive LLM deception. Period `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z` (24 dated reports + `cumulative.md` in `reports/mumbai/`).
 
 - **US-East (`us-east-1`, `wraith-us-east-static`, historically `100.27.226.37`):** Beelzebub SSH on `2222` fronting the **deterministic Wraith interactive shell** (`wraith/server.py`, `wraith/filesystem.py`, `wraith/telemetry.py` etc., JSONL `wraith_logs/events.jsonl`). Intended to evaluate lightweight deterministic interaction. Period `2026-07-12T18:02:32.608023+00:00` - `2026-09-06T18:14:25.210796+00:00` cumulative, with 14 dated daily reports in `reports/us-east/` (including 4 `N/A` days with 0 sessions after exclusion).
 
@@ -101,7 +101,7 @@ The two deployments demonstrate differing operational and behavioral characteris
 - Compared an LLM-backed interaction architecture against the deterministic Wraith shell (observational, not controlled)
 - Observed large-scale credential scanning (Mumbai 15,153 logins), automated reconnaissance, repeated host-capability probing (7-command battery, `echo -e` loops), and command skew (79.0% single loop, 18 unique strings)
 - Identified operational limitations of local LLM inference on constrained EC2 resources (51 sec mean latency, OOM, 64.8 min max) and the resilience of lightweight deterministic simulation (sub-millisecond measured)
-- Implemented telemetry reporting (`scripts/generate_report.py`, `scripts/generate_report_us_east.py` with `--out-file`/`--no-geo`), experiment isolation (`experiments/mumbai/` logs vs `reports/`), recovery procedures (EBS snapshot, `ssh.socket` mask fix), and reproducible documentation (`docs/methodology.md`, `docs/deployment-comparison.md`)
+- Implemented telemetry reporting (`scripts/generate_report.py`, `scripts/generate_report_us_east.py` with `--out-file`/`--no-geo`), experiment isolation (`reports/mumbai/` logs vs `reports/`), recovery procedures (EBS snapshot, `ssh.socket` mask fix), and reproducible documentation (`docs/methodology.md`, `docs/deployment-comparison.md`)
 
 ## Practical lessons
 

@@ -86,7 +86,7 @@ Verification: `wraith/telemetry.py` appends `events.jsonl` and is exercised by `
 
 ## Deployment Status
 
-- **Mumbai:** Completed, recovered, and documented (`experiments/mumbai/` 24 reports + cumulative 773 IPs, see `docs/mumbai-results.md` and `docs/mumbai-incident.md`)
+- **Mumbai:** Completed, recovered, and documented (`reports/mumbai/` 24 reports + cumulative 773 IPs, see `docs/mumbai-results.md` and `docs/mumbai-incident.md`)
 - **Wraith cloud:** Recovered and documented (`reports/us-east/` 14 daily + cumulative 12 IPs, see `docs/us-east-results.md` and `docs/us-east-recovery.md`)
 - **Comparison:** Observational comparison in `docs/deployment-comparison.md` (not controlled)
 

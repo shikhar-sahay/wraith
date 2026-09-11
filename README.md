@@ -6,7 +6,17 @@ Ghost Cloud is a research repository for collecting attacker behavior from multi
 
 The shared objective is to observe how attackers interact with realistic SSH honeypots, compare behavior across deployments, and store evidence in a form that is easy to analyze later.
 
-**Proposal vs implementation vs experiments:** The original proposal is in `docs/project-proposal.pdf` (Adaptive SSH Honeypot). What was actually built is the Wraith deterministic shell in `wraith/` (`server.py:88` 30+ commands, `filesystem.py`, `telemetry.py`) with Beelzebub integration (`deploy/`). Completed experiments are Mumbai (`ap-south-1`, `2026-07-03` - `2026-07-26`, `experiments/mumbai/`) and US-East (`us-east-1`, `2026-07-12` - `2026-09-06`, `reports/us-east/`). Current conclusions are observational (see `docs/deployment-comparison.md` caveat) and documented in `docs/mumbai-results.md`/`docs/us-east-results.md`.
+**Proposal vs implementation vs experiments:** The original proposal is in `docs/project-proposal.pdf` (Adaptive SSH Honeypot). What was actually built is the Wraith deterministic shell in `wraith/` (`server.py:88` 30+ commands, `filesystem.py`, `telemetry.py`) with Beelzebub integration (`deploy/`). Completed experiments are Mumbai (`ap-south-1`, `2026-07-03` - `2026-07-26`, `reports/mumbai/`) and US-East (`us-east-1`, `2026-07-12` - `2026-09-06`, `reports/us-east/`). Current conclusions are observational (see `docs/deployment-comparison.md` caveat) and documented in `docs/mumbai-results.md`/`docs/us-east-results.md`.
+
+## Quick Links for Review / Showcase
+
+**Deployment Comparison and Findings (canonical):** [docs/deployment-comparison.md](docs/deployment-comparison.md) - side-by-side table, Overall Experimental Consensus, Showcase Summary
+
+**Primary report artifacts (directly comparable):** [reports/mumbai/cumulative.md](reports/mumbai/cumulative.md) (24+1 reports, `ap-south-1`) and [reports/us-east/cumulative.md](reports/us-east/cumulative.md) (14+1 reports, `us-east-1`)
+
+**Detailed results:** [docs/mumbai-results.md](docs/mumbai-results.md) | [docs/us-east-results.md](docs/us-east-results.md) | **Methodology:** [docs/methodology.md](docs/methodology.md)
+
+**Incidents:** [docs/mumbai-incident.md](docs/mumbai-incident.md) (2026-07-26 OOM) | [docs/us-east-recovery.md](docs/us-east-recovery.md) (masked `ssh.socket`)
 
 ## Research Objectives
 
@@ -37,11 +47,10 @@ flowchart LR
 
 ### Mumbai Deployment
 
-The Mumbai deployment is the LLM-adapted honeypot environment and remains valid. It ran in `ap-south-1` (Mumbai) on `wraith-honeypot` (`t3.micro`, Beelzebub on `2222`, Ollama `qwen2.5:0.5b`) and is the adaptive baseline for interactive shell behavior. Recovered dataset: `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`, 773 unique observed source IPs, 942 sessions, 15,153 login attempts, but only 1 session progressed to command execution: indicating heavy automated credential-guessing with minimal engagement depth. Local LLM inference was observed to be operationally fragile on `t3.micro` (OOM/resource exhaustion and degraded networking ended telemetry on July 26). See `experiments/mumbai/` for the full 24-report recovered set and research notes.
+The Mumbai deployment is the LLM-adapted honeypot environment and remains valid. It ran in `ap-south-1` (Mumbai) on `wraith-honeypot` (`t3.micro`, Beelzebub on `2222`, Ollama `qwen2.5:0.5b`) and is the adaptive baseline for interactive shell behavior. Recovered dataset: `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`, 773 unique observed source IPs, 942 sessions, 15,153 login attempts, but only 1 session progressed to command execution: indicating heavy automated credential-guessing with minimal engagement depth. Local LLM inference was observed to be operationally fragile on `t3.micro` (OOM/resource exhaustion and degraded networking ended telemetry on July 26). See `reports/mumbai/cumulative.md` and `docs/mumbai-results.md` for the full 24-report recovered set.
 
 See:
-- [experiments/mumbai/README.md](experiments/mumbai/README.md)
-- [reports/mumbai/cumulative.md](reports/mumbai/cumulative.md)
+- [experiments/mumbai/README.md](experiments/mumbai/README.md) (experiment log) and [reports/mumbai/cumulative.md](reports/mumbai/cumulative.md) (reports)
 - [docs/aws-deployment-notes.md](docs/aws-deployment-notes.md)
 - [docs/architecture-notes.md](docs/architecture-notes.md)
 
@@ -89,7 +98,7 @@ Collected fields include attacker IP, client string, command, response, cwd, lat
 
 - **Start here:** `docs/README.md` index, then `docs/methodology.md` for methodology
 - **Deployments:** `docs/aws-deployment-notes.md`, `infra/aws-setup.md`, `deploy/README.md`
-- **Results:** `docs/mumbai-results.md` (`experiments/mumbai/` 24+1 reports), `docs/us-east-results.md` (`reports/us-east/` 14+1 reports), `docs/deployment-comparison.md` (observational comparison)
+- **Results:** `docs/mumbai-results.md` (`reports/mumbai/` 24+1 reports), `docs/us-east-results.md` (`reports/us-east/` 14+1 reports), `docs/deployment-comparison.md` (observational comparison)
 - **Incidents:** `docs/mumbai-incident.md` (2026-07-26 OOM), `docs/us-east-recovery.md` (masked `ssh.socket`)
 - **Architecture & Operations:** `docs/architecture-notes.md`, `docs/simulator-architecture.md`, `docs/telemetry-pipeline.md`, `docs/experiment-workflow.md`
 - **Proposal:** `docs/project-proposal.pdf`
@@ -124,7 +133,7 @@ For the deployed Wraith stack, enable the systemd services on the Ubuntu EC2 ins
 
 **Completed**
 
-- Mumbai AWS deployment on `wraith-honeypot` (`t3.micro`, `ap-south-1`, Ubuntu 24.04, Beelzebub on `2222`, local Ollama `qwen2.5:0.5b`) - 24 dated reports + `cumulative.md` in `experiments/mumbai/` (period `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`, 773 IPs, 942 sessions, 15153 logins, 1 command from `47.113.113.162`)
+- Mumbai AWS deployment on `wraith-honeypot` (`t3.micro`, `ap-south-1`, Ubuntu 24.04, Beelzebub on `2222`, local Ollama `qwen2.5:0.5b`) - 24 dated reports + `cumulative.md` in `reports/mumbai/` (period `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`, 773 IPs, 942 sessions, 15153 logins, 1 command from `47.113.113.162`)
 - Recovery of surviving Mumbai telemetry and regeneration via `scripts/generate_report.py` (test traffic excluded); investigation of July 26 OOM resource exhaustion and degraded guest networking with `2026-09-10` reboot recovery (`docs/mumbai-incident.md`)
 - Development of Wraith deterministic shell components (`wraith/` - filesystem, parser, session identity, persona, privesc, registry, telemetry, server) with local demo `demo_fake_shell.py` and tests `tests/test_fake_shell.py`
 - US-East AWS deployment `wraith-us-east-static` (`us-east-1`, `100.27.226.37:2222`) - 14 daily reports + `cumulative.md` in `reports/us-east/` (period `2026-07-12` - `2026-09-06`, 12 IPs, 12 sessions, 11 with commands, 21103 commands, see `docs/us-east-results.md`)

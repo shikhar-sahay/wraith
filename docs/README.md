@@ -26,7 +26,7 @@ This folder contains canonical research and engineering documentation for Ghost 
 
 ## Operations
 
-- [Experiment Workflow](experiment-workflow.md) - Layout `experiments/mumbai/` and `reports/us-east/`, workflow, deployment mapping, preservation rule
+- [Experiment Workflow](experiment-workflow.md) - Layout `reports/mumbai/` and `reports/us-east/`, workflow, deployment mapping, preservation rule
 - [Simulator Architecture](simulator-architecture.md) - Deterministic shell `wraith/server.py:88` 30+ commands, filesystem, persona, telemetry, planned vs implemented (no Redis, no LLM fallback)
 
 ## Proposals and Reports

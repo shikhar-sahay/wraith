@@ -24,19 +24,19 @@ The recovered Mumbai files in `reports/mumbai/` (24 dated reports + `cumulative.
 2. Collect raw telemetry (Mumbai: Beelzebub logs; Wraith: `wraith_logs/events.jsonl` via `wraith/telemetry.py`).
 3. Exclude known test traffic when needed (Mumbai: `49.207.63.82`, `49.207.60.111`, `49.207.58.88`; Wraith: those plus `223.187.126.163`, `223.187.121.20`, `1.2.3.4`).
 4. Generate a Markdown report for the day or cumulative period (`scripts/generate_report.py` for Mumbai, `scripts/generate_report_us_east.py` for Wraith, both with `--out-file` and `--no-geo`).
-5. Store the report in the appropriate deployment folder (`experiments/mumbai/` Mumbai, `reports/us-east/` Wraith).
+5. Store the report in the appropriate deployment folder (`reports/mumbai/` Mumbai, `reports/us-east/` Wraith).
 6. Add manual notes after reviewing attacker behavior (see `reports/mumbai/cumulative.md` and `reports/us-east/cumulative.md` Research Notes; comparison in `docs/deployment-comparison.md`).
 
 ## Deployment Mapping
 
 | Deployment | Experiment target | Notes |
 |------------|-------------------|-------|
-| Mumbai | `experiments/mumbai/` | Recovered Beelzebub + local Ollama `qwen2.5:0.5b` outputs - 24 dated reports (July 1 validation + July 3-26 observation) + cumulative (773 IPs, 942 sessions, 15,153 logins, 1 command) |
+| Mumbai | `reports/mumbai/` | Recovered Beelzebub + local Ollama `qwen2.5:0.5b` outputs - 24 dated reports (July 1 validation + July 3-26 observation) + cumulative (773 IPs, 942 sessions, 15,153 logins, 1 command) |
 | Wraith | `reports/us-east/` and `experiments/us-east/` | Wraith deterministic shell reports - 14 daily + cumulative in `reports/us-east/` (period `2026-07-12` - `2026-09-06`, 12 IPs, 21103 commands, see `docs/us-east-results.md`) |
 
 ## Report Sources
 
-- Mumbai reports originate from raw Beelzebub logs via `scripts/generate_report.py` (local Ollama `qwen2.5:0.5b` path) and land in `experiments/mumbai/` (July 1 is validation-only; July 5 intentionally absent)
+- Mumbai reports originate from raw Beelzebub logs via `scripts/generate_report.py` (local Ollama `qwen2.5:0.5b` path) and land in `reports/mumbai/` (July 1 is validation-only; July 5 intentionally absent)
 - Wraith reports originate from `wraith_logs/events.jsonl` via `scripts/generate_report_us_east.py` (Wraith JSONL) and land in `reports/us-east/` (daily via `--out-file` redirection, cumulative via `--all`)
 
 ## Preservation Rule

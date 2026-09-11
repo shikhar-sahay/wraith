@@ -4,12 +4,12 @@
 
 Ghost Cloud now documents two coexisting deployments:
 
-- Mumbai deployment: the LLM-adapted AWS honeypot setup that used local Ollama `qwen2.5:0.5b` on `t3.micro` (Beelzebub on `2222` in `ap-south-1`) for dynamic shell responses - recovered period `2026-07-03` - `2026-07-26`, see `experiments/mumbai/`
+- Mumbai deployment: the LLM-adapted AWS honeypot setup that used local Ollama `qwen2.5:0.5b` on `t3.micro` (Beelzebub on `2222` in `ap-south-1`) for dynamic shell responses - recovered period `2026-07-03` - `2026-07-26`, see `reports/mumbai/`
 - Wraith deployment: the newer `us-east-1`/Virginia deployment that uses a deterministic static shell and telemetry-focused SSH layer
 
 ## Mumbai Deployment
 
-The Mumbai deployment is the LLM adaptation path described in `experiments/mumbai/`. It used local Ollama `qwen2.5:0.5b` on `t3.micro` and should be treated as the interactive, model-backed deployment rather than a plain baseline shell; the recovered dataset shows heavy scanning with minimal post-auth engagement and an operational OOM/networking limit on July 26.
+The Mumbai deployment is the LLM adaptation path described in `reports/mumbai/`. It used local Ollama `qwen2.5:0.5b` on `t3.micro` and should be treated as the interactive, model-backed deployment rather than a plain baseline shell; the recovered dataset shows heavy scanning with minimal post-auth engagement and an operational OOM/networking limit on July 26.
 
 ```mermaid
 flowchart LR
@@ -42,7 +42,7 @@ flowchart LR
 | Telemetry | Beelzebub logs -> `scripts/generate_report.py` -> `reports/mumbai/*.md` (recovered, validated: 773 IPs, 942 sessions, 15153 logins, 1 command) | JSONL session and command telemetry (`wraith/server.py` -> `wraith_logs/` -> `reports/us-east/` via `scripts/generate_report_us_east.py`: 12 IPs, 12 sessions, 21103 commands) |
 | Output format | Recovered Markdown reports (24 dated + cumulative, period `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`) | Markdown reports (14 daily + cumulative, period `2026-07-12` - `2026-09-06`, see `reports/us-east/`) |
 | Runtime model | Local Ollama `qwen2.5:0.5b` (high latency 51094 ms, OOM on `t3.micro` - observed) | Deterministic static shell and Python telemetry pipeline (sub-millisecond, no LLM fallback in production; LLM fallback is planned architecture) |
-| Status | Completed and documented in `experiments/mumbai/` (`docs/mumbai-results.md`, `docs/mumbai-incident.md`) | Recovered and documented in `reports/us-east/` (`docs/us-east-results.md`, `docs/us-east-recovery.md`); observational comparison in `docs/deployment-comparison.md` |
+| Status | Completed and documented in `reports/mumbai/` (`docs/mumbai-results.md`, `docs/mumbai-incident.md`) | Recovered and documented in `reports/us-east/` (`docs/us-east-results.md`, `docs/us-east-recovery.md`); observational comparison in `docs/deployment-comparison.md` |
 
 ## Wraith Components (verified in repository)
 
@@ -73,7 +73,7 @@ Planned but not production-complete: cross-session persistence via Redis (no Red
 3. The telemetry server records session metadata and command execution details (`wraith/telemetry.py`).
 4. JSONL files accumulate the raw evidence (`wraith_logs/events.jsonl`).
 5. `scripts/generate_report.py` converts the JSONL or Beelzebub logs into experiment reports.
-6. Reports are stored under `reports/` for later review (Wraith) or `experiments/mumbai/` for Mumbai.
+6. Reports are stored under `reports/` for later review (Wraith) or `reports/mumbai/` for Mumbai.
 
 ## Design Goal
 

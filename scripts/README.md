@@ -28,7 +28,7 @@ This folder contains two report generators with different input schemas. They ar
 
 ## Reproducibility
 
-- Mumbai reports in `experiments/mumbai/` were regenerated from surviving Beelzebub logs with three excluded IPs and `--no-geo` (see `docs/mumbai-results.md`)
+- Mumbai reports in `reports/mumbai/` were regenerated from surviving Beelzebub logs with three excluded IPs and `--no-geo` (see `docs/mumbai-results.md`)
 - US-East reports in `reports/us-east/` were regenerated from preserved `raw-data-us-east/events.jsonl` (gitignored, backup `wraith-us-east-telemetry-backup-*.tar.gz` gitignored) with six excluded IPs (see `docs/us-east-results.md` and `docs/us-east-recovery.md`)
 - Raw `*.jsonl` and `raw-data-us-east/` remain gitignored; only Markdown reports are versioned
 - Verify before committing: `python -m py_compile scripts/generate_report*.py` and `python -m unittest tests/test_fake_shell.py` (4 tests)

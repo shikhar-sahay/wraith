@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Wraith now documents two deployment contexts. The Mumbai deployment is the LLM-adapted path, backed by local Ollama `qwen2.5:0.5b` on `t3.micro` (Beelzebub on `2222` in `ap-south-1`; see `experiments/mumbai/` for the July 26 OOM and networking limitation), while the US-East deployment is a deterministic shell simulator. The simulator is designed to behave like a believable Ubuntu 22.04 server for research purposes while never executing commands on the real host. Code is in `wraith/` and is verified locally; cloud instance `wraith-us-east-static` (`us-east-1`, `100.27.226.37`) was recovered via EBS repair (see `docs/us-east-recovery.md`) and produced `reports/us-east/` telemetry (12 IPs, 21103 commands).
+Wraith now documents two deployment contexts. The Mumbai deployment is the LLM-adapted path, backed by local Ollama `qwen2.5:0.5b` on `t3.micro` (Beelzebub on `2222` in `ap-south-1`; see `reports/mumbai/` for the July 26 OOM and networking limitation), while the US-East deployment is a deterministic shell simulator. The simulator is designed to behave like a believable Ubuntu 22.04 server for research purposes while never executing commands on the real host. Code is in `wraith/` and is verified locally; cloud instance `wraith-us-east-static` (`us-east-1`, `100.27.226.37`) was recovered via EBS repair (see `docs/us-east-recovery.md`) and produced `reports/us-east/` telemetry (12 IPs, 21103 commands).
 
 ## Intended Architecture
 
@@ -51,4 +51,4 @@ Internet attacker
 
 ## Relationship to Mumbai
 
-Mumbai (`ap-south-1`, `t3.micro`, Beelzebub + local Ollama `qwen2.5:0.5b`) collected 773 source IPs and 15,153 logins but only 1 command execution, with mean LLM latency 51,094 ms and OOM on July 26 (see `experiments/mumbai/`). Wraith addresses those limitations by prioritizing deterministic shell behavior; adaptive behavior is a controlled extension, not the sole source of terminal responses.
+Mumbai (`ap-south-1`, `t3.micro`, Beelzebub + local Ollama `qwen2.5:0.5b`) collected 773 source IPs and 15,153 logins but only 1 command execution, with mean LLM latency 51,094 ms and OOM on July 26 (see `reports/mumbai/`). Wraith addresses those limitations by prioritizing deterministic shell behavior; adaptive behavior is a controlled extension, not the sole source of terminal responses.

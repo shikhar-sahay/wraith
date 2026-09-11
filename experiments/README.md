@@ -18,7 +18,7 @@ reports/
   us-east/       (14 daily + cumulative, Wraith JSONL, 12 IPs, 21103 commands)
 ```
 
-Historical Mumbai files in `experiments/mumbai/` and Wraith US-East reports in `reports/us-east/` are preserved and should not be deleted or overwritten except via deliberate regeneration (`scripts/generate_report.py` for Mumbai, `scripts/generate_report_us_east.py` for US-East). `2026-07-05.md` remains absent; `2026-07-01.md` is validation-only.
+Historical Mumbai files in `reports/mumbai/` and Wraith US-East reports in `reports/us-east/` are preserved and should not be deleted or overwritten except via deliberate regeneration (`scripts/generate_report.py` for Mumbai, `scripts/generate_report_us_east.py` for US-East). `2026-07-05.md` remains absent; `2026-07-01.md` is validation-only.
 
 ## Related Docs
 

@@ -11,6 +11,6 @@ This folder contains deployment-related documentation and service definitions fo
 
 ## Notes
 
-- The Mumbai deployment (`ap-south-1`, `t3.micro`, Beelzebub + local Ollama `qwen2.5:0.5b`, period `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`) remains documented separately in `experiments/mumbai/`.
+- The Mumbai deployment (`ap-south-1`, `t3.micro`, Beelzebub + local Ollama `qwen2.5:0.5b`, period `2026-07-03T18:59:13Z` - `2026-07-26T17:23:56Z`) remains documented separately in `reports/mumbai/`.
 - The Wraith deterministic shell is implemented locally (`wraith/`, `run_server.py`, `demo_fake_shell.py`, `tests/test_fake_shell.py`); cloud instance `wraith-us-east-static` (`us-east-1`, `100.27.226.37`) was recovered (masked `ssh.socket` removed, `ssh.service` enabled, snapshot before repair) and produced `reports/us-east/` telemetry (12 IPs, 21103 commands, see `docs/us-east-results.md`).
 - Wraith uses systemd for persistence (`beelzebub-simulator.service`) and runs independently from the terminal once enabled - verified active after recovery.

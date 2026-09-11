@@ -11,6 +11,6 @@ This folder stores generated Markdown experiment reports.
 ## Notes
 
 - Raw telemetry stays in `wraith_logs/` (and gitignored `raw-data-us-east/` with backup `wraith-us-east-telemetry-backup-*.tar.gz`); only Markdown reports are versioned.
-- Historical Mumbai artifacts in `experiments/mumbai/` remain preserved; `2026-07-05.md` remains absent.
+- Historical Mumbai artifacts in `reports/mumbai/` remain preserved; `2026-07-05.md` remains absent.
 - Reports here should not overwrite preserved historical experiment files; use `--out-file` for explicit daily naming and `--all` for cumulative.
 - See `docs/deployment-comparison.md` for Mumbai vs US-East observational comparison.
